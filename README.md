@@ -17,7 +17,7 @@ Possibly, rotoscoping applications are not considered commercially viable since 
 * layer cache (purpose for unused variable cacheMaxMB) is not yet implemented
 
 ## Developer Notes
-The RotoCanvas (based  on ScribbleArea from Qt Examples) class is modular, with hopes that it can be used by various video editing applications in the future. The recommended use of RotoCanvas in a video editing application is for applying effects to source media as a preprocessing step before they are trimmed or other effects are added, since rotoscoping is highly dependent on the source frame (base layer) remaining the same.  Using the RotoCanvas as a post-processing effect is possible, but accurate frame seeking must be assured somehow (such as by a frame-accurate video editing engine), and further edits to the previous layers will in some cases cause the rotoscoped parts (parts of the image edited by RotoCanvas) to no longer make sense (such as, if a lens pinch effect is added to a scene where there was a layer order error that has been rotoscoped out, instead of the error being rotoscoped out, there will be both the error and a corrected blotch that is the error's original position & shape), which in such cases would require redoing the rotoscoping.
+The RotoCanvas class is modular, with hopes that it can be used by various video editing applications in the future. The recommended use of RotoCanvas in a video editing application is for applying effects to source media as a preprocessing step before they are trimmed or other effects are added, since rotoscoping is highly dependent on the source frame (base layer) remaining the same.  Using the RotoCanvas as a post-processing effect is possible, but accurate frame seeking must be assured somehow (such as by a frame-accurate video editing engine), and further edits to the previous layers will in some cases cause the rotoscoped parts (parts of the image edited by RotoCanvas) to no longer make sense (such as, if a lens pinch effect is added to a scene where there was a layer order error that has been rotoscoped out, instead of the error being rotoscoped out, there will be both the error and a corrected blotch that is the error's original position & shape), which in such cases would require redoing the rotoscoping.
 
 ### Storage Method
 where <sequenceName> is sequence name (such as, if mygreatvideo0000.png is first frame, <sequenceName> is mygreatvideo)
@@ -30,4 +30,6 @@ where <sequenceName> is sequence name (such as, if mygreatvideo0000.png is first
 				<layerNumber>.png
 				<layerNumber>.yml [not yet implemented]
 				
-				
+## Credits
+* created by expertmm (see also LICENSE)
+* special thanks to the Qt team for ScribbleArea from Qt Examples
