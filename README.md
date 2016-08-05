@@ -32,8 +32,9 @@ Folder and file structure is as follows, where `<sequenceName>` is sequence name
 	rotocanvas.yml [not yet implemented]
 	frames [folder]
 		<frameNumber> [folder; only exists if frame is a keyframe]
-			alpha.png [file where only alpha channel is used (and applied to background upon export)]
-			[alpha is stored separately so when background is edited, only edits are saved (to layer 0), reducing storage use; then alpha is applied]
+			alpha.png [file where only alpha channel is used (and applied to background upon export)--
+			alpha is stored separately so when background is edited, only edits are saved (to layer 0),
+			reducing storage use; then alpha is applied]
 			layers [folder]
 				<layerNumber>.png
 				<layerNumber>.yml [not yet implemented]
