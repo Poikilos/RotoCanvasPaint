@@ -12,7 +12,8 @@ Possibly, rotoscoping applications are not considered commercially viable since 
 
 ## Known Issues
 * not yet done first working version (expected August 2016)
-* initially will only input and output png sequences.
+* initially will only input and output image sequences.
+* detect format instead of ever using the strings "png" or ".png"
 * layer cache (purpose for unused variable cacheMaxMB) is not yet implemented
 
 ## Developer Notes
