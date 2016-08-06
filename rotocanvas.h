@@ -37,23 +37,31 @@ public:
     static QString getLayersFolderPath(QString framePath, int frameNumber, bool createEnable);
     static QString getLayersFolderPath(QFileInfo frameFI, int frameNumber, bool createEnable);
     QString getLayersFolderPath(int frameNumber, bool createEnable);
-    static QString getLayerImagePathMostRecent(QString framePath, int frameNumber, int layerNumber);
-    static QString getLayerImagePathMostRecent(QFileInfo frameFI, int frameNumber, int layerNumber);
-    QString getLayerImagePathMostRecent(int frameNumber, int layerNumber);
+    static QString getLayerImagePathMostRecent(QString framePath, int frameNumber, int layerNumber, int* returnFrameNumber);
+    static QString getLayerImagePathMostRecent(QFileInfo frameFI, int frameNumber, int layerNumber, int* returnFrameNumber);
+    QString getLayerImagePathMostRecent(int frameNumber, int layerNumber, int* returnFrameNumber);
+    static QString getFrameName(QString framePath, int frameNumber);
+    static QString getFrameName(QFileInfo frameFI, int frameNumber);
+    QString getFrameName(int frameNumber);
+    static QString getFramePath(QString framePath, int frameNumber);
+    static QString getFramePath(QFileInfo frameFI, int frameNumber);
+    QString getFramePath(int frameNumber);
 
-    static QString getSeqFramePath(QString folderPath, QString seqName, int frameNumber, int minDigitCount, QString format);
-    QString getSeqFramePath(int frameNumber);
+    static QString getFramePath(QString folderPath, QString seqName, int frameNumber, int minDigitCount, QString format);
+    //QString getFramePath(int frameNumber);
     static QString getZeroPadded(int frameNumber, int minDigitCount);
+    static void drawAlphaPix(QImage* destImage, int x, int y, QColor sourceColor, double this_opacity);
 
-
+    bool getIsModified();
     bool openImage(const QString &fileName);
-    bool saveImage(const QString &fileName, const char *fileFormat);
+    bool saveFrame();//const QString &fileName, const char *fileFormat);
+    bool exportFrame(QDir destinationDir, const QString &sequenceName, const char *fileFormat, int frameNumber);
+    int exportFrames(QDir destinationDir, const QString &sequenceName, const char *fileFormat);
     void setBrushColor(const QColor &newColor);
     void setBrushRadius(double newWidth);
     void setBrushHardness(double newHardness);
     void setBrushOpacity(double newOpacity);
 
-    bool getIsModified() const { return isModified; }
     QColor getBrushColor() const { return brushColor; }
     double getBrushRadius() const { return brushRadius; }
     double getBrushHardness() const { return (brushRadius-brushHardRadius)/brushRadius; }
@@ -76,21 +84,22 @@ private:
     void resizeImage(QImage *thisImage, const QSize &newSize);
     QImage getCacheableImage(QString filePath);
 
-    bool isModified;
+    //bool isModified;
     bool isToolActive;
     int selectedLayerIndex;
-    double cacheMaxMB;
+    int layerCount;  // PROJECT INFO
+    double cacheMaxMB;  // SETTINGS
     //int minDigitCount;  // use getSeqDigitCount; formerly PROJECT INFO
-    double brushRadius; // PROJECT INFO
-    double brushHardRadius; // PROJECT INFO
-    double brushOpacity; // PROJECT INFO
-    QFileInfo* loadedFI; // PROJECT INFO; STATE INFO: background layer
+    double brushRadius;  // PROJECT INFO
+    double brushHardRadius;  // PROJECT INFO
+    double brushOpacity;  // PROJECT INFO
+    QFileInfo* loadedFI;  // PROJECT INFO; STATE INFO: background layer
     QSize outputSize;  // PROJECT INFO size of video (same as layers, but different from image)
-    QColor brushColor; // PROJECT INFO
-    QColor checkerDarkColor; // PROJECT INFO
-    QColor checkerLightColor; // PROJECT INFO
-    QImage backgroundImage;
-    QImage displayImage; //just for display (not saved anywhere)--includes matte, canvas (checkerboard), and interface
+    QColor brushColor;  // PROJECT INFO
+    QColor checkerDarkColor;  // PROJECT INFO
+    QColor checkerLightColor;  // PROJECT INFO
+    QImage originalImage; // the actual source frame (nondestructive edits are on layerPtrs)
+    QImage panelImage;  // just for display (not saved anywhere)--includes matte, canvas (checkerboard), and interface
     QList<RotoCanvasLayer*> layerPtrs;
     QPoint lastPoint;
 

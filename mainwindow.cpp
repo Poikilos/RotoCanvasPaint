@@ -52,7 +52,8 @@ void MainWindow::open()
 {
     if (maybeSave()) {
         QString path=QDir::currentPath();
-        QString tryPath="C:\\Users\\Owner\\Videos\\NTWAOG (Music Video)\\Media\\Sequence 00092 hovering\\00092a";
+        //QString tryPath="C:\\Users\\Owner\\Videos\\NTWAOG (Music Video)\\Media\\Sequence 00092 hovering\\00092a";
+        QString tryPath="C:\\Users\\Owner\\Videos\\ImageSequenceExamples";
         QDir defaultDir=QDir(tryPath);
         if (defaultDir.exists()) path=tryPath;
         QString fileName = QFileDialog::getOpenFileName(this,
@@ -69,7 +70,7 @@ void MainWindow::save()
 {
     QAction *action = qobject_cast<QAction *>(sender());
     QByteArray fileFormat = action->data().toByteArray();
-    saveFile(fileFormat);
+    saveFrame();//fileFormat);
 }
 //! [6]
 
@@ -141,6 +142,10 @@ void MainWindow::createActions()
     openAct->setShortcuts(QKeySequence::Open);
     connect(openAct, SIGNAL(triggered()), this, SLOT(open()));
 
+    saveFrameAct = new QAction(tr("&Save..."), this);
+    saveFrameAct->setShortcut(QKeySequence::Save);
+    connect(saveFrameAct, SIGNAL(triggered()), this, SLOT(save()));
+
     foreach (QByteArray format, QImageWriter::supportedImageFormats()) {
         QString text = tr("%1...").arg(QString(format).toUpper());
 
@@ -167,7 +172,7 @@ void MainWindow::createActions()
     connect(brushHardnessAct, SIGNAL(triggered()), this, SLOT(askBrushHardness()));
 
     brushOpacityAct = new QAction(tr("Brush &Opacity..."), this);
-    connect(brushOpacityAct, SIGNAL(triggered()), this, SLOT(askOpacity()));
+    connect(brushOpacityAct, SIGNAL(triggered()), this, SLOT(askBrushOpacity()));
 
     clearScreenAct = new QAction(tr("&Clear Screen"), this);
     clearScreenAct->setShortcut(tr("Ctrl+L"));
@@ -192,6 +197,7 @@ void MainWindow::createMenus()
 
     fileMenu = new QMenu(tr("&File"), this);
     fileMenu->addAction(openAct);
+    fileMenu->addAction(saveFrameAct);
     fileMenu->addMenu(saveAsMenu);
     fileMenu->addAction(printAct);
     fileMenu->addSeparator();
@@ -226,7 +232,7 @@ bool MainWindow::maybeSave()
                           QMessageBox::Save | QMessageBox::Discard
                           | QMessageBox::Cancel);
         if (ret == QMessageBox::Save) {
-            return saveFile("png");
+            return saveFrame();
         } else if (ret == QMessageBox::Cancel) {
             return false;
         }
@@ -236,20 +242,37 @@ bool MainWindow::maybeSave()
 //! [18]
 
 //! [19]
-bool MainWindow::saveFile(const QByteArray &fileFormat)
+bool MainWindow::saveFrame()  // const QByteArray &fileFormat)
 //! [19] //! [20]
 {
-    QString initialPath = QDir::currentPath() + "/untitled." + fileFormat;
+    return rotocanvas->saveFrame();
+}
 
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Save As"),
-                               initialPath,
-                               tr("%1 Files (*.%2);;All Files (*)")
-                               .arg(QString::fromLatin1(fileFormat.toUpper()))
-                               .arg(QString::fromLatin1(fileFormat)));
-    if (fileName.isEmpty()) {
-        return false;
-    } else {
-        return rotocanvas->saveImage(fileName, fileFormat.constData());
-    }
+bool MainWindow::exportSequence()
+{
+        QByteArray fileFormat("png");
+        QString initialPath = QDir::currentPath() + "untitled.png"; //"/untitled." + fileFormat;
+
+        QString fileName = QFileDialog::getSaveFileName(this, tr("Export Image Sequence (#s will be added)"),
+                                   initialPath,
+                                   tr("%1 Files (*.%2);;All Files (*)")
+                                   .arg(QString::fromLatin1(fileFormat.toUpper()))
+                                   .arg(QString::fromLatin1(fileFormat)));
+        if (fileName.isEmpty()) {
+            return false;
+        } else {
+            QFileInfo frameFI(fileName);
+            QString sequenceName=frameFI.completeBaseName(); //baseName gets name such as file from file.tar.gz, so use completeBaseName
+            int resultCount=rotocanvas->exportFrames(frameFI.dir(), sequenceName, fileFormat);//(fileName, fileFormat.constData());
+            QString msg="Exported "+QString::number(resultCount)+" frame(s).";
+            if (resultCount<1) msg="ERROR: "+msg;
+            QMessageBox msgBox;
+            msgBox.setText("Finished Exporting Image Sequence");
+            msgBox.setInformativeText(msg);
+            msgBox.setStandardButtons(QMessageBox::Ok); //msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+            msgBox.setDefaultButton(QMessageBox::Ok);
+            int thisDialogResult=msgBox.exec();
+            //if (thisDialogResult==QMessageBox::OK)
+        }
 }
 //! [20]

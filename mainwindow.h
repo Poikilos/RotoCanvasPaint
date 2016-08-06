@@ -32,7 +32,8 @@ private:
     void createActions();
     void createMenus();
     bool maybeSave();
-    bool saveFile(const QByteArray &fileFormat);
+    bool saveFrame();  // const QByteArray &fileFormat);
+    bool exportSequence();
 
     QVBoxLayout *vBoxLayout;
 
@@ -45,6 +46,7 @@ private:
     QMenu *helpMenu;
 
     QAction *openAct;
+    QAction *saveFrameAct;
     QList<QAction *> saveAsActs;
     QAction *exitAct;
     QAction *brushColorAct;
