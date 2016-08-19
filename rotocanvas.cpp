@@ -43,8 +43,14 @@ QString RotoCanvas::getSeqName(QString framePath)
 QString RotoCanvas::getSeqName(QFileInfo frameFI)
 {
     QString result;
-    QString baseName=frameFI.completeBaseName(); //baseName would get file from file.tar.gz, completeBaseName gets file.tar
+    QString baseName=frameFI.completeBaseName(); //baseName would get file from file.tar.gz or from file.myvideo0000.png, where completeBaseName gets file.tar or file.myvideo0000
     result=baseName;
+    // now remove any trailing digits to get the "sequence name":
+    int newLength=result.length();
+    while ( newLength>0 && baseName.at(newLength-1).isDigit() ) {
+        newLength--;
+    }
+    if (newLength!=result.length()) result = result.left(newLength);
     return result;
 }
 
@@ -103,6 +109,7 @@ QString RotoCanvas::getSeqPaddedFrameNumber(QFileInfo frameFI)
 {
     QString baseName=frameFI.completeBaseName();
     int digitCount=RotoCanvas::getSeqDigitCount(frameFI);
+    //qInfo()<<"getSeqPaddedFrameNumber digitCount:"<<digitCount;
     QString result=baseName.right(digitCount);
     return result;
 }
@@ -124,26 +131,26 @@ QString RotoCanvas::getLayersFolderPath(QFileInfo frameFI, int frameNumber, bool
 {
     //such as <sequenceName>/frames/<frameNumber>/layers
     QString seqName=RotoCanvas::getSeqName(frameFI);
-    qInfo() << "seqName:" << seqName; //see also qInfo,qDebug,qWarning,qCritical,qFatal
+    //qInfo() << "seqName:" << seqName; //see also qInfo,qDebug,qWarning,qCritical,qFatal
     QString seqPath=frameFI.dir().filePath(seqName);
     QDir seqDir(seqPath);
     if (createEnable) {
         if (!seqDir.exists()) frameFI.dir().mkdir(seqName);
     }
-    QString framesPath=frameFI.dir().filePath("frames");
-    qInfo()<<"framesPath:"<<framesPath;
+    QString framesPath=seqDir.filePath("frames");
+    //qInfo()<<"framesPath:"<<framesPath;
     QDir framesDir(framesPath);
     if (createEnable) {
         if (!framesDir.exists()) seqDir.mkdir("frames");
     }
     QString thisFramePath=framesDir.filePath(QString::number(frameNumber));
-    qInfo()<<"thisFramePath:"<<thisFramePath;
+    //qInfo()<<"thisFramePath:"<<thisFramePath;
     QDir thisFrameDir=QDir(thisFramePath);
     if (createEnable) {
         if (!thisFrameDir.exists()) framesDir.mkdir(QString::number(frameNumber));
     }
     QString layersPath=QDir(thisFramePath).filePath("layers");
-    qInfo()<<"layersPath:"<<layersPath;
+    //qInfo()<<"layersPath:"<<layersPath;
     QDir layersDir=QDir(layersPath);
     if (createEnable) {
         if (!layersDir.exists()) thisFrameDir.mkdir("layers");
@@ -247,10 +254,18 @@ int RotoCanvas::getSeqFrameNumber(QFileInfo frameFI)
 {
     int result=-1;
     QString resultString=RotoCanvas::getSeqPaddedFrameNumber(frameFI);
-    while (resultString.length()>0 && resultString.left(1)=="0") {
-        resultString=resultString.right(resultString.length()-1);
+    if (resultString.length()>0) {
+        int newLength=resultString.length();
+        int index=0;
+        while (index<resultString.length() && resultString.at(index)=='0') {
+            newLength--;
+            index++;
+        }
+        if (newLength<1) newLength=1;
+        resultString=resultString.right(newLength);
     }
     bool ok=false;
+    //qInfo()<<"getSeqFrameNumber resultString: "<<resultString;
     result = resultString.toInt(&ok);
     if (!ok) result=-1;
     return result;
@@ -284,7 +299,7 @@ int RotoCanvas::getSeqDigitCount(QFileInfo frameFI)
             break;
         }
     }
-    if (digitCount>0) result=baseName.left(baseName.length()-digitCount).toInt();
+    if (digitCount>0) result=digitCount; // result=baseName.left(baseName.length()-digitCount).toInt();
     return result;
 }
 
@@ -353,7 +368,7 @@ bool RotoCanvas::getIsModified()
 bool RotoCanvas::openImage(const QString &fileName)
 //! [1] //! [2]
 {
-
+    qInfo()<<"RotoCanvas::openImage...";
     QImage loadedImage;
     if (!loadedImage.load(fileName))
         return false;
@@ -367,28 +382,31 @@ bool RotoCanvas::openImage(const QString &fileName)
     //this->formatString = loadedFI.suffix();
     QSize newSize = loadedImage.size().expandedTo(size());
     //resizeImage(&loadedImage, this->outputSize);
-    resizeImage(&panelImage, newSize); //resizeImage(&)
+    resizeImage(&panelImage, newSize);  // resizeImage(&)
     fillCheckered(&panelImage);
 
-    /// Load the source frame as originalImage:
-    originalImage = QImage(loadedImage.size(),QImage::Format_ARGB32);
+    /// Load the source frame as originalImage (converting to 32-bit):
+    originalImage = QImage(loadedImage.size(), QImage::Format_ARGB32);
     originalImage.fill(qRgba(0,0,0,0));
     QPainter bgPainter(&originalImage);
-    bgPainter.drawImage(QPoint(0,0),loadedImage);//originalImage = loadedImage;
+    bgPainter.drawImage(QPoint(0,0), loadedImage);  // originalImage = loadedImage;
 
     QPainter displayPainter(&panelImage);
-
+    displayPainter.drawImage(QPoint(0,0), originalImage);
     //isModified = false;
     while (layerPtrs.length()>0) {
         RotoCanvasLayer* thisLayer=layerPtrs.takeLast();
         if (thisLayer!=nullptr) delete thisLayer;
     }
-    QString layersPath=getLayersFolderPath(getSeqFrameNumber(),false);
+    int frameNumber=getSeqFrameNumber();
+    qInfo()<<"frameNumber: "<<frameNumber;
+    QString layersPath=getLayersFolderPath(frameNumber,false);
+    qInfo()<<"layersPath: "<<layersPath;
     QDir layersDir=QDir(layersPath);
     for (int thisLayerNumber=0; thisLayerNumber<layerCount; thisLayerNumber++) {
         //QString thisLayerPath=layersDir.filePath(QString::number(thisLayerNumber)+"."+RotoCanvas::getSeqFormatString(fileName));
         int thisLayerFrameNumber=-1;
-        QString thisLayerPath=getLayerImagePathMostRecent(getSeqFrameNumber(),thisLayerNumber,&thisLayerFrameNumber);
+        QString thisLayerPath=getLayerImagePathMostRecent(frameNumber,thisLayerNumber,&thisLayerFrameNumber);
         QFileInfo thisLayerFI=QFileInfo(thisLayerPath);
         if (thisLayerPath!="" && thisLayerFI.exists()) {
             //while (thisLayerFI.exists()) {
@@ -583,6 +601,8 @@ void RotoCanvas::resizeEvent(QResizeEvent *event)
         int newWidth = qMax(width() + 128, panelImage.width());
         int newHeight = qMax(height() + 128, panelImage.height());
         resizeImage(&panelImage, QSize(newWidth, newHeight));
+        QPainter painter(&panelImage);
+        painter.drawImage(QPoint(0,0), originalImage);
         update();
     }
     QWidget::resizeEvent(event);
@@ -651,17 +671,18 @@ void RotoCanvas::drawLineTo(const QPoint &endPoint)
 
 void RotoCanvas::fillCheckered(QImage *thisImage)
 {
+    int checkerPxCount=((thisImage->width()>thisImage->height())?thisImage->width():thisImage->height()) / 200;
     if (thisImage!=nullptr) {
         //QSize newSize=thisImage->size();
         thisImage->fill(this->checkerDarkColor); //newImage.fill(qRgb(255, 255, 255));
         for (int y=0; y<thisImage->height(); y++) {
             for (int x=0; x<thisImage->width(); x++) {
                 //debug optimization: try lines instead of pixel
-                if (y%2==1) {
-                    if (x%2==1) thisImage->setPixelColor(x, y, this->checkerLightColor);
+                if ((y/checkerPxCount)%2==1) {
+                    if ((x/checkerPxCount)%2==1) thisImage->setPixelColor(x, y, this->checkerLightColor);
                 }
                 else {
-                    if ((x+1)%2==1) thisImage->setPixelColor(x, y, this->checkerLightColor);
+                    if (((x/checkerPxCount)+1)%2==1) thisImage->setPixelColor(x, y, this->checkerLightColor);
                 }
             }
         }
@@ -674,6 +695,7 @@ void RotoCanvas::fillCheckered(QImage *thisImage)
 void RotoCanvas::resizeImage(QImage *image, const QSize &newSize)
 //! [19] //! [20]
 {
+    //qInfo()<<"resizing...";
     if (image->size() == newSize)
         return;
 
@@ -683,6 +705,7 @@ void RotoCanvas::resizeImage(QImage *image, const QSize &newSize)
     QPainter painter(&newImage);
     painter.drawImage(QPoint(0, 0), *image);
     *image = newImage;
+    //qInfo()<<"done (resizing)";
 }
 
 QImage RotoCanvas::getCacheableImage(QString filePath)

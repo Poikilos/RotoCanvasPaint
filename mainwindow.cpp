@@ -47,25 +47,32 @@ void MainWindow::closeEvent(QCloseEvent *event)
 //! [2]
 
 //! [3]
-void MainWindow::open()
+void MainWindow::askOpen()
 //! [3] //! [4]
 {
     if (maybeSave()) {
-        QString path=QDir::currentPath();
+        qInfo()<<"maybeSave ok so askOpen continues...";
+        QString defaultPaths=QDir::currentPath();
         //QString tryPath="C:\\Users\\Owner\\Videos\\NTWAOG (Music Video)\\Media\\Sequence 00092 hovering\\00092a";
         QString tryPath="C:\\Users\\Owner\\Videos\\ImageSequenceExamples";
-        QDir defaultDir=QDir(tryPath);
-        if (defaultDir.exists()) path=tryPath;
+        QDir tryDir=QDir(tryPath);
+        if (tryDir.exists()) defaultPath=tryPath;
         QString fileName = QFileDialog::getOpenFileName(this,
-                                   tr("Open File"), path);
-        if (!fileName.isEmpty())
+                                   tr("Open File"), defaultPath);
+        if (!fileName.isEmpty()) {
+            qInfo()<<"opening file...";
             rotocanvas->openImage(fileName);
+            qInfo()<<"opened.";
+        }
+        else {
+            qInfo()<<"can't open since no name.";
+        }
     }
 }
 //! [4]
 
 //! [5]
-void MainWindow::save()
+void MainWindow::askSave()
 //! [5] //! [6]
 {
     QAction *action = qobject_cast<QAction *>(sender());
@@ -140,18 +147,18 @@ void MainWindow::createActions()
 {
     openAct = new QAction(tr("&Open..."), this);
     openAct->setShortcuts(QKeySequence::Open);
-    connect(openAct, SIGNAL(triggered()), this, SLOT(open()));
+    connect(openAct, SIGNAL(triggered()), this, SLOT(askOpen()));
 
     saveFrameAct = new QAction(tr("&Save..."), this);
     saveFrameAct->setShortcut(QKeySequence::Save);
-    connect(saveFrameAct, SIGNAL(triggered()), this, SLOT(save()));
+    connect(saveFrameAct, SIGNAL(triggered()), this, SLOT(askSave()));
 
     foreach (QByteArray format, QImageWriter::supportedImageFormats()) {
         QString text = tr("%1...").arg(QString(format).toUpper());
 
         QAction *action = new QAction(text, this);
         action->setData(format);
-        connect(action, SIGNAL(triggered()), this, SLOT(save()));
+        connect(action, SIGNAL(triggered()), this, SLOT(askSave()));
         saveAsActs.append(action);
     }
 

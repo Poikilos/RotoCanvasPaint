@@ -20,8 +20,8 @@ protected:
     void closeEvent(QCloseEvent *event) Q_DECL_OVERRIDE;
 
 private slots:
-    void open();
-    void save();
+    void askOpen();
+    void askSave();
     void askBrushColor();
     void askBrushOpacity();
     void askBrushRadius();
