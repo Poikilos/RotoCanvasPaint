@@ -52,7 +52,7 @@ void MainWindow::askOpen()
 {
     if (maybeSave()) {
         qInfo()<<"maybeSave ok so askOpen continues...";
-        QString defaultPaths=QDir::currentPath();
+        QString defaultPath=QDir::currentPath();
         //QString tryPath="C:\\Users\\Owner\\Videos\\NTWAOG (Music Video)\\Media\\Sequence 00092 hovering\\00092a";
         QString tryPath="C:\\Users\\Owner\\Videos\\ImageSequenceExamples";
         QDir tryDir=QDir(tryPath);
@@ -110,7 +110,7 @@ void MainWindow::askBrushRadius()
     double new_value = QInputDialog::getDouble(this, tr("RotoCanvas Paint"),
                                         tr("Select brush radius:"),
                                         rotocanvas->getBrushRadius(),
-                                        0.0, 1.0, 2, &ok);
+                                        0.0, 1000.0, 2, &ok);
     if (ok)
         rotocanvas->setBrushRadius(new_value);
 }
@@ -149,7 +149,7 @@ void MainWindow::createActions()
     openAct->setShortcuts(QKeySequence::Open);
     connect(openAct, SIGNAL(triggered()), this, SLOT(askOpen()));
 
-    saveFrameAct = new QAction(tr("&Save..."), this);
+    saveFrameAct = new QAction(tr("&Save"), this);
     saveFrameAct->setShortcut(QKeySequence::Save);
     connect(saveFrameAct, SIGNAL(triggered()), this, SLOT(askSave()));
 

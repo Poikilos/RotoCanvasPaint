@@ -15,6 +15,7 @@ Possibly, rotoscoping applications are not considered commercially viable since 
 
 ## Known Issues
 * complete first working version
+* audit & test getLayerImagePathMostRecent
 
 ## Planned Features
 * use alpha.png for reducing opacity of parts of background layer
@@ -26,7 +27,9 @@ Possibly, rotoscoping applications are not considered commercially viable since 
 
 
 ## Developer Notes
-The RotoCanvas class is modular, with hopes that it can be used by various video editing applications in the future. The recommended use of RotoCanvas in a video editing application is for applying effects (primarily manual rotoscoping) to source videos (as frame sequences) as a preprocessing step before they are trimmed or other effects are added, since rotoscoping is highly dependent on the source frame (base layer) remaining the same.  Using the RotoCanvas as a post-processing effect is possible, but accurate frame seeking must be assured somehow (such as by a frame-accurate video editing engine), and further edits to the previous layers will in some cases cause the rotoscoped parts (parts of the image edited by RotoCanvas) to no longer make sense (such as, if a lens pinch effect is added to a scene where there was a layer order error that has been rotoscoped out, instead of the error being rotoscoped out, there will be both the error and a corrected blotch that is the error's original position & shape), which in such cases would require redoing the rotoscoping.
+* The RotoCanvas class is modular, with hopes that it can be used by various video editing applications in the future. The recommended use of RotoCanvas in a video editing application is for applying effects (primarily manual rotoscoping) to source videos (as frame sequences) as a preprocessing step before they are trimmed or other effects are added, since rotoscoping is highly dependent on the source frame (base layer) remaining the same.  Using the RotoCanvas as a post-processing effect is possible, but accurate frame seeking must be assured somehow (such as by a frame-accurate video editing engine), and further edits to the previous layers will in some cases cause the rotoscoped parts (parts of the image edited by RotoCanvas) to no longer make sense (such as, if a lens pinch effect is added to a scene where there was a layer order error that has been rotoscoped out, instead of the error being rotoscoped out, there will be both the error and a corrected blotch that is the error's original position & shape), which in such cases would require redoing the rotoscoping.
+### RotoCanvas Paint Notes
+* The save method is used by both the Save and the Save As actions. The save sender is pre-programmed with the format property
 
 ### Storage Method
 Folder and file structure is as follows, where `<sequenceName>` is sequence name (such as, if mygreatvideo0000.png is first frame, `<sequenceName>` is mygreatvideo) and where the base folder (containing `<sequenceName>` folder) is the folder where the images in an image sequence are stored:

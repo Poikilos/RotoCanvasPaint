@@ -615,63 +615,83 @@ void RotoCanvas::drawLineTo(const QPoint &endPoint)
 {
     if (outputSize.width()>0&&outputSize.height()>0) {
         if (selectedLayerIndex>=0) {
+            //qInfo()<<"Draw line on layer "<<selectedLayerIndex<<"...";
             QString layersPath=getLayersFolderPath(getSeqFrameNumber(),true);
             QDir layersDir=QDir(layersPath);
             int thisLayerNumber=selectedLayerIndex;
             QString thisLayerPath=layersDir.filePath(QString::number(thisLayerNumber)+"."+RotoCanvas::getSeqFormatString(*this->loadedFI));
             QFileInfo thisLayerFI=QFileInfo(thisLayerPath);
-
-            while (layerPtrs.length()<selectedLayerIndex+1) {
+            //qInfo()<<"Layer list length is "<<layerPtrs.length();
+            while (this->layerPtrs.length()<selectedLayerIndex+1) {
+                layerPtrs.append((RotoCanvasLayer*)nullptr);
+                //qInfo()<<"Had to add blank layer (now list length is "<<layerPtrs.length()<<")";
+            }
+            if (this->layerPtrs[selectedLayerIndex]==nullptr) {
                 RotoCanvasLayer* newLayer;
                 newLayer = new RotoCanvasLayer;
                 newLayer->frameNumber=getSeqFrameNumber();
                 newLayer->image=QImage(outputSize, QImage::Format_ARGB32);
-                layerPtrs.append(newLayer);
+                this->layerPtrs[selectedLayerIndex]=newLayer;  // layerPtrs.append(newLayer);
             }
-            QPainter painter(&panelImage);
-            int rad = (brushRadius) + 2;
-            QRect rectBrush = QRect(lastPoint, endPoint).normalized()
-                    .adjusted(-rad, -rad, +rad, +rad);
-            //QPen pen;
-            //pen.setStyle(Qt::SolidLine);
-            //pen.setWidth(1);
-            //pen.setColor(brushColor);
-            painter.setPen(brushColor);
-            QColor thisColor;
+            //qInfo()<<"this->layerPtrs[selectedLayerIndex]: "<<((this->layerPtrs[selectedLayerIndex]!=nullptr)?"<non-null>":"nullptr");
+            if (this->layerPtrs[selectedLayerIndex]!=nullptr) {
+                //qInfo()<<"this->layerPtrs[selectedLayerIndex].image.isNull(): "<<((this->layerPtrs[selectedLayerIndex]->image.isNull())?"Null":"non-Null");
+                QPainter painter(&this->layerPtrs[selectedLayerIndex]->image);
+                //QPainter painter(&panelImage);
+                int rad = (brushRadius) + 2;
+                QRect rectBrush = QRect(lastPoint, endPoint).normalized()
+                        .adjusted(-rad, -rad, +rad, +rad);
+                //QPen pen;
+                //pen.setStyle(Qt::SolidLine);
+                //pen.setWidth(1);
+                //pen.setColor(brushColor);
+                QColor thisColor;
 
-            QPoint thisPoint;
-            brushColor.setAlpha(this->brushOpacity);
-            for (int y=rectBrush.top(); y<rectBrush.bottom(); y++) {
-                for (int x=rectBrush.left(); x<rectBrush.right(); x++) {
-                    //todo: distance from line instead of points
-                    if (x>=0 && y>=0) {
-                        //thisPoint.setX(x);
-                        //thisPoint.setY(y);
-                        double this_distance = sqrt(pow(endPoint.x()-x, 2) + pow(endPoint.y()-y, 2));
-                        double fade_length = brushRadius-brushHardRadius;
-                        double this_opacity = (fade_length>0.0) ? ((brushRadius-this_distance) / fade_length) : ((brushRadius-this_distance) / 0.000001) ;
-                        if (this_opacity>1.0) this_opacity=1.0;
-                        else if (this_opacity<0.0) this_opacity=0.0;
-                        if (selectedLayerIndex>=0&&layerPtrs[selectedLayerIndex]!=nullptr) {
-                            RotoCanvas::drawAlphaPix(&panelImage, x, y, this->brushColor, this_opacity);
-                            RotoCanvas::drawAlphaPix(&layerPtrs[selectedLayerIndex]->image, x, y, this->brushColor, this_opacity);
-                            layerPtrs[selectedLayerIndex]->isModified=true;
+                QPoint thisPoint;
+                //qInfo()<<"this->brushOpacity: "<<this->brushOpacity;
+                //painter.setPen(brushColor);
+                //brushColor.setAlpha(this->brushOpacity);  // sets to GRAY
+                if (this->brushOpacity<0.0) this->brushOpacity=0.0;
+                else if (this->brushOpacity>255.0) this->brushOpacity=255.0;
+                int opacity_int = (int)(this->brushOpacity*255.0+.5); //+.5 for rounding
+                brushColor = QColor(brushColor.red(),brushColor.green(),brushColor.blue(),opacity_int);
+                //qInfo()<<"brushColor r,g,b,a: "<< brushColor.red()<<","<<brushColor.green()<<","<<brushColor.blue()<<","<<brushColor.alpha();
+                for (int y=rectBrush.top(); y<rectBrush.bottom(); y++) {
+                    for (int x=rectBrush.left(); x<rectBrush.right(); x++) {
+                        //todo: distance from line instead of points
+                        if (x>=0 && y>=0) {
+                            //thisPoint.setX(x);
+                            //thisPoint.setY(y);
+                            double this_distance = sqrt(pow(endPoint.x()-x, 2) + pow(endPoint.y()-y, 2));
+                            double fade_length = brushRadius-brushHardRadius;
+                            double this_opacity = (fade_length>0.0) ? ((brushRadius-this_distance) / fade_length) : ((brushRadius-this_distance) / 0.000001) ;
+                            if (this_opacity>1.0) this_opacity=1.0;
+                            else if (this_opacity<0.0) this_opacity=0.0;
+                            if (selectedLayerIndex>=0&&layerPtrs[selectedLayerIndex]!=nullptr) {
+                                RotoCanvas::drawAlphaPix(&panelImage, x, y, this->brushColor, this_opacity);
+                                RotoCanvas::drawAlphaPix(&layerPtrs[selectedLayerIndex]->image, x, y, this->brushColor, this_opacity);
+                                layerPtrs[selectedLayerIndex]->isModified=true;
+                            }
                         }
                     }
                 }
+                //isModified = true;
+                update(rectBrush);
+                lastPoint = endPoint;
             }
-            //isModified = true;
-            update(rectBrush);
-            lastPoint = endPoint;
+            else {
+                qInfo()<<"image "<<selectedLayerIndex<<" on layer list is null";
+            }
         }
-        //else no layer is selected
+        else qInfo()<<"no layer is selected";
     }
-    //else a dimension is 0--no video loaded
+    else qInfo()<<"a dimension is 0--no video loaded";
 }
 
 void RotoCanvas::fillCheckered(QImage *thisImage)
 {
     int checkerPxCount=((thisImage->width()>thisImage->height())?thisImage->width():thisImage->height()) / 200;
+    if (checkerPxCount<8) checkerPxCount=8;
     if (thisImage!=nullptr) {
         //QSize newSize=thisImage->size();
         thisImage->fill(this->checkerDarkColor); //newImage.fill(qRgb(255, 255, 255));
