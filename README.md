@@ -21,7 +21,15 @@ Possibly, rotoscoping applications are not considered commercially viable since 
 * use alpha.png for reducing opacity of parts of background layer
 * allow blocker layer type (make an animated object that seems to "undo" previous edits, such as to reveal parts of characters under the effect, without permanently erasing any part of the effect)
 * use layer cache (purpose for unused variable cacheMaxMB)
-
+* Keyboard controls for fast operation:
+	Ctrl Scrollwheel: zoom
+	Shift Alt Scrollwheel: brush hardness
+	Shift Scrollwheel: brush size
+* Add exception handling in appropriate situations:
+catch(std::exception& e) {
+      qCritical() << "Exception thrown:" << e.what();
+    }
+	
 ## Low-priority Known Issues
 * drawLineTo (this is used for painting) should draw line instead of last point
 

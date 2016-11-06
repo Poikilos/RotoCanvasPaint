@@ -21,7 +21,7 @@ protected:
 
 private slots:
     void askOpen();
-    void askSave();
+    void save();
     void askBrushColor();
     void askBrushOpacity();
     void askBrushRadius();

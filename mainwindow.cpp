@@ -72,7 +72,7 @@ void MainWindow::askOpen()
 //! [4]
 
 //! [5]
-void MainWindow::askSave()
+void MainWindow::save()
 //! [5] //! [6]
 {
     QAction *action = qobject_cast<QAction *>(sender());
@@ -151,14 +151,14 @@ void MainWindow::createActions()
 
     saveFrameAct = new QAction(tr("&Save"), this);
     saveFrameAct->setShortcut(QKeySequence::Save);
-    connect(saveFrameAct, SIGNAL(triggered()), this, SLOT(askSave()));
+    connect(saveFrameAct, SIGNAL(triggered()), this, SLOT(save()));
 
     foreach (QByteArray format, QImageWriter::supportedImageFormats()) {
         QString text = tr("%1...").arg(QString(format).toUpper());
 
         QAction *action = new QAction(text, this);
         action->setData(format);
-        connect(action, SIGNAL(triggered()), this, SLOT(askSave()));
+        connect(action, SIGNAL(triggered()), this, SLOT(save()));
         saveAsActs.append(action);
     }
 
