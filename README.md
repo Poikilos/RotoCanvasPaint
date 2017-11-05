@@ -18,6 +18,7 @@ Possibly, rotoscoping applications are not considered commercially viable since 
 * audit & test getLayerImagePathMostRecent
 
 ## Planned Features
+* add markers to media OR timeline, separately (media markers are also on timeline behave differently: ghosted until media is selected, has filmstrip icon if from a clip; reversed if video is reversed, changed placement if speed is changed, etc)
 * use alpha.png for reducing opacity of parts of background layer
 * allow blocker layer type (make an animated object that seems to "undo" previous edits, such as to reveal parts of characters under the effect, without permanently erasing any part of the effect)
 * use layer cache (purpose for unused variable cacheMaxMB)
