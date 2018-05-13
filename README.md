@@ -196,5 +196,40 @@ REM C:\Users\Jakeg7505\Documents\Projects\IntegratorEduImport\bin\MPlayer\mencod
 * extract and compress sound:
   E:\Progs\Video\gui4ffmpeg\ffmpeg -i "$vidbasename.mp4" -vn -ar 44100 -ac 2 -ab 192 -f mp3 "$vidbasename-audio.mp3"
 
-* Manipulate video:
+* extract from dvd losslessly:
+```bash
+#ffmpeg -i concat:'VTS_01_1.VOB|VTS_01_2.VOB|VTS_01_3.VOB|VTS_01_4.VOB|VTS_01_5.VOB|VTS_01_6.VOB|VTS_01_7.VOB|VTS_01_8.VOB|VTS_01_9.VOB' -c copy $dest_path/Hi-8-to-DVD-via-Sharp.mpg
+#the commands below supposedly also work
+#ffmpeg -i 'concat:VTS_01_1.VOB|VTS_01_2.VOB|VTS_01_3.VOB|VTS_01_4.VOB|VTS_01_5.VOB|VTS_01_6.VOB|VTS_01_7.VOB|VTS_01_8.VOB|VTS_01_9.VOB' -c copy $dest_path/Hi-8-to-DVD-via-Sharp.mpg
+#ffmpeg -i VTS_01_1.VOB -i VTS_01_2.VOB -i VTS_01_3.VOB -i VTS_01_4.VOB -i VTS_01_5.VOB -i VTS_01_6.VOB -i VTS_01_7.VOB -i VTS_01_8.VOB -i VTS_01_9.VOB -c copy $dest_path/Hi-8-to-DVD-via-Sharp.mpg
+
+#The commands above produce out-of-order errors due to timestamps starting at 0 at each file
+#so see https://stackoverflow.com/questions/31691943/ffmpeg-concat-poduces-dts-out-of-order-errors:
+#ffmpeg -i concat:'VTS_01_1.VOB|VTS_01_2.VOB|VTS_01_3.VOB|VTS_01_4.VOB|VTS_01_5.VOB|VTS_01_6.VOB|VTS_01_7.VOB|VTS_01_8.VOB|VTS_01_9.VOB' -c:v copy -c:a copy $dest_path/Hi-8-to-DVD-via-Sharp.mpg
+
+dest_path=$HOME/Videos/OldFHC,The2017Repair
+vid_name=OldFHC,The3a
+concat_list=concat.txt
+cd /run/media/$USER
+cd DVD*
+cd VIDEO_TS
+#NOTE: if extension is mpg, warning is shown: ac3 in MPEG-1 system streams is not widely supported, consider using the vob or the dvd muxer to force a MPEG-2 program stream. 
+echo "file `pwd`/VTS_01_1.VOB" > $dest_path/$concat_list
+echo "file `pwd`/VTS_01_2.VOB" >> $dest_path/$concat_list
+echo "file `pwd`/VTS_01_3.VOB" >> $dest_path/$concat_list
+echo "file `pwd`/VTS_01_4.VOB" >> $dest_path/$concat_list
+echo "file `pwd`/VTS_01_5.VOB" >> $dest_path/$concat_list
+echo "file `pwd`/VTS_01_6.VOB" >> $dest_path/$concat_list
+echo "file `pwd`/VTS_01_7.VOB" >> $dest_path/$concat_list
+echo "file `pwd`/VTS_01_8.VOB" >> $dest_path/$concat_list
+echo "file `pwd`/VTS_01_9.VOB" >> $dest_path/$concat_list
+#not sure how to use -f mpegps in the following line but that may help according to https://lists.libav.org/pipermail/libav-bugs/2015-September/004286.html
+ffmpeg -f concat -safe 0 -i $dest_path/$concat_list -c copy -fflags +genpts -f dvd $dest_path/$vid_name.mpg
+#-safe 0 is needed if using absolute paths (however, relative paths are relative to txt file so that may be difficult/impossible if source is readonly)
+#see also https://superuser.com/questions/1150276/trim-video-and-concatenate-using-ffmpeg-getting-non-monotonous-dts-in-output
+#ffmpeg -f concat -i $concat_list -c copy output.MTS
+#where mylist must have lines like "file filename.MTS" (must have the word 'file')
+```
+
+* Edit video:
   * Split file i.e. ffmpeg -vcodec copy -ss 00:01:00 -t 00:03:00 -i infile.mpg outfile.mpg
