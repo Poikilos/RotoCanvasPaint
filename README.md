@@ -207,28 +207,57 @@ REM C:\Users\Jakeg7505\Documents\Projects\IntegratorEduImport\bin\MPlayer\mencod
 #so see https://stackoverflow.com/questions/31691943/ffmpeg-concat-poduces-dts-out-of-order-errors:
 #ffmpeg -i concat:'VTS_01_1.VOB|VTS_01_2.VOB|VTS_01_3.VOB|VTS_01_4.VOB|VTS_01_5.VOB|VTS_01_6.VOB|VTS_01_7.VOB|VTS_01_8.VOB|VTS_01_9.VOB' -c:v copy -c:a copy $dest_path/Hi-8-to-DVD-via-Sharp.mpg
 
-dest_path=$HOME/Videos/OldFHC,The2017Repair
+dest_path=$HOME/Videos/OldFHC,The2017Repair/Media
 vid_name=OldFHC,The3a
 concat_list=concat.txt
 cd /run/media/$USER
 cd DVD*
 cd VIDEO_TS
 #NOTE: if extension is mpg, warning is shown: ac3 in MPEG-1 system streams is not widely supported, consider using the vob or the dvd muxer to force a MPEG-2 program stream. 
-echo "file `pwd`/VTS_01_1.VOB" > $dest_path/$concat_list
-echo "file `pwd`/VTS_01_2.VOB" >> $dest_path/$concat_list
-echo "file `pwd`/VTS_01_3.VOB" >> $dest_path/$concat_list
-echo "file `pwd`/VTS_01_4.VOB" >> $dest_path/$concat_list
-echo "file `pwd`/VTS_01_5.VOB" >> $dest_path/$concat_list
-echo "file `pwd`/VTS_01_6.VOB" >> $dest_path/$concat_list
-echo "file `pwd`/VTS_01_7.VOB" >> $dest_path/$concat_list
-echo "file `pwd`/VTS_01_8.VOB" >> $dest_path/$concat_list
-echo "file `pwd`/VTS_01_9.VOB" >> $dest_path/$concat_list
+#echo "file `pwd`/VTS_01_1.VOB" > $dest_path/$concat_list
+#echo "file `pwd`/VTS_01_2.VOB" >> $dest_path/$concat_list
+#echo "file `pwd`/VTS_01_3.VOB" >> $dest_path/$concat_list
+#echo "file `pwd`/VTS_01_4.VOB" >> $dest_path/$concat_list
+#echo "file `pwd`/VTS_01_5.VOB" >> $dest_path/$concat_list
+#echo "file `pwd`/VTS_01_6.VOB" >> $dest_path/$concat_list
+#echo "file `pwd`/VTS_01_7.VOB" >> $dest_path/$concat_list
+#echo "file `pwd`/VTS_01_8.VOB" >> $dest_path/$concat_list
+#echo "file `pwd`/VTS_01_9.VOB" >> $dest_path/$concat_list
+#echo "file VTS_01_1.VOB" > $dest_path/$concat_list
+#echo "file VTS_01_2.VOB" >> $dest_path/$concat_list
+#echo "file VTS_01_3.VOB" >> $dest_path/$concat_list
+#echo "file VTS_01_4.VOB" >> $dest_path/$concat_list
+#echo "file VTS_01_5.VOB" >> $dest_path/$concat_list
+#echo "file VTS_01_6.VOB" >> $dest_path/$concat_list
+#echo "file VTS_01_7.VOB" >> $dest_path/$concat_list
+#echo "file VTS_01_8.VOB" >> $dest_path/$concat_list
+#echo "file VTS_01_9.VOB" >> $dest_path/$concat_list
+
+#ffmpeg -i VTS_01_1.VOB -c copy -f dvd $dest_path/$vid_name-1of9.mpg
+#ffmpeg -i VTS_01_2.VOB -c copy -f dvd $dest_path/$vid_name-2of9.mpg
+#ffmpeg -i VTS_01_3.VOB -c copy -f dvd $dest_path/$vid_name-3of9.mpg
+#ffmpeg -i VTS_01_4.VOB -c copy -f dvd $dest_path/$vid_name-4of9.mpg
+#ffmpeg -i VTS_01_5.VOB -c copy -f dvd $dest_path/$vid_name-5of9.mpg
+#ffmpeg -i VTS_01_6.VOB -c copy -f dvd $dest_path/$vid_name-6of9.mpg
+#ffmpeg -i VTS_01_7.VOB -c copy -f dvd $dest_path/$vid_name-7of9.mpg
+#ffmpeg -i VTS_01_8.VOB -c copy -f dvd $dest_path/$vid_name-8of9.mpg
+#ffmpeg -i VTS_01_9.VOB -c copy -f dvd $dest_path/$vid_name-9of9.mpg
 #not sure how to use -f mpegps in the following line but that may help according to https://lists.libav.org/pipermail/libav-bugs/2015-September/004286.html
-ffmpeg -f concat -safe 0 -i $dest_path/$concat_list -c copy -fflags +genpts -f dvd $dest_path/$vid_name.mpg
+#ffmpeg -f concat -safe 0 -i $dest_path/$concat_list -c copy -fflags +genpts -f dvd $dest_path/$vid_name.mpg
 #-safe 0 is needed if using absolute paths (however, relative paths are relative to txt file so that may be difficult/impossible if source is readonly)
 #see also https://superuser.com/questions/1150276/trim-video-and-concatenate-using-ffmpeg-getting-non-monotonous-dts-in-output
 #ffmpeg -f concat -i $concat_list -c copy output.MTS
 #where mylist must have lines like "file filename.MTS" (must have the word 'file')
+#above results in faulty timecodes--file won't play back and doesn't have correct length, so...
+#see https://wiki.archlinux.org/index.php/dvdbackup#Ripping_the_DVD:
+cat VTS_01_*.VOB > $dest_path/$vid_name.VOB
+#-y: overwrite
+#(added -f dvd though to avoid MPEG-1 and therefore missing AC3 audio)
+ffmpeg -y -i $dest_path/$vid_name.VOB -codec:v copy -codec:a copy -f dvd $dest_path/$vid_name.mpeg
+#or see https://www.linuxquestions.org/questions/linux-software-2/ffmpeg-trying-to-demux-vob-subtitles-show-up-in-video-stream-785500/:
+#mencoder $dest_path/$vid_name.VOB -ovc copy -of rawvideo -nosound -o $dest_path/$vid_name-via-mencoder.mpeg
+#or see https://video.stackexchange.com/questions/3187/fix-timecode-in-merged-vobs:
+#avconv -i $dest_path/$vid_name.VOB -vf 'setpts=PTS-STARTPTS' -c:a copy -c:v copy $dest_path/$vid_name-repaired-by-mencoder.vob
 ```
 
 * Edit video:
