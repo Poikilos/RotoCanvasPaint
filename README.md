@@ -24,9 +24,9 @@ Possibly, rotoscoping applications are not considered commercially viable since 
 * allow blocker layer type (make an animated object that seems to "undo" previous edits, such as to reveal parts of characters under the effect, without permanently erasing any part of the effect)
 * use layer cache (purpose for unused variable cacheMaxMB)
 * Keyboard controls for fast operation:
-	Ctrl Scrollwheel: zoom
-	Shift Alt Scrollwheel: brush hardness
-	Shift Scrollwheel: brush size
+  * Ctrl Scrollwheel: zoom
+  * Shift Alt Scrollwheel: brush hardness
+  * Shift Scrollwheel: brush size
 * Add exception handling in appropriate situations:
 ```
 catch(std::exception& e) {
@@ -92,6 +92,7 @@ Folder and file structure is as follows, where `<sequenceName>` is sequence name
 				<layerNumber>.yml [not yet implemented]
 ```
 * an older considered method:
+```
   Storage Format
   *.rotocanvas folder with L folder under it (Layers folder) where * is base name of sequence (excluding sequential numbering)
 	folder for each keyframe containing layer files (whether hand-painted movement frame or actual interpolated keyframe)
@@ -106,6 +107,7 @@ Folder and file structure is as follows, where `<sequenceName>` is sequence name
 			interpolated (position[and rotation & scale eventually] interpolated until next)
 		interpolation_type:  # can be:
 			linear
+```
 
 ## Credits
 * created by expertmm (see also LICENSE)
@@ -134,10 +136,11 @@ Folder and file structure is as follows, where `<sequenceName>` is sequence name
 * convert video to image sequence:
   E:\Progs\Video\gui4ffmpeg\ffmpeg -i VideoFile.m2v Forensics1a%d.png
 * convert image sequence to video:
+```
   * Tried with image sequence in folder: D:\Videos\Projects\Rebel Assault IX\RAIX2b\Scene07 (Lightsaber Duel)\forcegrab\2b4 (2013 3D Hilt flying away and back added)\
   * E:\Progs\Video\gui4ffmpeg\ffmpeg -r 29.97 -i RAIX2b4-scene-lightsaberduel-shot-forcegrab%04d.png -sameq -r 29.97 output.mp4
     * #-r forces frame rate to same so no frames are skipped (default is 25 fps, so, for example, converting to 24fps results in 1 lost per second)
-	* [failed]E:\Progs\Video\gui4ffmpeg\ffmpeg -f image2 -i RAIX2b4-scene-lightsaberduel-shot-forcegrab%04d.png VideoFile.mpg
+	[failed]E:\Progs\Video\gui4ffmpeg\ffmpeg -f image2 -i RAIX2b4-scene-lightsaberduel-shot-forcegrab%04d.png VideoFile.mpg
 		#NOTE: only failed since "truncated or corrupted" input error occurred, due to using %d when %04d was required (for 4-digit 0-padded frame numbering)
 	[failed]E:\Progs\Video\gui4ffmpeg\ffmpeg -f png -i RAIX2b4-scene-lightsaberduel-shot-forcegrab%04d.png input -acodec aac -ab 128kb -vcodec mpeg4 -b 1200kb -mbd 2 -flags +4mv+trell -aic 2 -cmp 2 -subcmp 2 -title X final_video.mp4
 		#NOTE: only failed since "truncated or corrupted" input error occurred, due to using %d when %04d was required (for 4-digit 0-padded frame numbering)
@@ -149,53 +152,57 @@ Folder and file structure is as follows, where `<sequenceName>` is sequence name
 	E:\Progs\Video\gui4ffmpeg\ffmpeg -r 29.97 -f image2 -i RAIX2b4-scene-lightsaberduel-shot-forcegrab%04d.png -r 29.97 -acodec aac -ab 128k -vcodec mpeg4 -b 1200k -mbd 2 -flags +mv4+aic -trellis 1 -cmp 2 -subcmp 2 -s 320x180 -metadata title=X output-ipod.mp4
 	or for YouTube:
 	[failed]E:\Progs\Video\gui4ffmpeg\ffmpeg -r 30 -i RAIX2b4-scene-lightsaberduel-shot-forcegrab%04d.png -s:v 1280x720 -c:v libx264 -profile:v high -crf 23 -pix_fmt yuv420p -r 30 output-YouTube.mp4
+```
 * convert to m2ts (from IntegratorEduImport):
 (see also "Selecting codecs and container formats." mplayer.hu. <http://www.mplayerhq.hu/DOCS/HTML/en/menc-feat-selecting-codec.html>. Oct 11, 2012.)
+```
 REM Convert to m2ts (tried using mencoder):
-REM mencoder -of help doesn't list mts, only mpeg (MPEG-1&MPEG-2 PS according to mplayerhq.hu
-), xvid (MPEG-4 ASP), and x264 (MPEG-4 AVC)
-REM lavf means that you then specify a libavformat container -- still only has mpg (MPEG-1&MPEG-2 PS according to mplayerhq.hu
-) & mp4
+REM mencoder -of help doesn't list mts, only mpeg (MPEG-1&MPEG-2 PS according to mplayerhq.hu), xvid (MPEG-4 ASP), and x264 (MPEG-4 AVC)
+REM lavf means that you then specify a libavformat container -- still only has mpg (MPEG-1&MPEG-2 PS according to mplayerhq.hu) & mp4
 REM mencoder was originally only meant for AVI so resulting file should be tested, according to mplayerhq.hu
 REM C:\Users\Jakeg7505\Documents\Projects\IntegratorEduImport\bin\MPlayer\mencoder.exe E:\Backup-school\00394.mts -vf scale=1280:720 -oac copy -fps 60 -ofps 30 -o c:\Users\Jakeg7505\Documents\1080-to-720-00394.m2ts
 REM C:\Users\Jakeg7505\Documents\Projects\IntegratorEduImport\bin\MPlayer\mencoder.exe E:\Backup-school\00394.mts -s hd720 -oac copy -fps 60 -ofps 30 -o c:\Users\Jakeg7505\Documents\1080-to-720-00394.m2ts
+```
 * ffmpeg convert h.264 avi to mp4 container for sony
   "E:\Program Files\WinFF\ffmpeg.exe" -i "Logo4 Animation A 1b.avi" -acodec libfaac -b:a 128k -vcodec mpeg4 -b:v 1200k -flags +aic+mv4 "Logo4 Animation A 1b.mp4"
-
   * Convert to m2ts (using ffmpeg):
-  
     * -y overwrite output files without asking
     * -loglevel 1  is OK too
     * -r doesn't seem to work before input (for forcing framerate)
     * -qscale is deprecated -- says to use -q:v (quantize video) or -q:a (quantize audio) instead 
-    * -async <samples per second> to resync audio is deprecated, use asyncts instead
+    * `-async <samples per second> to resync audio is deprecated, use asyncts instead`
 
     * "C:\Program Files (x86)\WinFF\ffmpeg.exe" -y -r 60 -i "00394.mts" -r 30 -aspect 16:9 -qscale 4 -vcodec mpeg2video -acodec copy -f mpegts "c:\Users\Jakeg7505\Documents\1080-to-720-00394.m2ts"
 
     * "C:\Program Files (x86)\WinFF\ffmpeg.exe" -y -i "00394.mts" -r 30 -s 1280x720 -qscale 4 -vcodec mpeg2video -acodec copy -f mpegts "c:\Users\Jakeg7505\Documents\1080-to-720-00394.m2ts"
   
 
-* "C:\Program Files (x86)\WinFF\ffmpeg.exe" -y -i "00394.mts" -r 30 -s 1280x720 -q:v 4 -vcodec mpeg2video -acodec copy -f mpegts "c:\Users\Jakeg7505\Documents\1080-to-720-00394.m2ts"
+* `"C:\Program Files (x86)\WinFF\ffmpeg.exe" -y -i "00394.mts" -r 30 -s 1280x720 -q:v 4 -vcodec mpeg2video -acodec copy -f mpegts "c:\Users\Jakeg7505\Documents\1080-to-720-00394.m2ts"`
 
 
 * dump sound losslessly:
-	PART OF SOUND e.g. 1st minute E:\Progs\Video\gui4ffmpeg\ffmpeg -vcodec copy -acodec copy -s 00:00:00 -t 00:01:00 -i in.flv intro-only1a_480p.flv
-	If multiple audio streams or audio not detected, first get Audio ID: ffmpeg -i "$filename"
+```
+	#PART OF SOUND e.g. 1st minute E:\Progs\Video\gui4ffmpeg\ffmpeg -vcodec copy -acodec copy -s 00:00:00 -t 00:01:00 -i in.flv intro-only1a_480p.flv
+	#If multiple audio streams or audio not detected, first get Audio ID: ffmpeg -i "$filename"
 	E:\Progs\Video\gui4ffmpeg\ffmpeg -i "$vidbasename.mp4" -vn -f wav "$vidbasename-audio.wav"
 	E:\Progs\Video\gui4ffmpeg\ffmpeg -i "$vidbasename.mp4" -vn -acodec copy "$vidbasename-audio.m4a"
 	E:\Progs\Video\gui4ffmpeg\ffmpeg -i "$vidbasename.flv" -vn -acodec copy "$vidbasename-audio.mp3"
-	   - where .mp3 a compatible container e.g.:
-			ffmpeg -i "$vidbasename.ogg" -acodec copy "$vidbasename.mkv"
-	some people do:
+	#   - where .mp3 a compatible container e.g.:
+	#		ffmpeg -i "$vidbasename.ogg" -acodec copy "$vidbasename.mkv"
+	#some people do:
 	E:\Progs\Video\gui4ffmpeg\ffmpeg -i video.mpg -acodec copy audio.ac3
 	E:\Progs\Video\megui\tools\mencoder\mplayer x.mpg -dumpaudio -dumpfile sound.ac3
 	E:\Progs\Video\megui\tools\mencoder\mplayer source_file.vob -aid 129 -dumpaudio -dumpfile sound.ac3
-		- where 129 is the audio id
+	#	- where 129 is the audio id
+```
 * extract and recompress incompatible ac3 or other audio stream (allow burning video+audio with Sony DVD Architect; works with wave file input too):
-	E:\Progs\Video\gui4ffmpeg\ffmpeg -i video.mpg -ab 224k -ar 48000 -ac 2 -acodec ac3 video.ac3
+```
+  E:\Progs\Video\gui4ffmpeg\ffmpeg -i video.mpg -ab 224k -ar 48000 -ac 2 -acodec ac3 video.ac3
+```
 * extract and compress sound:
+```
   E:\Progs\Video\gui4ffmpeg\ffmpeg -i "$vidbasename.mp4" -vn -ar 44100 -ac 2 -ab 192 -f mp3 "$vidbasename-audio.mp3"
-
+```
 * extract from dvd losslessly:
 ```bash
 #ffmpeg -i concat:'VTS_01_1.VOB|VTS_01_2.VOB|VTS_01_3.VOB|VTS_01_4.VOB|VTS_01_5.VOB|VTS_01_6.VOB|VTS_01_7.VOB|VTS_01_8.VOB|VTS_01_9.VOB' -c copy $dest_path/Hi-8-to-DVD-via-Sharp.mpg
