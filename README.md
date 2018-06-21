@@ -34,6 +34,7 @@ catch(std::exception& e) {
     }
 ```
 * Change Speed (optional frame blending to create "in-between" frames for slow, merged frames for fast!)
+* (~) Effects (see <http://randombio.com/linuxsetup141.html>)
 * (~) Load VirtualDub plugins, possibly as cscript using their sourcecode
 * (~) Detect Light Sabers
   * auto masking behind objects
