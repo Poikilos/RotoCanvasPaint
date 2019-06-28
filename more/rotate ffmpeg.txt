@@ -1,0 +1,6 @@
+REM 0 = 90CounterCLockwise and Vertical Flip (default)
+REM 1 = 90Clockwise
+REM 2 = 90CounterClockwise
+REM 3 = 90Clockwise and Vertical Flip
+cd "C:\Users\Owner\Videos\2015-11-13 Day By Day lipsync\Media"
+C:\PortableApps\Video\ffmpeg\bin\ffmpeg.exe -i "Day By Day lipsync 2015-11-13 LPhone-1113151734_hyperlapse_1x_std (original 23.976fps).mp4" -vf "transpose=2" "Day By Day lipsync 2015-11-13 LPhone-1113151734_hyperlapse_1x_std rot -90.mp4"

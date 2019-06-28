@@ -1,0 +1,8 @@
+destination_fullpath=$HOME/temp2
+
+if [ ! -d "$destination_fullpath" ]; then
+mkdir "$destination_fullpath"
+fi
+
+#next line requires imagemagick
+mogrify -path "$destination_fullpath" -geometry x1080 *.JPG

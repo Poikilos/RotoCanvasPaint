@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<meta name="keywords" content=" Drop frame/Non-drop frame, doom9,video,dvd,conversion,mpeg-2,mpeg-4,divx,xvid,avisynth" />
+	<meta name="description" content="[Archive]  Drop frame/Non-drop frame Subtitles" />
+	
+	<title> Drop frame/Non-drop frame [Archive]  - Doom9's Forum</title>
+	<link rel="stylesheet" type="text/css" href="http://forum.doom9.org/archive/archive.css" />
+</head>
+<body>
+<div class="pagebody">
+<div id="navbar"><a href="http://forum.doom9.org/archive/index.php">Doom9's Forum</a> &gt; <a href="http://forum.doom9.org/archive/index.php/f-3.html">General</a> &gt; <a href="http://forum.doom9.org/archive/index.php/f-12.html">Subtitles</a> &gt;  Drop frame/Non-drop frame</div>
+<hr />
+<div class="pda"><a href="http://forum.doom9.org/archive/index.php/t-73400.html?pda=1" rel="nofollow">PDA</a></div>
+<p class="largefont">View Full Version : <a href="http://forum.doom9.org/showthread.php?t=73400">Drop frame/Non-drop frame</a></p>
+<hr />
+
+<div class="post"><div class="posttop"><div class="username">atropos</div><div class="date">27th March 2004, 01:09</div></div><div class="posttext">Could someone explain in more depth about drop frame/no drop frame subtitles  and when and how to apply them correctly.<br />
+<br />
+Thanks,<br />
+atropos</div></div><hr />
+
+
+<div class="post"><div class="posttop"><div class="username">Jackinbox</div><div class="date">20th April 2004, 19:51</div></div><div class="posttext">I would love to know about this also.  I have a DVD with subs not in sync, made from DVD-Lab Pro.  They start out fine and gradually get worse and worse until the end of the film where they are off by about 5 secs or so.  I believe this is &quot;Drop Frame&quot; related but I have no idea how to rectify this problem.</div></div><hr />
+
+
+<div class="post"><div class="posttop"><div class="username">Dimmer</div><div class="date">20th April 2004, 20:43</div></div><div class="posttext">Originally posted by Jackinbox <br />
+I would love to know about this also.  I have a DVD with subs not in sync, made from DVD-Lab Pro.  They start out fine and gradually get worse and worse until the end of the film where they are off by about 5 secs or so.  I believe this is &quot;Drop Frame&quot; related but I have no idea how to rectify this problem.Well, I know how to fix the problem in general, not specifically in DVD-Lab. In whatever script used to store subtitle timestamps (sst, srt, ssa, and so on), you have to adjust the timing to make them run faster or slower by 0.1% (difference between 29.97fps and 30 fps) depending on whether the subtitles are early or late. However, it would be great if someone could give a proper scientific explanation regarding this issue.</div></div><hr />
+
+
+<div class="post"><div class="posttop"><div class="username">McPoodle</div><div class="date">23rd April 2004, 00:49</div></div><div class="posttext">I can answer the original question, although I don't know much about DVDLab Pro and whatever subtitle format it uses (SubViewer 2?).<br />
+<br />
+NTSC video runs at a rate of 29.97 frames per second (the exact rate is 30 divided by 1.001, or 29.97002997002997002997002997...).  The odd number was necessary so that old North American TV's would never run into the problem of a frame rate precisely in or out of sync with the frequency of the AC current (60 MHz), if I remember correctly.<br />
+<br />
+The early mechanical devices used to record videotape could not handle fractional framerates, so the solution was to run the clock at 30 frames per second (too fast), and then drop certain frames from the clock to &quot;catch up&quot;.  The rule was to drop the first two frames of every minute that was not evenly divisible by 10 (so 00:05:59;29 would be followed by 00:06:00;02, but 00:19:59;29 would be followed by 00:20:00;00).  This was called a &quot;drop-frame&quot; timebase.  By the way, using that semicolon between the seconds and the frames is the general convention for drop-frame.<br />
+<br />
+Nowadays, electronic recording devices can easily handle fractional framerates, so &quot;nondrop-frame&quot; timebase is used when no frames are dropped.<br />
+<br />
+Timecodes are encoded into MPEG files, which is how they are indexed and how other assets, such as AC3 files and subtitles, are all lined up.  The MPEG also includes a &quot;drop flag&quot;, to tell the world which timebase to use.  If the assets all use the same timebase (either one), everything will be OK, but if for example the subtitle was timed an AVI file in nondrop-frame timebase and the AVI was then encoded to MPEG as drop-frame, the mismatch will cause the subtitles to drift (the subtitles would be too fast in this case; reversing the scenario would cause them to be too slow).  It's possible to have an audio-video mismatch from the same cause.<br />
+<br />
+I looked at the webpage for DVDLab, and it appears that it includes a tool called &quot;MPEG Parse&quot; that will tell you the &quot;Drop flag&quot;, so you'll know what timebase the MPEG has (I believe it's safe to say that any subtitle is probably nondrop-frame by default).  Also, I think the free version of Bitrate Viewer (http://www.tecoltd.com/bitratev.htm) will tell you the timebase.<br />
+<br />
+You have a number of options to fix this problem.  Some subtitle formats (but not SubViewer 2) allow you to state at the top of the file if the timecodes are drop-frame or nondrop-frame.  Some DVD authoring programs have an option to ignore timebase or something like that (Maestro's option is rather cryptic).  The Pulldown program includes the option to change the drop flag of an MPEG file (I believe the options would be &quot;-nopulldown -dropframe true&quot; [or false]), but then you might run into trouble syncronizing with the audio (and I don't know how to change the timebase for audio files).  Perhaps Dimmer's 0.1% slowdown/speedup of the subtitle file is the best solution.</div></div><hr />
+
+
+<div class="post"><div class="posttop"><div class="username">scharfis_brain</div><div class="date">23rd April 2004, 01:10</div></div><div class="posttext">McPoodle: where can I find more about this NTSC phenomenon?<br />
+(frame-drop timabase etc.)</div></div><hr />
+
+
+<div class="post"><div class="posttop"><div class="username">McPoodle</div><div class="date">24th April 2004, 06:26</div></div><div class="posttext">I got my understanding of drop vs non-drop from Doom9 member SomeJoe.  Looking for more formal documentation, I came across two good links:<br />
+<br />
+<br />
+ http://www.edlmax.com/NTSC3.html is good at describing the historical reason why the NTSC framerate is 29.97002997002997... (or 30 divided by 1.001).<br />
+ http://www.ledet.com/coolstuff/software/premiere/timecode.pdf describes how drop-frame and non-drop-frame works in a much clearer fashion than I did.<br />
+ <br />
+<br />
+What that second link taught me is that I got my rationale for drop-frame and non-drop-frame wrong: drop-frame doesn't exist because of equipment that couldn't count 29.97 frames per second, but because of the obvious fact that frames are displayed as integers: 00:00:01;00 (or 00:00:01:00) is not 30 frames, but actually 29.97 frames.  Non-drop-frame increments the seconds counter every 30 frames, which means it will gradually drift away from the true time, so that a non-drop-frame timecode of 01:00:03:18 represents exactly one hour of real time (108 frames fast).  Drop-frame timebase, by dropping those frames every minute but the tenth, results in a clock that drifts back and forth, but on average is accurate (at most 1.8 frames off of real time at any instant)--01:00:00;00 is exactly one hour of real time in drop-frame timebase.<br />
+<br />
+For programming, the key I discovered for converting drop-frame to a framecount was to split the number of minutes into &quot;single minutes&quot; and &quot;tens of minutes&quot;.  To convert an NTSC timecode into an accurate framecount, follow these rules:<br />
+<br />
+[list=1]<br />
+ Each hour is 108000 non-drop frames (30 * 60 * 60) or 107892 drop frames (drop 108 frames).  In real time, each hour is 107892.108 frames.<br />
+ Each &quot;deci-minute&quot; is 18000 non-drop frames (30 * 60 * 10) or 17982 drop frames (drop 18 frames, or 2 frames for nine out of every ten minutes).  In real time, 10 minutes is 17982.018 frames.<br />
+ Each &quot;single-minute&quot; is 1800 non-drop frames (30 * 60) or 1798 drop frames (drop 2 frames for every minute, or 0 frames when multiplying by 0).  In real time, a minute is 1798.202 frames.<br />
+ Each second is 30 frames (both timebases), or 29.970 frames real-time.<br />
+[/list=1]<br />
+<br />
+For example, 02:34:17:12 (non-drop-frame) is 277722 frames, while 02:34:17;12 (drop-frame) is 277444 frames (in real time, 2 hours 34 minutes and 17 seconds, plus 12 frames, is 277444.567 frames).  Running the calculation in reverse, 02:34:17:12 in non-drop-frame is the same framecount as 02:34:26;20 in drop-frame (or 2 hours 34 minutes 26 seconds and 19.702 frames real-time).</div></div><hr />
+
+
+<div id="copyright">vBulletin&reg; v3.8.2, Copyright &copy;2000-2009, Jelsoft Enterprises Ltd.</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,1698 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns:expr="http://www.google.com/2005/gml/expr" xmlns:data="http://www.google.com/2005/gml/data" xmlns:b="http://www.google.com/2005/gml/b" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+
+<script type="text/javascript">(function() { var a=window;function f(e){this.t={};this.tick=function(d,b,c){var i=c?c:(new Date).getTime();this.t[d]=[i,b]};this.tick("start",null,e)}var g=new f;a.jstiming={Timer:f,load:g};try{a.jstiming.pt=a.external.pageT}catch(h){};a.tickAboveFold=function(e){var d,b=e,c=0;if(b.offsetParent){do c+=b.offsetTop;while(b=b.offsetParent)}d=c;d<=750&&a.jstiming.load.tick("aft")};var j=false;function k(){if(!j){j=true;a.jstiming.load.tick("firstScrollTime")}}a.addEventListener?a.addEventListener("scroll",k,false):a.attachEvent("onscroll",k); })();</script>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+<meta content="true" name="MSSmartTagsPreventParsing">
+<meta content="blogger" name="generator">
+<link href="http://www.blogger.com/favicon.ico" rel="icon" type="image/vnd.microsoft.icon">
+<link href="http://blog.ahfr.org/2008/08/fuckin-ffmpeg.html" rel="canonical">
+<link rel="alternate" type="application/atom+xml" title="blogggggg.ahfr.org - Atom" href="http://blog.ahfr.org/feeds/posts/default">
+<link rel="alternate" type="application/rss+xml" title="blogggggg.ahfr.org - RSS" href="http://blog.ahfr.org/feeds/posts/default?alt=rss">
+<link rel="service.post" type="application/atom+xml" title="blogggggg.ahfr.org - Atom" href="http://www.blogger.com/feeds/3943397105358047332/posts/default">
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.blogger.com/rsd.g?blogID=3943397105358047332">
+<link rel="alternate" type="application/atom+xml" title="blogggggg.ahfr.org - Atom" href="http://blog.ahfr.org/feeds/2742838784193321545/comments/default">
+<title>
+Use FFmpeg!
+</title>
+<link type="text/css" rel="stylesheet" href="ffmpeg%20markin-markout,%20av%20resync,%20and%20muxing_files/1839888021-widget_css_bundle.css">
+ <link rel="stylesheet" type="text/css" href="ffmpeg%20markin-markout,%20av%20resync,%20and%20muxing_files/3727950723-blog_controls.css">
+ <link rel="stylesheet" type="text/css" href="ffmpeg%20markin-markout,%20av%20resync,%20and%20muxing_files/authorization.css">
+<style type="text/css">#navbar-iframe { display:block }
+</style>
+
+<style id="page-skin-1" type="text/css"><!--
+/*
+* Blogger Template Style
+*
+* Simple II
+* by Jason Sutter
+*/
+/* Variable definitions
+====================
+<Variable name="bgcolor" description="Page Background Color"
+type="color" default="#fff">
+<Variable name="textcolor" description="Text Color"
+type="color" default="#000">
+<Variable name="pagetitlecolor" description="Blog Title Color"
+type="color" default="#000">
+<Variable name="titlecolor" description="Post Title Color"
+type="color" default="#000">
+<Variable name="footercolor" description="Date and Footer Color"
+type="color" default="#555">
+<Variable name="linkcolor" description="Link Color"
+type="color" default="#58a">
+<Variable name="visitedlinkcolor" description="Visited Link Color"
+type="color" default="#999"> Used to be #969
+<Variable name="bordercolor" description="Border Color"
+type="color" default="#999">
+<Variable name="bodyfont" description="Text Font"
+type="font" default="normal normal 100% Georgia,Serif;">
+<Variable name="pagetitlefont" description="Blog Title Font"
+type="font"
+default="normal bold 200% Georgia,Serif">
+<Variable name="startSide" description="Start side in blog language"
+type="automatic" default="left">
+<Variable name="endSide" description="End side in blog language"
+type="automatic" default="right">
+*/
+body {
+margin:0;
+font:normal normal 100% Georgia,Serif;;
+background:#ffffff;
+color:#4c4c4c;
+}
+a:link {
+color:#5588aa;
+text-decoration:none;
+}
+#index {
+text-decoration:none;
+}
+a:visited {
+color:#aa5557;
+text-decoration:none;
+}
+a:hover {
+color:#999999;
+text-decoration: underline;
+}
+a img {
+border-width:0;
+}
+#outer-wrapper {
+margin-top: 0px;
+margin-right: 3em;
+margin-bottom: 0;
+margin-left: 3em;
+}
+#main-wrapper {
+width: 68%;
+float: left;
+margin-right: 0px;
+}
+#sidebar-wrapper {
+width: 25%;
+float: right;
+margin-top: 0px;
+padding-left: 20px;
+}
+#footer-text {
+text-align: center;
+}
+#footer-wrapper {
+margin: 0 120px;
+padding-top: 30px;
+padding-bottom: 5px;
+clear: both;
+font-size: 2.0em;
+}
+h1 {
+<!-- removed  border-bottom:dotted 1px #999999; -->
+margin-bottom:0px;
+color: #000000;
+font: normal bold 200% Georgia,Serif;
+text-shadow: 1px 1px 2px #333;
+}
+h1 a, h1 a:link, h1 a:visited {
+color: #000000;
+}
+h2 {
+margin:0px;
+padding: 0px;
+font-weight: normal;
+font-size: 2em;
+color: #676767;
+}
+#main .widget {
+padding-bottom:0px; <!-- was 10px -->
+margin-bottom:0px; <!-- was 20px -->
+clear: both;
+<!-- removed   border-bottom:dotted 1px #999999; -->
+}
+#main .Header {
+border-bottom-width: 0px;
+}
+h2.date-header {
+padding-top:15px;
+color:#555555;
+padding-bottom:0px;
+margin-bottom:0px;
+font-size: 90%;
+}
+h3.post-title {
+font-size: 170%;
+color: #999999;
+}
+.post {
+padding-left:5%;
+padding-right:10%;
+}
+.post-footer {
+color:#555555;
+}
+a.titlewrapper:hover, a.title:hover { text-decoration: none !important; }
+#comments {
+padding-top:30px;
+color:#4c4c4c;
+padding-bottom:0px;
+margin-bottom:0px;
+font-weight:bold;
+}
+#comments .comment-footer {
+font-size:1em;
+font-weight:normal;
+color:#555555;
+margin-right:10px;
+display:inline;
+}
+.comment-author {
+margin-top: 3%;
+}
+.comment-body {
+font-size:1em;
+font-weight:normal;
+}
+.deleted-comment {
+font-style:italic;
+color:gray;
+}
+.comment-link {
+margin-left:.6em;
+}
+.feed-links {
+clear: both;
+line-height: 2.5em;
+display: none;
+}
+#blog-pager-newer-link {
+float: right;
+}
+#blog-pager-older-link {
+float: left;
+}
+#blog-pager {
+text-align: center;
+}
+.clear {
+clear: both;
+}
+.profile-img {
+float: left;
+margin-top: 0;
+margin-right: 5px;
+margin-bottom: 5px;
+margin-left: 0;
+}
+body#layout #outer-wrapper {
+margin-top: 0px;
+margin-right: 50px;
+margin-bottom: 0;
+margin-left: 50px;
+}
+blockquote {
+background: url(http://bp1.blogger.com/_nCLKbj44niI/R50aczdDMNI/AAAAAAAAAOg/-MbennuBiIk/s400/left-quote.gif) top left no-repeat;
+padding-left: 45px;
+margin-left: 15px;
+font-size: 90%;
+}
+/*font-size: 0.95em;
+font-style: italic !important;
+border: 1px black dotted;
+background: #dbdbdb;
+padding-top: 5px;
+padding-left: 15px;
+padding-bottom: 10px;
+padding-right: 10px;
+margin-top: 0px;
+margin-left: 20px;
+margin-right: 0px;
+*/
+/*
+background: url(http://bp1.blogger.com/_nCLKbj44niI/R50aczdDMNI/AAAAAAAAAOg/-MbennuBiIk/s400/left-quote.gif) top left no-repeat;
+padding-left: 45px;
+margin-left: 15px;
+*/
+}
+#blockquote-beta {
+background: url(http://bp1.blogger.com/_nCLKbj44niI/R50aczdDMNI/AAAAAAAAAOg/-MbennuBiIk/s400/left-quote.gif) top left no-repeat;
+padding-left: 45px;
+margin-left: 15px;
+font-size: 90%;
+}
+ul {
+padding-left: 5px;
+padding-top: 0px;
+padding-bottom: 0px;
+margin: 0px;
+}
+pre {
+font-style: normal;
+background: #bbcccc;
+padding: 10px;
+border: 1px solid #ddd;
+width: 550px;
+/* the following block of code is from http://www.longren.org/2006/09/27/wrapping-text-inside-pre-tags/ and is used to wrap lines inside of the pre tag. */
+overflow-x: auto; /* Use horizontal scroller if needed; for Firefox 2, not needed in Firefox 3 */
+white-space: pre-wrap; /* css-3 */
+white-space: -moz-pre-wrap !important; /* Mozilla, since 1999 */
+white-space: -pre-wrap; /* Opera 4-6 */
+white-space: -o-pre-wrap; /* Opera 7 */
+/* width: 99%; */
+word-wrap: break-word; /* Internet Explorer 5.5+ */
+}
+#socialcode {
+font-size: 0.85em;
+font-weight: bold;
+font-family: arial, helvetica, sans-serif;
+/* border-left: 3px solid black;
+border-right: 3px solid black; */
+padding-left: 1px;
+padding-right: 1px;
+}
+#stumble a:link{ background-color: #3d87a1; color: #59b067; }
+#stumble a:visited{ background-color: #3d87a1; color: #59b067; }
+#stumble a:hover{ background-color: #3d87a1; color: #999999; }
+#facebook a:link{ background-color: #3b5998; color: #f0f0f0; }
+#facebook a:visited{ background-color: #3b5998; color: #f0f0f0; }
+#facebook a:hover{ background-color: #3b5998; color: #999999; }
+#delicious a:link{ background-color: #dddddd; color: #0000ff; }
+#delicious a:visited{ background-color: #dddddd;  color: #0000ff; }
+#delicious a:hover{ background-color: #dddddd; color: #999999; }
+#email a:link{ background-color: #000000; color: #ffffff; }
+#email a:visited{ background-color: #000000; color: #ffffff; }
+#email a:hover{ background-color: #000000; color: #999999; }
+#navbar-iframe {
+height:0px;
+visibility:hidden;
+display:none;
+}
+/* Video Post (http://hunsonisgroovy.com/) */
+.video {
+border: dotted 1px #eee;
+padding: 11px 0px 11px 0px;
+text-align: center;
+}
+.video:hover {
+border: dotted 1px #BFCEB9;
+}
+abbr {
+}
+#search-box{
+font-size: 1.5em;
+font-weight: bold;
+font-family: "Georgia", serif;
+color:  #999999;
+}
+#feedControl .gf-author,
+#feedControl .gf-spacer,
+#feedControl .gf-relativePublishedDate,
+#threadList .gf-snippet {
+display: none;
+}
+#threadList .gf-author,
+#threadList .gf-relativePublishedDate,
+#threadList .gf-spacer  { font-size: 0.7em; padding-left: 5px;
+}
+#threadList .gf-title { margin-bottom: -5px;
+}
+#threadList .gf-snippet{ margin-top: 5px;
+}
+#feedControl .gf-snippet { font-size: 0.85em; padding-left: 8px;}
+#feedControl .gf-snippet:before {content:"\0022"}
+#feedControl .gfc-result {
+margin-bottom : 0px;
+}
+#feedControl {
+font-size: 0.8em;
+}
+#feedControl .gfc-resultsHeader {
+font-size: 2.5em;
+}
+#threadList .gfc-resultsHeader {
+font-size: 2em;
+}
+#feedControl .gfc-title:before {
+}
+.hide {display:none}
+.blog-icon {display: none}
+
+--></style>
+<link href="http://1.bp.blogspot.com/_nCLKbj44niI/SE2HFLtlpNI/AAAAAAAABG4/vylyvH00sXU/s400/favicon-ahfr.png" rel="shortcut icon" type="image/x-icon">
+<script src="ffmpeg%20markin-markout,%20av%20resync,%20and%20muxing_files/jsapi" type="text/javascript"></script>
+<script type="text/javascript">
+
+      google.load("feeds", "1");
+
+      function initialize() {
+        var feedControl = new google.feeds.FeedControl();
+        feedControl.addFeed("http://www.google.com/reader/public/atom/user/05742745243373381808/state/com.google/broadcast", "Shared (&#8594;) ");
+feedControl.setNumEntries(8);
+             feedControl.draw(document.getElementById("feedControl"));
+              
+      }
+
+      google.setOnLoadCallback(initialize);
+
+    </script><script src="ffmpeg%20markin-markout,%20av%20resync,%20and%20muxing_files/defaulten.js" type="text/javascript"></script><link href="ffmpeg%20markin-markout,%20av%20resync,%20and%20muxing_files/default.css" type="text/css" rel="stylesheet">
+<script src="ffmpeg%20markin-markout,%20av%20resync,%20and%20muxing_files/jsapi" type="text/javascript"></script>
+<!-- http://code.google.com/apis/ajaxfeeds/documentation/#FEEDCONTROL -->
+<script type="text/javascript">
+
+      google.load("feeds", "1");
+
+      function initialize() {
+        var feedControl = new google.feeds.FeedControl();
+        feedControl.addFeed("http://blog.ahfr.org/feeds/comments/default", "Threads.");
+feedControl.setNumEntries(8);
+             feedControl.draw(document.getElementById("threadList"));
+              
+      }
+
+      google.setOnLoadCallback(initialize);
+
+    </script>
+<script language="JavaScript" src="ffmpeg%20markin-markout,%20av%20resync,%20and%20muxing_files/audio-player.js"></script>
+<meta content="BPudrZDhjedbmgIEdQ/A7XfFh8ZsRdrBskWxtRReLkg=" name="verify-v1">
+<script src="ffmpeg%20markin-markout,%20av%20resync,%20and%20muxing_files/jquery-latest.txt" type="text/javascript">
+</script>
+<!-- work in progress to add RSS link to shared list. need help! -->
+<script>
+  $(document).ready(function(){
+   $(".gf-snippet:last").append("<a href='http://www.google.com/reader/public/atom/user/05742745243373381808/state/com.google/broadcast'>(more)</a>");
+  });
+</script>
+<!-- rebuild link to pic feed -->
+<script>
+  $(document).ready(function(){
+   $(".blog-title:first").html("<a href='http://pics.ahfr.org'>blog.ahfr.org pics feed</a>");
+  });
+</script>
+<!-- hide index -->
+<script>
+  $(document).ready(function(){
+    
+    $("#index").click(function () {
+      if ($(".hide").is(":hidden")) {
+        $(".hide").slideDown(1500);
+      } else {
+        $(".hide").slideUp();
+      }
+    });
+
+  });
+  </script>
+<!-- clear search input -->
+<script type="text/javascript">
+
+$(document).ready(function(){
+
+var clearMePrevious = '';
+
+// clear input on focus
+$('.clearMeFocus').focus(function()
+{
+if($(this).val()==$(this).attr('title'))
+{
+clearMePrevious = $(this).val();
+$(this).val('');
+
+}
+});
+
+// if field is empty afterward, add text again
+$('.clearMeFocus').blur(function()
+{
+if($(this).val()=='')
+{
+$(this).val(clearMePrevious);
+}
+});
+
+
+// ...
+$('.clearMeFocus').blur(function()
+{
+if($(this).val()=='suck')
+{
+window.location = "http://www.youtube.com/watch?v=VzkVxkiOqGA";
+}
+});
+
+});
+
+</script>
+</head><body>
+<div class="navbar section" id="navbar"><div class="widget Navbar" id="Navbar1"><script type="text/javascript">
+    function setAttributeOnload(object, attribute, val) {
+      if(window.addEventListener) {
+        window.addEventListener("load",
+          function(){ object[attribute] = val; }, false);
+      } else {
+        window.attachEvent('onload', function(){ object[attribute] = val; });
+      }
+    }
+  </script>
+<iframe src="ffmpeg%20markin-markout,%20av%20resync,%20and%20muxing_files/navbar.htm" marginwidth="0" marginheight="0" id="navbar-iframe" title="Blogger Navigation and Search" width="100%" frameborder="0" height="30px" scrolling="no"></iframe>
+<div></div></div></div>
+<div id="outer-wrapper">
+<div id="header-wrapper">
+<div class="header section" id="header"><div class="widget Header" id="Header1">
+<div id="header-inner">
+<div class="titlewrapper" style="overflow: hidden;">
+<h1 class="title" style="text-align: center; font-size: 6.4em;">
+<a href="http://blog.ahfr.org/" style="text-decoration: none;"><span style="color: rgb(153, 153, 153);">BLOG</span><span style="color: rgb(85, 136, 170);">GGGGGGG</span><span style="color: rgb(153, 153, 153);">!</span></a>
+</h1>
+</div>
+</div>
+</div></div>
+</div>
+<div id="main-wrapper">
+<div class="main section" id="main"><div class="widget Blog" id="Blog1">
+<h3 style="margin-bottom: 0px; color: rgb(103, 103, 103); font-weight: normal;">Updated Daily.</h3>
+<div class="blog-posts hfeed">
+<!-- google_ad_section_start -->
+<h2 class="date-header" style="padding-top: 5px; font-weight: bold;">Tuesday, August 12 gave rise to...</h2>
+<div class="post">
+<a name="2742838784193321545"></a>
+<h3 class="post-title">
+<a href="http://blog.ahfr.org/2008/08/fuckin-ffmpeg.html">Use FFmpeg!</a>
+</h3>
+<div class="post-header-line-1"></div>
+<div class="post-body" id="post-2742838784193321545">
+<style>#fullpost{display:inline;}</style>
+<p><span class="Apple-style-span" style="font-size: 180%;"><span class="Apple-style-span" style="font-weight: bold;"><span class="Apple-style-span" style="color: rgb(51, 51, 51);">&lt;!-- USE FFMPEG --&gt;</span></span></span><br><br><br><br><span style="font-weight: bold;">FFmpeg</span>
+is the Swiss Army Knife of command line tools for video and audio. It
+does many things you already want; for example, FFmpeg makes it easy to
+convert between almost any video or audio format you can think of. It
+also does some cool things you may not have considered trying before,
+like facilitating the usage of YouTube as a gigantic downloadable mp3
+library. Also, considering that Flash video is the more or less the de
+facto official video format of the web (and thereby appears to be the
+future of video on the web), FLV is a very important format to be able
+to convert from and to. FFmpeg makes this work incredibly easy.<br><br>Let's start this tutorial/guide with the mp3 stuff, then move on to more basic/intended usage, and then go on to something cool.<span id="fullpost"><br><br><span style="font-weight: bold;">Extracting mp3 from YouTube videos (2 steps):</span><br><br>Let's
+say you like a song you heard on YouTube, but cannot find the mp3
+anywhere online and there's nothing available at the record store. Back
+in the 1980s you would have been screwed -- you might have been upset
+enough to try a new drug called "crack" cocaine. But now with The
+Internet and FFmpeg, you can avoid becoming addicted to crack by
+downloading a DRM-free mp3 file that will play anywhere, directly from
+the YouTube video itself! Here's how:<br><ul><li>First, download the video from YouTube. You can find the .flv file in the source code, but services like <a href="http://keepvid.com/">KeepVid</a> have utilized YouTube's <abbr title="application programming interface">API</abbr> to easily allow you to download the video directly from YouTube's server's in a higher quality .mp4 format.</li><li>Second, take the video, "<span style="font-family: monospace;">video.mp4</span>" and run it through FFmpeg like this:<pre>ffmpeg -i video.mp4 -ab 192k audio.mp3</pre>This
+will give you an mp3 with a fairly standard quality of 192kbps. You can
+make that value higher or lower if it pleases you, but remember your
+source: audio from a YouTube video. The saying, "You can't polish a
+turd," is true.</li></ul><br><span style="font-weight: bold;">Extracting a clip from a longer video (1 step):</span><br><br>Let's
+say you really like a segment of a movie, and want to share it with the
+world. Here's how you can post it to YouTube using free software, make
+sure the audio syncs up with the video (often times it doesn't, if a
+certain option is not included in the command) and upload it faster
+than the dopes uploading video in mpeg or avi format:<br><pre>ffmpeg -ss 00:06:09 -t 00:00:15 -i mmm.avi -async 1 -qscale 3.5 -vcodec flv seriously.flv</pre>The first part of the command <span style="font-family: monospace;">-ss 00:06:09 -t 00:00:15</span> means to start at 00:06:09 into the movie, and to play for 15 seconds. <span style="font-family: monospace;">-i mmm.avi</span> is where you tell FFmpeg to use mmm.avi as the input file. Yes, that's right -- you define the segment <span style="font-style: italic;">before</span> you define the input file.<br><br><span style="font-family: monospace;">-async 1</span> is optional, but it is very helpful for a situation where the audio in your new cropped clip does not sync up with the video.<br><br><span style="font-family: monospace;">-qscale 3.5</span>
+is a variable command that changes the quality of your cropped clip.
+3.5 is a good value here for YouTube -- it seems about equal to the
+quality of YouTube videos. A lower value means a higher quality. <span style="font-family: monospace;">-sameq</span> is a different option that serves the same function. It means to convert the video losslessly -- no loss in quality. Use <span style="font-family: monospace;">sameq</span>
+if you cannot tolerate any loss in quality from source to destination.
+When you're happy (or frustrated to the point of not being able to work
+any more) with the results, simply upload to YouTube.<br><br><span style="font-weight: bold;">If you want to convert a file from one format to another</span> (losslessly), use this command:<br><pre>ffmpeg -i input.mp4 -sameq output.mpg</pre><span style="font-style: italic;">Remember, the <span style="font-family: monospace;">-sameq</span> option means to use the same quality (lossless).</span><br><br><span style="font-weight: bold;">If you want to do something cool</span>, like make a <abbr title="let's define it as such: 'The apparent or alleged purposeful parallels in timing between two different creative objects, in order to create a single new object, or to enhance the experience of one of them.' Thanks Wikipedia~"><a href="http://www.roosterflix.com/search/label/muxes">mux</a></abbr> (or music video, if you prefer that term) a la <a href="http://en.wikipedia.org/wiki/Dark_Side_of_the_Rainbow">Pink Floyd + The Wizard of Oz</a>, try this:<br><pre>ffmpeg -ss 00:04:25 -t 00:05:15 -i superman.avi -i grandma.mp3 -map 0:0 -map 1:0 -qscale 3.5 -vcodec flv killer.flv</pre>When you want to make a simple video like what we're describing, this is a good way to do it. There are a couple of examples <a href="http://blog.ahfr.org/search/label/the%20dog%20finally%20succumed%20when%20the%20horse%20planted%20both%20fore%20feet%20on%20its%20body.%20crushing%20it">here</a>.<br><br>The only option we haven't gone over yet here is <span style="font-family: monospace;">-map</span>.
+This is used in conjunction with the two input files to tell FFmpeg
+where to put them in the output. Here we have the first input file
+going to stream position 0 on output file 0 and the second input file
+is going to position 1. <span style="font-family: monospace;">-map</span> options correspond to the position in the command of input files -- so the first <span style="font-family: monospace;">-map</span>
+tells FFmpeg where to map the first input file specified in the
+command, the second tells where to map the second input file, and so
+on. It will make more sense if you try it. Use the format above if you
+get lost.<br><br><span style="font-weight: bold;">If you want to do something cooler, like <a href="http://www.youtube.com/watch?v=JMR2GnGJvdA">this</a>, where multiple video files are combined</span> (see intro and outro), you will need to use another command line tool called <span style="font-family: monospace;">cat</span>. This tool con<span style="font-family: monospace;">cat</span>enates
+files (it joins them together). It doesn't work with all video formats
+-- for instance, it will not work with .flv, but it will work with
+.avi. It also doesn't play nicely with certain differences between
+files, such as differences in video dimensions or bitrate. To really
+use this tool well you may need to consult the <a href="http://linux.die.net/man/1/ffmpeg">man page for ffmpeg</a>
+or some mailing lists to see how other people solved their
+problems...but if you just need to join two files, here's how you do it:<br><pre>cat mick.avi killar.avi &gt; killar-milk.avi</pre>And after this, you should run the resulting file <span style="font-family: monospace;">killar-milk.avi</span>
+through FFmpeg to rebuild the part of the file that tell video players
+their duration. If you don't, you probably won't be able to see the
+entire new video.<br><br>Since videos with different resolutions are
+incompatible, here's a hint that should help you combine two videos of
+different resolutions: you can resize videos with the <span style="font-weight: bold;">-s</span> option. the format is wxh (width x height) so if you want your video to be 480x196, your option looks like this: <pre>-s 480x196</pre><br><span style="font-weight: bold;">Hope
+all this helps. Leave questions and comments in the comments area. Try
+combining these commands in new and novel ways to achieve interesting
+results. Really freak it. <span style="color: rgb(255, 153, 0); font-size: 130%;">At the very least, post something online that has never been posted before; it's easy.</span><br><br>When you use the right tools, the Internet is your oyster.</span><br><br><span style="font-style: italic;">FFmpeg
+is available for Linux, Mac, and Windows. Officially it's only
+available to be compiled from source, but you can use Google to easily
+find a build for your operating system. If you use Linux, check your
+favorite repository for your chosen distro -- if it isn't included,
+abandon your distro for a good one.</span></span><br><br><!-- <a onblur="try {parent.deselectBloggerImageGracefully();} catch(e) {}" href="http://2.bp.blogspot.com/_nCLKbj44niI/SJ-Dc7y1kjI/AAAAAAAACwg/V2gEoLENff0/s1600-h/fffmpeg.png"><img style="cursor: pointer;" src="http://2.bp.blogspot.com/_nCLKbj44niI/SJ-Dc7y1kjI/AAAAAAAACwg/V2gEoLENff0/s400/fffmpeg.png" alt="" id="BLOGGER_PHOTO_ID_5233045825138299442" border="0" /></a> --><a onblur="try {parent.deselectBloggerImageGracefully();} catch(e) {}" href="http://blog.ahfr.org/2008/08/fuckin-ffmpeg.html"><img style="cursor: pointer;" src="ffmpeg%20markin-markout,%20av%20resync,%20and%20muxing_files/fffmpeg-article.png" alt="ffmpeg is pretty fucking cool." title="ffmpeg is pretty fucking cool." id="BLOGGER_PHOTO_ID_5233045822546434754" border="0"></a></p>
+<div style="clear: both;"></div>
+</div>
+<div class="post-footer">
+<p class="post-footer-line post-footer-line-1">
+--<br>
+<a href="http://blog.ahfr.org/2008/08/fuckin-ffmpeg.html" title="permanent link">#</a>&nbsp;
+
+<span class="post-author">
+</span>
+<span class="post-timestamp">
+Posted at
+<a class="timestamp-link" href="http://blog.ahfr.org/2008/08/fuckin-ffmpeg.html" title="permanent link">8:00 PM</a>.
+        
+</span>
+<span class="reaction-buttons">
+</span>
+<span class="post-comment-link">
+</span>
+<span class="post-icons">
+<span class="item-control blog-admin pid-573541081">
+<a href="http://www.blogger.com/post-edit.g?blogID=3943397105358047332&amp;postID=2742838784193321545" title="Edit Post">
+<img alt="quickedit" class="icon-action" src="ffmpeg%20markin-markout,%20av%20resync,%20and%20muxing_files/icon18_edit_allbkg.gif">
+</a>
+</span>
+</span>
+<span class="post-backlinks post-comment-link">
+</span>
+</p>
+<p class="post-footer-line post-footer-line-2"><span class="post-labels">
+<span style="font-weight: bold;">tagged:</span>
+<a href="http://blog.ahfr.org/search/label/howto?max-results=5" rel="tag">howto</a>,
+<a href="http://blog.ahfr.org/search/label/internet?max-results=5" rel="tag">internet</a>,
+<a href="http://blog.ahfr.org/search/label/linux?max-results=5" rel="tag">linux</a>,
+<a href="http://blog.ahfr.org/search/label/video?max-results=5" rel="tag">video</a>,
+<a href="http://blog.ahfr.org/search/label/youtube?max-results=5" rel="tag">youtube</a>
+</span>
+</p>
+<p class="post-footer-line post-footer-line-3">
+<!-- google_ad_section_end -->
+<script type="text/javascript"><!--
+google_ad_client="pub-5120371218279514";
+google_ad_host="pub-1556223355139109";
+google_ad_width=468;
+google_ad_height=60;
+google_ad_format="468x60_as";
+google_ad_type="text";
+google_color_border="FFFFFF";
+google_color_bg="FFFFFF";
+google_color_link="5588AA";
+google_color_url="000000";
+google_color_text="999999";
+//--></script>
+<script type="text/javascript" src="ffmpeg%20markin-markout,%20av%20resync,%20and%20muxing_files/show_ads.js">
+</script><script src="ffmpeg%20markin-markout,%20av%20resync,%20and%20muxing_files/expansion_embed.js"></script><script src="ffmpeg%20markin-markout,%20av%20resync,%20and%20muxing_files/test_domain.js"></script><script>google_protectAndRun("ads_core.google_render_ad", google_handleError, google_render_ad);</script><ins style="border: medium none ; margin: 0pt; padding: 0pt; display: inline-table; height: 60px; position: relative; visibility: visible; width: 468px;"><ins style="border: medium none ; margin: 0pt; padding: 0pt; display: block; height: 60px; position: relative; visibility: visible; width: 468px;"><iframe allowtransparency="true" hspace="0" id="google_ads_frame1" marginheight="0" marginwidth="0" name="google_ads_frame" src="ffmpeg%20markin-markout,%20av%20resync,%20and%20muxing_files/ads.htm" style="left: 0pt; position: absolute; top: 0pt;" vspace="0" width="468" frameborder="0" height="60" scrolling="no"></iframe></ins></ins>
+<!-- google_ad_section_start -->
+<br>
+</p>
+</div>
+</div>
+<div class="comments" id="comments">
+<a name="comments"></a>
+<h4>
+0
+comments:
+        
+</h4>
+<dl id="comments-block">
+</dl>
+<p class="comment-footer">
+</p><div class="comment-form">
+<a name="comment-form"></a>
+<h4 id="comment-post-message">Post a Comment</h4>
+<p>
+</p>
+<a href="http://www.blogger.com/comment-iframe.g?blogID=3943397105358047332&amp;postID=2742838784193321545&amp;blogspotRpcToken=6945156" id="comment-editor-src"></a>
+<iframe allowtransparency="true" class="blogger-iframe-colorize blogger-comment-from-post" id="comment-editor" name="comment-editor" src="ffmpeg%20markin-markout,%20av%20resync,%20and%20muxing_files/comment-iframe.htm" width="100%" frameborder="0" height="410"></iframe>
+<script type="text/javascript">
+        if (!window.google || !google.friendconnect) {
+          document.write('<script type="text/javascript"' +
+              'src="http://www.google.com/friendconnect/script/friendconnect.js">' +
+              '</scr' + 'ipt>');
+        }
+      </script><script type="text/javascript" src="comment-iframe_data/friendconnect.js"></script>
+<script type="text/javascript">
+      if (!window.registeredBloggerCallbacks) {
+        window.registeredBloggerCallbacks = true;
+
+        
+
+        
+        var registeredGadgets = [];
+        gadgets.rpc.register('registerGadgetForRpcs', function(gadgetDomain, iframeName) {
+          // Trim the gadget domain from a random url (w/ query params)
+          // down to just a top level domain.
+          // TODO(henrywong): There must be a slicker way to do this
+          var startIndex = 0;
+          var protocolMarker = "://";
+
+          // Find the start of the host name
+          if (gadgetDomain.indexOf(protocolMarker) != -1) {
+            startIndex = gadgetDomain.indexOf(protocolMarker) + protocolMarker.length;
+          }
+          // Now find the start of the path
+          var pathIndex = gadgetDomain.indexOf("/", startIndex);
+
+          // Now extract just the hostname
+          if (pathIndex != -1) {
+            gadgetDomain = gadgetDomain.substring(0, pathIndex);
+          }
+
+          // TODO(jpanzer): Presumably this is a no-op now?  Should we remove this?
+          gadgets.rpc.setRelayUrl(iframeName, gadgetDomain + "/ps/rpc_relay.html");
+
+          // Just return some random stuff so the gadget can tell when
+          // we're done.
+          return "callback";
+        });
+
+        
+        gadgets.rpc.register('getBlogUrls', function() {
+          var holder = {};
+          
+            
+              
+              
+                holder.currentPost = "http://www.blogger.com/feeds/3943397105358047332/posts/default/2742838784193321545";
+              
+              
+              
+                holder.currentComments = "http://www.blogger.com/feeds/3943397105358047332/2742838784193321545/comments/default";
+              
+            
+            
+            
+              holder.postFeed = "http://www.blogger.com/feeds/3943397105358047332/posts/default";
+            
+            
+            
+              holder.commentFeed = "http://www.blogger.com/feeds/3943397105358047332/comments/default";
+            
+          
+          return holder;
+        });
+
+        
+        gadgets.rpc.register('requestReload', function() {
+          document.location.reload();
+        });
+
+        
+        gadgets.rpc.register('requestSignOut', function(siteId) {
+          
+          google.friendconnect.container.openSocialSiteId = siteId;
+          google.friendconnect.requestSignOut();
+        });
+      }
+    </script>
+<script type="text/javascript" src="ffmpeg%20markin-markout,%20av%20resync,%20and%20muxing_files/1033129300-comment_from_post_iframe.js"></script>
+<script type="text/javascript">
+      BLOG_CMT_createIframe('http://www.blogger.com/rpc_relay.html', '07481442473544171001');
+    </script>
+</div>
+
+<div id="backlinks-container">
+<div id="Blog1_backlinks-container">
+</div>
+</div>
+</div>
+<!-- google_ad_section_end -->
+</div>
+<div class="blog-pager" id="blog-pager">
+<span id="blog-pager-newer-link">
+<a class="blog-pager-newer-link" href="http://blog.ahfr.org/2008/08/blog-post.html" id="Blog1_blog-pager-newer-link" title="Newer Post">Newer Post</a>
+</span>
+<span id="blog-pager-older-link">
+<a class="blog-pager-older-link" href="http://blog.ahfr.org/2008/08/xenia-ohio.html" id="Blog1_blog-pager-older-link" title="Older Post">Older Post</a>
+</span>
+<a class="home-link" href="http://blog.ahfr.org/">Home</a>
+</div>
+<div class="clear"></div>
+<div class="post-feeds">
+<div class="feed-links">
+Subscribe to:
+<a class="feed-link" href="http://blog.ahfr.org/feeds/2742838784193321545/comments/default" target="_blank" type="application/atom+xml">Post Comments (Atom)</a>
+</div>
+</div>
+</div><div class="widget AdSense" id="AdSense2">
+<br><br>
+<div class="widget-content">
+<script type="text/javascript"><!--
+google_ad_client="pub-5120371218279514";
+google_ad_host="pub-1556223355139109";
+google_ad_width=728;
+google_ad_height=90;
+google_ad_format="728x90_as";
+google_ad_type="text";
+google_color_border="FFFFFF";
+google_color_bg="FFFFFF";
+google_color_link="5588AA";
+google_color_url="5588AA";
+google_color_text="4C4C4C";
+//--></script>
+<script type="text/javascript" src="ffmpeg%20markin-markout,%20av%20resync,%20and%20muxing_files/show_ads.js">
+</script><script>google_protectAndRun("ads_core.google_render_ad", google_handleError, google_render_ad);</script><ins style="border: medium none ; margin: 0pt; padding: 0pt; display: inline-table; height: 90px; position: relative; visibility: visible; width: 728px;"><ins style="border: medium none ; margin: 0pt; padding: 0pt; display: block; height: 90px; position: relative; visibility: visible; width: 728px;"><iframe allowtransparency="true" hspace="0" id="google_ads_frame2" marginheight="0" marginwidth="0" name="google_ads_frame" src="ffmpeg%20markin-markout,%20av%20resync,%20and%20muxing_files/ads_002.htm" style="left: 0pt; position: absolute; top: 0pt;" vspace="0" width="728" frameborder="0" height="90" scrolling="no"></iframe></ins></ins>
+</div>
+</div></div>
+</div>
+<div id="sidebar-wrapper">
+<div class="sidebar section" id="sidebar"><div class="widget HTML" id="HTML3">
+<div class="widget-content" style="margin-bottom: 15px;">
+<form action="/search" style="display: inline;" method="get"> <input id="search-box" value="Search..." class="clearMeFocus" name="q" title="Search..." size="10" type="text"> </form>
+</div>
+</div><div class="widget LinkList" id="LinkList1">
+<h2 style="border-bottom: 1px solid rgb(233, 233, 233); margin-top: 10px; margin-bottom: 0px;" title="">Useful Posts</h2>
+<div class="widget-content" style="margin-bottom: 10px;">
+<ul style="list-style-type: none; list-style-image: none; list-style-position: outside; margin-left: 0px; margin-top: 5px;">
+<li><a href="http://blog.ahfr.org/2009/05/use-shell-fm-for-fun-and-profit.html"><span style="border-bottom: 1px dotted black;">shell-fm + last.fm</span></a></li>
+<li><a href="http://blog.ahfr.org/2008/08/fuckin-ffmpeg.html"><span style="border-bottom: 1px dotted black;">ffmpeg</span></a></li>
+<li><a href="http://blog.ahfr.org/2008/04/newsgroup-binaries-with-hellanzb-and.html"><span style="border-bottom: 1px dotted black;">hellanzb</span></a></li>
+<li><a href="http://blog.ahfr.org/2008/03/making-animated-gifs-with-free-software.html"><span style="border-bottom: 1px dotted black;">animated gifs</span></a></li>
+<li><a href="http://blog.ahfr.org/2008/03/tweaking-icons-in-ubuntu-linux.html"><span style="border-bottom: 1px dotted black;">linux icon tweaks</span></a></li>
+<li><a href="http://blog.ahfr.org/2007/12/os-x-leopard-on-your-relatively-old-amd.html"><span style="border-bottom: 1px dotted black;">osx on an 'old' pc</span></a></li>
+<li><a href="http://blog.ahfr.org/2008/04/howto-get-more-results-in-url-bar-of.html"><span style="border-bottom: 1px dotted black;">firefox 3 tweaks</span></a></li>
+<li><a href="http://blog.ahfr.org/2005/02/so-you-want-hard-drive-in-your-ps2.html"><span style="border-bottom: 1px dotted black;">ps2 + hdd</span></a></li>
+</ul>
+</div>
+</div><div class="widget BlogList" id="BlogList1">
+<div id="blog-list-title">
+<h2 class="title" style="border-bottom: 1px solid rgb(233, 233, 233); margin-bottom: 5px;">Links (→)</h2>
+</div>
+<div class="widget-content">
+<div class="blog-list-container" id="BlogList1_container">
+<ul id="BlogList1_blogs">
+<li style="display: block;">
+<div class="blog-icon">
+</div>
+<div class="blog-content">
+<div class="blog-title"><a href="http://pics.ahfr.org/">blog.ahfr.org pics feed</a></div>
+<div class="item-content">
+<div class="item-time">
+6 hours ago
+</div>
+</div>
+</div>
+<div style="clear: both;"></div>
+</li>
+<li style="display: block;">
+<div class="blog-icon">
+</div>
+<div class="blog-content">
+<div class="blog-title">
+<a href="http://www.crunktastical.net/" target="_blank">
+crunk + disorderly</a>
+</div>
+<div class="item-content">
+<div class="item-time">
+46 minutes ago
+</div>
+</div>
+</div>
+<div style="clear: both;"></div>
+</li>
+<li style="display: block;">
+<div class="blog-icon">
+</div>
+<div class="blog-content">
+<div class="blog-title">
+<a href="http://www.boston.com/bigpicture/" target="_blank">
+the big picture</a>
+</div>
+<div class="item-content">
+<div class="item-time">
+1 day ago
+</div>
+</div>
+</div>
+<div style="clear: both;"></div>
+</li>
+<li style="display: block;">
+<div class="blog-icon">
+</div>
+<div class="blog-content">
+<div class="blog-title">
+<a href="http://www.pantherhouse.com/newshelton" target="_blank">
+the new shelton wet/dry</a>
+</div>
+<div class="item-content">
+<div class="item-time">
+3 weeks ago
+</div>
+</div>
+</div>
+<div style="clear: both;"></div>
+</li>
+<li style="display: block;">
+<div class="blog-icon">
+</div>
+<div class="blog-content">
+<div class="blog-title">
+<a href="http://vice.typepad.com/vice_magazine/" target="_blank">
+viceland</a>
+</div>
+<div class="item-content">
+<div class="item-time">
+22 minutes ago
+</div>
+</div>
+</div>
+<div style="clear: both;"></div>
+</li>
+<li style="display: block;">
+<div class="blog-icon">
+</div>
+<div class="blog-content">
+<div class="blog-title">
+<a href="http://community.livejournal.com/vintage_ads/" target="_blank">
+vintage ads</a>
+</div>
+<div class="item-content">
+<div class="item-time">
+3 hours ago
+</div>
+</div>
+</div>
+<div style="clear: both;"></div>
+</li>
+</ul>
+<div class="clear"></div>
+<span class="widget-item-control">
+<span class="item-control blog-admin">
+<a class="quickedit" href="http://www.blogger.com/rearrange?blogID=3943397105358047332&amp;widgetType=BlogList&amp;widgetId=BlogList1&amp;action=editWidget" onclick='return _WidgetManager._PopupConfig(document.getElementById("BlogList1"));' target="configBlogList1" title="Edit">
+<img alt="" src="ffmpeg%20markin-markout,%20av%20resync,%20and%20muxing_files/icon18_wrench_allbkg.png" width="18" height="18">
+</a>
+</span>
+</span>
+<div class="clear"></div>
+</div>
+</div>
+</div><div class="widget AdSense" id="AdSense3">
+<h2 style="border-bottom: 1px solid rgb(233, 233, 233); margin-top: 10px; margin-bottom: 0px;" title="judge the shit out of me for running        ads">Ads</h2>
+<div class="widget-content">
+<script type="text/javascript"><!--
+google_ad_client="pub-5120371218279514";
+google_ad_host="pub-1556223355139109";
+google_ad_width=250;
+google_ad_height=250;
+google_ad_format="250x250_as";
+google_ad_type="text";
+google_color_border="FFFFFF";
+google_color_bg="FFFFFF";
+google_color_link="5588AA";
+google_color_url="5588AA";
+google_color_text="4C4C4C";
+//--></script>
+<script type="text/javascript" src="ffmpeg%20markin-markout,%20av%20resync,%20and%20muxing_files/show_ads.js">
+</script><script>google_protectAndRun("ads_core.google_render_ad", google_handleError, google_render_ad);</script><ins style="border: medium none ; margin: 0pt; padding: 0pt; display: inline-table; height: 250px; position: relative; visibility: visible; width: 250px;"><ins style="border: medium none ; margin: 0pt; padding: 0pt; display: block; height: 250px; position: relative; visibility: visible; width: 250px;"><iframe allowtransparency="true" hspace="0" id="google_ads_frame3" marginheight="0" marginwidth="0" name="google_ads_frame" src="ffmpeg%20markin-markout,%20av%20resync,%20and%20muxing_files/ads_003.htm" style="left: 0pt; position: absolute; top: 0pt;" vspace="0" width="250" frameborder="0" height="250" scrolling="no"></iframe></ins></ins>
+</div>
+</div><div class="widget BlogArchive" id="BlogArchive1">
+</div><div class="widget HTML" id="HTML1">
+<div class="widget-content">
+<div id="feedControl"><div class="gfc-control"><div class="gfc-resultsbox-visible"><div class="gfc-resultsRoot"><div class="gfc-resultsHeader"><div class="gfc-title">Shared (→) </div></div><div class="gfc-results"><div class="gfc-result"><div class="gf-result"><div class="gf-title"><a target="_self" class="gf-title" href="http://www.thedailyswarm.com/headlines/music-industry-completely-over-2018/">UPDATE: The Music Industry Completely Over by 2018?... Musinformation Rebuts...</a></div><div class="gf-author">by&nbsp;(author unknown)</div><div class="gf-spacer">-</div><div class="gf-relativePublishedDate">Aug 03, 2009</div><div class="gf-snippet">
+	
+		
+		
+	
+
+
+
+	UPDATE: Musinformation Rebuts
+
+
+I suggest that before your next research challenged piece you take a look around ...</div></div></div><div class="gfc-result"><div class="gf-result"><div class="gf-title"><a target="_self" class="gf-title" href="http://feedproxy.google.com/%7Er/nymag/vulture/%7E3/9mWgFTsHXuw/sesame_street_does_mad_men.html">Sesame Street Does Mad Men</a></div><div class="gf-author">by&nbsp;Lane Brown</div><div class="gf-spacer">-</div><div class="gf-relativePublishedDate">Aug 03, 2009</div><div class="gf-snippet">In
+an apparent nod to Sesame Street's adults-only, tobacco-smoking early
+days, the kids' show will parody Mad Men on an episode ...</div></div></div><div class="gfc-result"><div class="gf-result"><div class="gf-title"><a target="_self" class="gf-title" href="http://blogs.tnr.com/tnr/blogs/the_plank/archive/2009/07/29/hobo-by-playmobil.aspx">Hobo, by Playmobil</a></div><div class="gf-author">by&nbsp;Chris Orr</div><div class="gf-spacer">-</div><div class="gf-relativePublishedDate">Jul 29, 2009</div><div class="gf-snippet">&nbsp;...and getting rousted by the police, no less. Who says children need to be sheltered from life's unhappier realities? ...</div></div></div><div class="gfc-result"><div class="gf-result"><div class="gf-title"><a target="_self" class="gf-title" href="http://www.clusterflock.org/2009/07/i-am-not-entirely-sure-of-what-to-make-of-this.html">I am not entirely sure of what to make of this.</a></div><div class="gf-author">by&nbsp;Andrew Simone</div><div class="gf-spacer">-</div><div class="gf-relativePublishedDate">Jul 30, 2009</div><div class="gf-snippet">
+More.</div></div></div><div class="gfc-result"><div class="gf-result"><div class="gf-title"><a target="_self" class="gf-title" href="http://experimentaletc.blogspot.com/2009/07/monks.html">The Monks</a></div><div class="gf-author">by&nbsp;joao</div><div class="gf-spacer">-</div><div class="gf-relativePublishedDate">Jul 31, 2009</div><div class="gf-snippet">info last.fm / wiki"... no one ever came up with a whole album of such dementia. The Monks' Black Monk Time is a gem born of ...</div></div></div><div class="gfc-result"><div class="gf-result"><div class="gf-title"><a target="_self" class="gf-title" href="http://feedproxy.google.com/%7Er/Techcrunch/%7E3/ypYZMA5mKFw/">Why The FCC Wants To Smash Open The iPhone</a></div><div class="gf-author">by&nbsp;Erick Schonfeld</div><div class="gf-spacer">-</div><div class="gf-relativePublishedDate">Aug 01, 2009</div><div class="gf-snippet">
+Right about now, Apple probably wishes it had never rejected Google Voice and related apps from the iPhone.  Or maybe it was ...</div></div></div><div class="gfc-result"><div class="gf-result"><div class="gf-title"><a target="_self" class="gf-title" href="http://blog.labnotes.org/2009/07/31/code-rush/">Code rush</a></div><div class="gf-author">by&nbsp;Assaf</div><div class="gf-spacer">-</div><div class="gf-relativePublishedDate">Jul 31, 2009</div><div class="gf-snippet">
+A PBS documentary on the early days of Mozilla:
+The film follows a group of Netscape engineers as they pursue at that time a ...</div></div></div><div class="gfc-result"><div class="gf-result"><div class="gf-title"><a target="_self" class="gf-title" href="http://blogoscoped.com/archive/2009-07-30-n65.html">Marissa Mayer Interview at Digg</a></div><div class="gf-author">by&nbsp;Philipp Lenssen</div><div class="gf-spacer">-</div><div class="gf-relativePublishedDate">Jul 30, 2009</div><div class="gf-snippet">
+
+The Digg community voted on questions to be asked to Google’s Marissa Mayer. The questions were:
+
+
+“Do you ever get disturbed ...</div></div></div></div></div></div></div></div>
+</div>
+<div class="clear"></div>
+<span class="widget-item-control">
+<span class="item-control blog-admin">
+<a class="quickedit" href="http://www.blogger.com/rearrange?blogID=3943397105358047332&amp;widgetType=HTML&amp;widgetId=HTML1&amp;action=editWidget" onclick='return _WidgetManager._PopupConfig(document.getElementById("HTML1"));' target="configHTML1" title="Edit">
+<img alt="" src="ffmpeg%20markin-markout,%20av%20resync,%20and%20muxing_files/icon18_wrench_allbkg.png" width="18" height="18">
+</a>
+</span>
+</span>
+<div class="clear"></div>
+</div><div class="widget Label" id="Label1">
+<h2 id="index" style="border-bottom: 1px solid rgb(233, 233, 233); margin-bottom: 4px; cursor: pointer;" title="a table of contents of sorts">Index
+<span style="font-size: 0.7em; color: rgb(85, 136, 170);">(clickkkk.)</span></h2>
+<div class="widget-content" style="margin-bottom: 10px;"><div class="hide">
+<ul>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/%3F%3F%3F">???</a>
+<span dir="ltr">(3)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/a%20milestone%20of%20sorts">a milestone of sorts</a>
+<span dir="ltr">(2)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/about">about</a>
+<span dir="ltr">(14)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/absurd">absurd</a>
+<span dir="ltr">(4)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/advertising">advertising</a>
+<span dir="ltr">(12)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/affirmation">affirmation</a>
+<span dir="ltr">(1)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/an%20artist">an artist</a>
+<span dir="ltr">(1)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/animals">animals</a>
+<span dir="ltr">(24)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/apple">apple</a>
+<span dir="ltr">(2)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/arbor%20day">arbor day</a>
+<span dir="ltr">(1)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/art%2Bdesign">art+design</a>
+<span dir="ltr">(14)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/beer">beer</a>
+<span dir="ltr">(2)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/bikes">bikes</a>
+<span dir="ltr">(2)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/bitching">bitching</a>
+<span dir="ltr">(10)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/black%20magic">black magic</a>
+<span dir="ltr">(3)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/books">books</a>
+<span dir="ltr">(3)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/browsing">browsing</a>
+<span dir="ltr">(1)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/bug%20powder">bug powder</a>
+<span dir="ltr">(5)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/carp">carp</a>
+<span dir="ltr">(1)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/cartoons">cartoons</a>
+<span dir="ltr">(1)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/cats">cats</a>
+<span dir="ltr">(1)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/celebrity">celebrity</a>
+<span dir="ltr">(9)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/chili">chili</a>
+<span dir="ltr">(1)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/colors">colors</a>
+<span dir="ltr">(2)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/computers">computers</a>
+<span dir="ltr">(2)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/cool">cool</a>
+<span dir="ltr">(2)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/copyright">copyright</a>
+<span dir="ltr">(2)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/darpa%20projects">darpa projects</a>
+<span dir="ltr">(2)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/data%20visualization">data visualization</a>
+<span dir="ltr">(3)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/david%20lynch">david lynch</a>
+<span dir="ltr">(2)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/deception">deception</a>
+<span dir="ltr">(10)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/desktops">desktops</a>
+<span dir="ltr">(15)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/dipset">dipset</a>
+<span dir="ltr">(3)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/disease">disease</a>
+<span dir="ltr">(1)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/dogs">dogs</a>
+<span dir="ltr">(11)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/dolemite">dolemite</a>
+<span dir="ltr">(2)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/doomsday%20scenarios">doomsday scenarios</a>
+<span dir="ltr">(1)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/drugs">drugs</a>
+<span dir="ltr">(7)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/etymology">etymology</a>
+<span dir="ltr">(1)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/evil">evil</a>
+<span dir="ltr">(6)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/fighting%20evil">fighting evil</a>
+<span dir="ltr">(7)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/food">food</a>
+<span dir="ltr">(6)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/fuck%20the%20internet">fuck the internet</a>
+<span dir="ltr">(1)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/funk">funk</a>
+<span dir="ltr">(6)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/fyi">fyi</a>
+<span dir="ltr">(1)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/games">games</a>
+<span dir="ltr">(31)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/geekin%27">geekin'</a>
+<span dir="ltr">(37)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/gifs">gifs</a>
+<span dir="ltr">(3)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/gnu%20screen">gnu screen</a>
+<span dir="ltr">(1)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/good%20ideas">good ideas</a>
+<span dir="ltr">(5)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/google">google</a>
+<span dir="ltr">(7)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/great%20quotes">great quotes</a>
+<span dir="ltr">(16)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/greed">greed</a>
+<span dir="ltr">(11)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/halloween">halloween</a>
+<span dir="ltr">(4)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/health">health</a>
+<span dir="ltr">(5)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/health%20%2B%20medicine">health + medicine</a>
+<span dir="ltr">(13)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/heinous%20crimes">heinous crimes</a>
+<span dir="ltr">(2)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/holy%20fucking%20shit">holy fucking shit</a>
+<span dir="ltr">(4)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/horror">horror</a>
+<span dir="ltr">(5)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/howto">howto</a>
+<span dir="ltr">(12)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/I%20should%20have%20taken%20creative%20writing">I should have taken creative writing</a>
+<span dir="ltr">(1)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/I%27ll%20never%20reveal%20the%20Wu%20Tang%20secret">I'll never reveal the Wu Tang secret</a>
+<span dir="ltr">(3)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/inkscape">inkscape</a>
+<span dir="ltr">(21)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/internet">internet</a>
+<span dir="ltr">(23)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/japan">japan</a>
+<span dir="ltr">(2)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/jesco%20white">jesco white</a>
+<span dir="ltr">(2)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/karate">karate</a>
+<span dir="ltr">(2)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/karate%20kicks%20were%20in%20his%20past">karate kicks were in his past</a>
+<span dir="ltr">(3)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/life">life</a>
+<span dir="ltr">(1)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/life%20and%20death">life and death</a>
+<span dir="ltr">(26)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/linux">linux</a>
+<span dir="ltr">(35)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/lol">lol</a>
+<span dir="ltr">(1)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/making%20a%20killing">making a killing</a>
+<span dir="ltr">(1)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/media%20effects">media effects</a>
+<span dir="ltr">(2)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/medicine">medicine</a>
+<span dir="ltr">(9)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/microsoft">microsoft</a>
+<span dir="ltr">(2)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/money">money</a>
+<span dir="ltr">(2)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/monsters">monsters</a>
+<span dir="ltr">(1)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/motivating%20factors">motivating factors</a>
+<span dir="ltr">(1)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/movies">movies</a>
+<span dir="ltr">(55)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/mp3">mp3</a>
+<span dir="ltr">(8)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/music">music</a>
+<span dir="ltr">(63)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/news">news</a>
+<span dir="ltr">(81)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/north%20korea">north korea</a>
+<span dir="ltr">(3)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/omg">omg</a>
+<span dir="ltr">(1)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/on%20being%20huge">on being huge</a>
+<span dir="ltr">(1)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/penis%20griefing">penis griefing</a>
+<span dir="ltr">(1)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/photographs">photographs</a>
+<span dir="ltr">(22)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/pics">pics</a>
+<span dir="ltr">(2)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/pigs">pigs</a>
+<span dir="ltr">(3)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/piracy">piracy</a>
+<span dir="ltr">(1)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/psychology">psychology</a>
+<span dir="ltr">(2)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/question%20for%20the%20%22community%22">question for the "community"</a>
+<span dir="ltr">(1)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/rap">rap</a>
+<span dir="ltr">(1)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/real%20hawk">real hawk</a>
+<span dir="ltr">(1)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/real%20life%20cartoon%20characters">real life cartoon characters</a>
+<span dir="ltr">(2)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/real%20talk">real talk</a>
+<span dir="ltr">(23)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/relaxation">relaxation</a>
+<span dir="ltr">(3)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/robert%20kelly">robert kelly</a>
+<span dir="ltr">(2)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/robots">robots</a>
+<span dir="ltr">(4)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/roosterflix">roosterflix</a>
+<span dir="ltr">(1)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/running%20on%20fumes">running on fumes</a>
+<span dir="ltr">(3)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/science">science</a>
+<span dir="ltr">(6)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/science%20fiction">science fiction</a>
+<span dir="ltr">(4)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/seasons%20greetings%20mother%20fuckers">seasons greetings mother fuckers</a>
+<span dir="ltr">(1)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/sex">sex</a>
+<span dir="ltr">(4)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/shark%20week">shark week</a>
+<span dir="ltr">(1)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/sir%20charles%20manson">sir charles manson</a>
+<span dir="ltr">(2)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/software">software</a>
+<span dir="ltr">(2)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/specials">specials</a>
+<span dir="ltr">(9)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/sports">sports</a>
+<span dir="ltr">(1)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/stories">stories</a>
+<span dir="ltr">(3)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/streetwear%20is%20killing%20me">streetwear is killing me</a>
+<span dir="ltr">(2)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/stuff">stuff</a>
+<span dir="ltr">(1)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/television">television</a>
+<span dir="ltr">(14)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/the%20dog%20finally%20succumed%20when%20the%20horse%20planted%20both%20fore%20feet%20on%20its%20body.%20crushing%20it">the dog finally succumed when the horse planted both fore feet on its body. crushing it</a>
+<span dir="ltr">(4)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/the%20economy%20is%20fucked">the economy is fucked</a>
+<span dir="ltr">(1)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/the%20future">the future</a>
+<span dir="ltr">(8)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/the%20internet%20lol">the internet lol</a>
+<span dir="ltr">(1)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/the%20past">the past</a>
+<span dir="ltr">(41)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/the%20reptilian%20conspiracy">the reptilian conspiracy</a>
+<span dir="ltr">(3)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/the%20riches%20of%20the%20internet">the riches of the internet</a>
+<span dir="ltr">(4)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/the%20scene">the scene</a>
+<span dir="ltr">(5)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/Thirty-nine-year-old%20Tetsunori%20Nanpei">Thirty-nine-year-old Tetsunori Nanpei</a>
+<span dir="ltr">(1)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/tips">tips</a>
+<span dir="ltr">(2)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/tools">tools</a>
+<span dir="ltr">(1)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/tracy%20morgan">tracy morgan</a>
+<span dir="ltr">(2)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/trends">trends</a>
+<span dir="ltr">(5)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/typography">typography</a>
+<span dir="ltr">(2)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/variety">variety</a>
+<span dir="ltr">(2)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/video">video</a>
+<span dir="ltr">(89)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/violence">violence</a>
+<span dir="ltr">(2)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/war">war</a>
+<span dir="ltr">(3)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/what">what</a>
+<span dir="ltr">(57)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/windows">windows</a>
+<span dir="ltr">(4)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/world%20issues">world issues</a>
+<span dir="ltr">(1)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/wow">wow</a>
+<span dir="ltr">(2)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/writers">writers</a>
+<span dir="ltr">(8)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/wuff%20----%20wuff">wuff ---- wuff</a>
+<span dir="ltr">(2)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/yes">yes</a>
+<span dir="ltr">(1)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/YOUR%20STUPID%20DESKTOP">YOUR STUPID DESKTOP</a>
+<span dir="ltr">(7)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/youtube">youtube</a>
+<span dir="ltr">(27)</span>
+</li>
+<li style="list-style-type: none;">
+<a dir="ltr" href="http://blog.ahfr.org/search/label/youtube%20is%20a%20ghetto">youtube is a ghetto</a>
+<span dir="ltr">(9)</span>
+</li>
+</ul>
+</div>
+<div class="clear"></div>
+<span class="widget-item-control">
+<span class="item-control blog-admin">
+<a class="quickedit" href="http://www.blogger.com/rearrange?blogID=3943397105358047332&amp;widgetType=Label&amp;widgetId=Label1&amp;action=editWidget" onclick='return _WidgetManager._PopupConfig(document.getElementById("Label1"));' target="configLabel1" title="Edit">
+<img alt="" src="ffmpeg%20markin-markout,%20av%20resync,%20and%20muxing_files/icon18_wrench_allbkg.png" width="18" height="18">
+</a>
+</span>
+</span>
+<div class="clear"></div>
+</div>
+</div>
+<div class="widget HTML" id="HTML2">
+</div><div class="widget Subscribe" id="Subscribe1">
+<div style="white-space: nowrap;">
+<h2 class="title" style="border-bottom: 1px solid rgb(233, 233, 233);">
+</h2>
+<div class="widget-content">
+<div class="subscribe-wrapper subscribe-type-POST">
+<div class="subscribe expanded subscribe-type-POST" id="SW_READER_LIST_Subscribe1POST" style="display: none;">
+<div class="top">
+<span class="inner" onclick='return(_SW_toggleReaderList(event, "Subscribe1POST"));'>
+<img class="subscribe-dropdown-arrow" src="ffmpeg%20markin-markout,%20av%20resync,%20and%20muxing_files/arrow_dropdown.gif">
+<img alt="" class="feed-icon" src="ffmpeg%20markin-markout,%20av%20resync,%20and%20muxing_files/icon_feed12.png" align="absmiddle" border="0">
+Posts
+</span>
+<ul class="feed-reader-links">
+<a class="feed-reader-link" href="http://www.google.com/ig/add?source=bstp&amp;feedurl=http%3A%2F%2Fblog.ahfr.org%2Ffeeds%2Fposts%2Fdefault" target="_blank">
+<img src="ffmpeg%20markin-markout,%20av%20resync,%20and%20muxing_files/subscribe-google.png">
+</a>
+<a class="feed-reader-link" href="http://www.bloglines.com/sub/http://blog.ahfr.org/feeds/posts/default" target="_blank">
+<img src="ffmpeg%20markin-markout,%20av%20resync,%20and%20muxing_files/subscribe-bloglines.png">
+</a>
+<a class="feed-reader-link" href="http://www.netvibes.com/subscribe.php?url=http%3A%2F%2Fblog.ahfr.org%2Ffeeds%2Fposts%2Fdefault" target="_blank">
+<img src="ffmpeg%20markin-markout,%20av%20resync,%20and%20muxing_files/subscribe-netvibes.png">
+</a>
+<a class="feed-reader-link" href="http://www.newsgator.com/ngs/subscriber/subext.aspx?url=http%3A%2F%2Fblog.ahfr.org%2Ffeeds%2Fposts%2Fdefault" target="_blank">
+<img src="ffmpeg%20markin-markout,%20av%20resync,%20and%20muxing_files/subscribe-newsgator.png">
+</a>
+<a class="feed-reader-link" href="http://add.my.yahoo.com/content?url=http%3A%2F%2Fblog.ahfr.org%2Ffeeds%2Fposts%2Fdefault" target="_blank">
+<img src="ffmpeg%20markin-markout,%20av%20resync,%20and%20muxing_files/subscribe-yahoo.png">
+</a>
+<a class="feed-reader-link" href="http://blog.ahfr.org/feeds/posts/default" target="_blank">
+<img class="feed-icon" src="ffmpeg%20markin-markout,%20av%20resync,%20and%20muxing_files/icon_feed12.png" align="absmiddle">
+				                Atom
+				              </a>
+</ul>
+</div>
+<div class="bottom"></div>
+</div>
+<div class="subscribe" id="SW_READER_LIST_CLOSED_Subscribe1POST" onclick='return(_SW_toggleReaderList(event, "Subscribe1POST"));'>
+<div class="top">
+<span class="inner">
+<img class="subscribe-dropdown-arrow" src="ffmpeg%20markin-markout,%20av%20resync,%20and%20muxing_files/arrow_dropdown.gif">
+<span onclick='return(_SW_toggleReaderList(event, "Subscribe1POST"));'>
+<img alt="" class="feed-icon" src="ffmpeg%20markin-markout,%20av%20resync,%20and%20muxing_files/icon_feed12.png" align="absmiddle" border="0">
+Posts
+</span>
+</span>
+</div>
+<div class="bottom"></div>
+</div>
+</div>
+<div class="subscribe-wrapper subscribe-type-PER_POST">
+<div class="subscribe expanded subscribe-type-PER_POST" id="SW_READER_LIST_Subscribe1PER_POST" style="display: none;">
+<div class="top">
+<span class="inner" onclick='return(_SW_toggleReaderList(event, "Subscribe1PER_POST"));'>
+<img class="subscribe-dropdown-arrow" src="ffmpeg%20markin-markout,%20av%20resync,%20and%20muxing_files/arrow_dropdown.gif">
+<img alt="" class="feed-icon" src="ffmpeg%20markin-markout,%20av%20resync,%20and%20muxing_files/icon_feed12.png" align="absmiddle" border="0">
+Comments
+</span>
+<ul class="feed-reader-links">
+<a class="feed-reader-link" href="http://www.google.com/ig/add?source=bstp&amp;feedurl=http%3A%2F%2Fblog.ahfr.org%2Ffeeds%2F2742838784193321545%2Fcomments%2Fdefault" target="_blank">
+<img src="ffmpeg%20markin-markout,%20av%20resync,%20and%20muxing_files/subscribe-google.png">
+</a>
+<a class="feed-reader-link" href="http://www.bloglines.com/sub/http://blog.ahfr.org/feeds/2742838784193321545/comments/default" target="_blank">
+<img src="ffmpeg%20markin-markout,%20av%20resync,%20and%20muxing_files/subscribe-bloglines.png">
+</a>
+<a class="feed-reader-link" href="http://www.netvibes.com/subscribe.php?url=http%3A%2F%2Fblog.ahfr.org%2Ffeeds%2F2742838784193321545%2Fcomments%2Fdefault" target="_blank">
+<img src="ffmpeg%20markin-markout,%20av%20resync,%20and%20muxing_files/subscribe-netvibes.png">
+</a>
+<a class="feed-reader-link" href="http://www.newsgator.com/ngs/subscriber/subext.aspx?url=http%3A%2F%2Fblog.ahfr.org%2Ffeeds%2F2742838784193321545%2Fcomments%2Fdefault" target="_blank">
+<img src="ffmpeg%20markin-markout,%20av%20resync,%20and%20muxing_files/subscribe-newsgator.png">
+</a>
+<a class="feed-reader-link" href="http://add.my.yahoo.com/content?url=http%3A%2F%2Fblog.ahfr.org%2Ffeeds%2F2742838784193321545%2Fcomments%2Fdefault" target="_blank">
+<img src="ffmpeg%20markin-markout,%20av%20resync,%20and%20muxing_files/subscribe-yahoo.png">
+</a>
+<a class="feed-reader-link" href="http://blog.ahfr.org/feeds/2742838784193321545/comments/default" target="_blank">
+<img class="feed-icon" src="ffmpeg%20markin-markout,%20av%20resync,%20and%20muxing_files/icon_feed12.png" align="absmiddle">
+				                Atom
+				              </a>
+</ul>
+</div>
+<div class="bottom"></div>
+</div>
+<div class="subscribe" id="SW_READER_LIST_CLOSED_Subscribe1PER_POST" onclick='return(_SW_toggleReaderList(event, "Subscribe1PER_POST"));'>
+<div class="top">
+<span class="inner">
+<img class="subscribe-dropdown-arrow" src="ffmpeg%20markin-markout,%20av%20resync,%20and%20muxing_files/arrow_dropdown.gif">
+<span onclick='return(_SW_toggleReaderList(event, "Subscribe1PER_POST"));'>
+<img alt="" class="feed-icon" src="ffmpeg%20markin-markout,%20av%20resync,%20and%20muxing_files/icon_feed12.png" align="absmiddle" border="0">
+Comments
+</span>
+</span>
+</div>
+<div class="bottom"></div>
+</div>
+</div>
+<div style="clear: both;"></div>
+</div>
+</div>
+<div class="clear"></div>
+<span class="widget-item-control">
+<span class="item-control blog-admin">
+<a class="quickedit" href="http://www.blogger.com/rearrange?blogID=3943397105358047332&amp;widgetType=Subscribe&amp;widgetId=Subscribe1&amp;action=editWidget" onclick='return _WidgetManager._PopupConfig(document.getElementById("Subscribe1"));' target="configSubscribe1" title="Edit">
+<img alt="" src="ffmpeg%20markin-markout,%20av%20resync,%20and%20muxing_files/icon18_wrench_allbkg.png" width="18" height="18">
+</a>
+</span>
+</span>
+<div class="clear"></div>
+</div><div class="widget BloggerButton" id="BloggerButton1">
+<div class="widget-content" style="padding-left: 8px;">
+<a href="http://www.blogger.com/"><img alt="Powered By Blogger" src="ffmpeg%20markin-markout,%20av%20resync,%20and%20muxing_files/blogger-simple-white.gif"></a>
+<div class="clear"></div>
+<span class="widget-item-control">
+<span class="item-control blog-admin">
+<a class="quickedit" href="http://www.blogger.com/rearrange?blogID=3943397105358047332&amp;widgetType=BloggerButton&amp;widgetId=BloggerButton1&amp;action=editWidget" onclick='return _WidgetManager._PopupConfig(document.getElementById("BloggerButton1"));' target="configBloggerButton1" title="Edit">
+<img alt="" src="ffmpeg%20markin-markout,%20av%20resync,%20and%20muxing_files/icon18_wrench_allbkg.png" width="18" height="18">
+</a>
+</span>
+</span>
+<div class="clear"></div>
+</div>
+</div></div>
+</div>
+</div>
+<div id="footer-wrapper">
+<div class="footer section" id="footer"><div class="widget HTML" id="HTML4">
+<div class="widget-content">
+<div id="footer-text">
+  2009. And, forever.
+</div>
+</div>
+<div class="clear"></div>
+<span class="widget-item-control">
+<span class="item-control blog-admin">
+<a class="quickedit" href="http://www.blogger.com/rearrange?blogID=3943397105358047332&amp;widgetType=HTML&amp;widgetId=HTML4&amp;action=editWidget" onclick='return _WidgetManager._PopupConfig(document.getElementById("HTML4"));' target="configHTML4" title="Edit">
+<img alt="" src="ffmpeg%20markin-markout,%20av%20resync,%20and%20muxing_files/icon18_wrench_allbkg.png" width="18" height="18">
+</a>
+</span>
+</span>
+<div class="clear"></div>
+</div></div>
+</div>
+<script src="ffmpeg%20markin-markout,%20av%20resync,%20and%20muxing_files/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-57092-6";
+urchinTracker();
+</script>
+<script type="text/javascript" src="ffmpeg%20markin-markout,%20av%20resync,%20and%20muxing_files/1718410760-widgets.js"></script>
+<script type="text/javascript">
+_WidgetManager._Init('http://www.blogger.com/rearrange?blogID=3943397105358047332', 'http://blog.ahfr.org/2008/08/fuckin-ffmpeg.html','3943397105358047332');
+_WidgetManager._SetPageActionUrl('http://www.blogger.com/display?blogID=3943397105358047332', 'EQsheGq_T77rxR-saoTyRnkTTOk:1249590776812');
+_WidgetManager._SetDataContext([{'name': 'blog', 'data': {'title': 'blogggggg.ahfr.org', 'pageType': 'item', 'url': 'http://blog.ahfr.org/2008/08/fuckin-ffmpeg.html', 'homepageUrl': 'http://blog.ahfr.org/', 'enabledCommentProfileImages': false, 'searchLabel': '', 'searchQuery': '', 'pageName': 'Use FFmpeg!', 'pageTitle': 'blogggggg.ahfr.org: Use FFmpeg!', 'encoding': 'UTF-8', 'locale': 'en-US', 'isPrivate': false, 'languageDirection': 'ltr', 'feedLinks': '\74link rel\75\42alternate\42 type\75\42application/atom+xml\42 title\75\42blogggggg.ahfr.org - Atom\42 href\75\42http://blog.ahfr.org/feeds/posts/default\42 /\76\n\74link rel\75\42alternate\42 type\75\42application/rss+xml\42 title\75\42blogggggg.ahfr.org - RSS\42 href\75\42http://blog.ahfr.org/feeds/posts/default?alt\75rss\42 /\76\n\74link rel\75\42service.post\42 type\75\42application/atom+xml\42 title\75\42blogggggg.ahfr.org - Atom\42 href\75\42http://www.blogger.com/feeds/3943397105358047332/posts/default\42 /\76\n\74link rel\75\42EditURI\42 type\75\42application/rsd+xml\42 title\75\42RSD\42 href\75\42http://www.blogger.com/rsd.g?blogID\0753943397105358047332\42 /\76\n\74link rel\75\42alternate\42 type\75\42application/atom+xml\42 title\75\42blogggggg.ahfr.org - Atom\42 href\75\42http://blog.ahfr.org/feeds/2742838784193321545/comments/default\42 /\76\n', 'meTag': '', 'openIdOpTag': '', 'latencyHeadScript': '\74script type\75\42text/javascript\42\76(function() { var a\75window;function f(e){this.t\75{};this.tick\75function(d,b,c){var i\75c?c:(new Date).getTime();this.t[d]\75[i,b]};this.tick(\42start\42,null,e)}var g\75new f;a.jstiming\75{Timer:f,load:g};try{a.jstiming.pt\75a.external.pageT}catch(h){};a.tickAboveFold\75function(e){var d,b\75e,c\0750;if(b.offsetParent){do c+\75b.offsetTop;while(b\75b.offsetParent)}d\75c;d\74\075750\46\46a.jstiming.load.tick(\42aft\42)};var j\75false;function k(){if(!j){j\75true;a.jstiming.load.tick(\42firstScrollTime\42)}}a.addEventListener?a.addEventListener(\42scroll\42,k,false):a.attachEvent(\42onscroll\42,k); })();\74/script\076'}}]);
+_WidgetManager._SetSystemMarkup({'layout': {'varName': '', 'template': '\74div class\75\47widget-wrap1\47\76\n\74div class\75\47widget-wrap2\47\76\n\74div class\75\47widget-wrap3\47\76\n\74div class\75\47widget-content\47\76\n\74div class\75\47layout-title\47\76\74data:layout-title\76\74/data:layout-title\76\74/div\76\n\74a class\75\47editlink\47 expr:href\75\47data:widget.quickEditUrl\47 expr:onclick\75\47\46quot;return _WidgetManager._PopupConfig(document.getElementById(\\\46quot;\46quot; +       data:widget.instanceId + \46quot;\\\46quot;));\46quot;\47 target\75\47chooseWidget\47\76\74data:edit-link\76\74/data:edit-link\76\74/a\76\n\74/div\76\n\74/div\76\n\74/div\76\n\74/div\076'}, 'quickedit': {'varName': '', 'template': '\74div class\75\47clear\47\76\74/div\76\n\74span class\75\47widget-item-control\47\76\n\74span class\75\47item-control blog-admin\47\76\n\74a class\75\47quickedit\47 expr:href\75\47data:widget.quickEditUrl\47 expr:onclick\75\47\46quot;return _WidgetManager._PopupConfig(document.getElementById(\\\46quot;\46quot; +       data:widget.instanceId + \46quot;\\\46quot;));\46quot;\47 expr:target\75\47\46quot;config\46quot; + data:widget.instanceId\47 expr:title\75\47data:edit-link\47\76\n\74img alt\75\47\47 height\75\04718\47 src\75\47http://img1.blogblog.com/img/icon18_wrench_allbkg.png\47 width\75\04718\47/\76\n\74/a\76\n\74/span\76\n\74/span\76\n\74div class\75\47clear\47\76\74/div\076'}, 'all-head-content': {'varName': 'page', 'template': '\74data:blog.latencyHeadScript\76\74/data:blog.latencyHeadScript\76\n\74meta expr:content\75\47\46quot;text/html; charset\75\46quot; + data:page.encoding\47 http-equiv\75\47Content-Type\47/\76\n\74meta content\75\47true\47 name\75\47MSSmartTagsPreventParsing\47/\76\n\74meta content\75\47blogger\47 name\75\47generator\47/\76\n\74link href\75\47http://www.blogger.com/favicon.ico\47 rel\75\47icon\47 type\75\47image/vnd.microsoft.icon\47/\76\n\74link expr:href\75\47data:blog.url\47 rel\75\47canonical\47/\76\n\74data:blog.feedLinks\76\74/data:blog.feedLinks\76\n\74data:blog.meTag\76\74/data:blog.meTag\76\n\74data:blog.openIdOpTag\76\74/data:blog.openIdOpTag\76\n\74b:if cond\75\47data:page.isPrivate\47\76\n\74meta content\75\47NOINDEX,NOFOLLOW\47 name\75\47robots\47/\76\n\74/b:if\076'}});
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML4', 'footer',{'main': {'varName': '', 'template': '\74b:if cond\75\47data:title !\75 \46quot;\46quot;\47\76\n\74h2 class\75\47title\47\76\74data:title\76\74/data:title\76\74/h2\76\n\74/b:if\76\n\74div class\75\47widget-content\47\76\n\74data:content\76\74/data:content\76\n\74/div\76\n\74b:include name\75\47quickedit\47\76\74/b:include\076'}}, document.getElementById('HTML4'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML3', 'sidebar',{'main': {'varName': '', 'template': '\74b:if cond\75\47data:title !\75 \46quot;\46quot;\47\76\n\74h2 class\75\47title\47\76\74data:title\76\74/data:title\76\74/h2\76\n\74/b:if\76\n\74div class\75\47widget-content\47 style\75\47margin-bottom: 15px;\47\76\n\74data:content\76\74/data:content\76\n\74/div\076'}}, document.getElementById('HTML3'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_LinkListView', new _WidgetInfo('LinkList1', 'sidebar',{'main': {'varName': '', 'template': '\74b:if cond\75\47data:title\47\76\n\74h2 style\75\47margin-top: 10px; border-bottom: 1px solid #e9e9e9; margin-bottom: 0px;\47 title\75\47\47\76Useful Posts\74/h2\76\n\74/b:if\76\n\74div class\75\47widget-content\47 style\75\47margin-bottom: 10px\47\76\n\74ul style\75\47list-style: none; margin-left: 0px; margin-top: 5px;\47\76\n\74b:loop values\75\47data:links\47 var\75\47link\47\76\n\74li\76\74a expr:href\75\47data:link.target\47\76\74span style\75\47border-bottom: 1px dotted black;\47\76\74data:link.name\76\74/data:link.name\76\74/span\76\74/a\76\74/li\76\n\74/b:loop\76\n\74/ul\76\n\74/div\076'}}, document.getElementById('LinkList1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_BlogListView', new _WidgetInfo('BlogList1', 'sidebar',{'main': {'varName': '', 'template': '\74b:if cond\75\47data:title !\75 \46quot;\46quot;\47\76\n\74div id\75\47blog-list-title\47\76\n\74h2 class\75\47title\47 style\75\47border-bottom: 1px solid #e9e9e9; margin-bottom: 5px\47\76\74data:title\76\74/data:title\76\74/h2\76\n\74/div\76\n\74/b:if\76\n\74div class\75\47widget-content\47\76\n\74div class\75\47blog-list-container\47 expr:id\75\47data:widget.instanceId + \46quot;_container\46quot;\47\76\n\74ul expr:id\75\47data:widget.instanceId + \46quot;_blogs\46quot;\47\76\n\74b:loop values\75\47data:items\47 var\75\47item\47\76\n\74li expr:style\75\47data:item.displayStyle\47\76\n\74div class\75\47blog-icon\47\76\n\74b:if cond\75\47data:showIcon \75\75 \46quot;true\46quot;\47\76\n\74input expr:value\75\47data:item.blogIconUrl\47 type\75\47hidden\47/\76\n\74/b:if\76\n\74/div\76\n\74div class\75\47blog-content\47\76\n\74div class\75\47blog-title\47\76\n\74a expr:href\75\47data:item.blogUrl\47 target\75\47_blank\47\76\n\74data:item.blogTitle\76\74/data:item.blogTitle\76\74/a\76\n\74/div\76\n\74div class\75\47item-content\47\76\n\74b:if cond\75\47data:showItemThumbnail \75\75 \46quot;true\46quot;\47\76\n\74b:if cond\75\47data:item.itemThumbnail\47\76\n\74div class\75\47item-thumbnail\47\76\n\74a expr:href\75\47data:item.blogUrl\47 target\75\47_blank\47\76\n\74img alt\75\47\47 border\75\0470\47 expr:height\75\47data:item.itemThumbnail.height\47 expr:src\75\47data:item.itemThumbnail.url\47 expr:width\75\47data:item.itemThumbnail.width\47/\76\n\74/a\76\n\74/div\76\n\74/b:if\76\n\74/b:if\76\n\74b:if cond\75\47data:showItemTitle \75\75 \46quot;true\46quot;\47\76\n\74span class\75\47item-title\47\76\n\74b:if cond\75\47data:item.itemUrl !\75 \46quot;\46quot;\47\76\n\74a expr:href\75\47data:item.itemUrl\47 target\75\47_blank\47\76\n\74data:item.itemTitle\76\74/data:item.itemTitle\76\74/a\76\n\74b:else\76\74/b:else\76\n\74data:item.itemTitle\76\74/data:item.itemTitle\76\n\74/b:if\76\n\74/span\76\n\74/b:if\76\n\74b:if cond\75\47data:showItemSnippet \75\75 \46quot;true\46quot;\47\76\n\74b:if cond\75\47data:showItemTitle \75\75 \46quot;true\46quot;\47\76\n			                      -\n			                    \74/b:if\76\n\74span class\75\47item-snippet\47\76\n\74data:item.itemSnippet\76\74/data:item.itemSnippet\76\n\74/span\76\n\74/b:if\76\n\74b:if cond\75\47data:showTimePeriodSinceLastUpdate \75\75 \46quot;true\46quot;\47\76\n\74div class\75\47item-time\47\76\n\74data:item.timePeriodSinceLastUpdate\76\74/data:item.timePeriodSinceLastUpdate\76\n\74/div\76\n\74/b:if\76\n\74/div\76\n\74/div\76\n\74div style\75\47clear: both;\47\76\74/div\76\n\74/li\76\n\74/b:loop\76\n\74/ul\76\n\74b:if cond\75\47data:numItemsToShow !\75 0\47\76\n\74b:if cond\75\47data:totalItems \46gt; data:numItemsToShow\47\76\n\74div class\75\47show-option\47\76\n\74span expr:id\75\47data:widget.instanceId + \46quot;_show-n\46quot;\47 style\75\47display: none;\47\76\n\74a href\75\47javascript:void(0)\47 onclick\75\47return false;\47\76\74data:showNText\76\74/data:showNText\76\74/a\76\n\74/span\76\n\74span expr:id\75\47data:widget.instanceId + \46quot;_show-all\46quot;\47 style\75\47margin-left: 5px;\47\76\n\74a href\75\47javascript:void(0)\47 onclick\75\47return false;\47\76\74data:showAllText\76\74/data:showAllText\76\74/a\76\n\74/span\76\n\74/div\76\n\74/b:if\76\n\74/b:if\76\n\74b:include name\75\47quickedit\47\76\74/b:include\76\n\74/div\76\n\74/div\076'}}, document.getElementById('BlogList1'), {'numItemsToShow': 0, 'totalItems': 6}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_AdSenseView', new _WidgetInfo('AdSense3', 'sidebar',{'main': {'varName': '', 'template': '\74b:if cond\75\47data:blog.pageType \75\75 \46quot;item\46quot;\47\76\n\74h2 style\75\47margin-top: 10px; border-bottom: 1px solid #e9e9e9; margin-bottom: 0px;\47 title\75\47judge the shit out of me for running        ads\47\76Ads\74/h2\76\n\74div class\75\47widget-content\47\76\n\74data:adCode\76\74/data:adCode\76\n\74/div\76\n\74/b:if\076'}}, document.getElementById('AdSense3'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_BlogArchiveView', new _WidgetInfo('BlogArchive1', 'sidebar',{'main': {'varName': '', 'template': '\74b:if cond\75\47data:blog.pageType \75\75 \46quot;index\46quot;\47\76\n\74b:if cond\75\47data:title\47\76\n\74h2 style\75\47margin-bottom: 4px; border-bottom: 1px solid #e9e9e9;\47\76\74data:title\76\74/data:title\76\74/h2\76\n\74/b:if\76\n\74div class\75\47widget-content\47 style\75\47margin-bottom: 10px\47\76\n\74div id\75\47ArchiveList\47\76\n\74div expr:id\75\47data:widget.instanceId + \46quot;_ArchiveList\46quot;\47\76\n\74b:if cond\75\47data:style \75\75 \46quot;HIERARCHY\46quot;\47\76\n\74b:include data\75\47data\47 name\75\47interval\47\76\74/b:include\76\n\74/b:if\76\n\74b:if cond\75\47data:style \75\75 \46quot;FLAT\46quot;\47\76\n\74b:include data\75\47data\47 name\75\47flat\47\76\74/b:include\76\n\74/b:if\76\n\74b:if cond\75\47data:style \75\75 \46quot;MENU\46quot;\47\76\n\74b:include data\75\47data\47 name\75\47menu\47\76\74/b:include\76\n\74/b:if\76\n\74/div\76\n\74/div\76\n\74b:include name\75\47quickedit\47\76\74/b:include\76\n\74/div\76\n\74/b:if\076'}, 'flat': {'varName': 'data', 'template': '\74ul\76\n\74b:loop values\75\47data:data\47 var\75\47i\47\76\n\74li class\75\47archivedate\47\76\n\74a expr:href\75\47data:i.url\47\76\74data:i.name\76\74/data:i.name\76\74/a\76 (\74data:i.post-count\76\74/data:i.post-count\76)\n				      \74/li\76\n\74/b:loop\76\n\74/ul\076'}, 'menu': {'varName': 'data', 'template': '\74select expr:id\75\47data:widget.instanceId + \46quot;_ArchiveMenu\46quot;\47\76\n\74option value\75\47\47\76\74data:title\76\74/data:title\76\74/option\76\n\74b:loop values\75\47data:data\47 var\75\47i\47\76\n\74option expr:value\75\47data:i.url\47\76\74data:i.name\76\74/data:i.name\76 (\74data:i.post-count\76\74/data:i.post-count\76)\74/option\76\n\74/b:loop\76\n\74/select\076'}, 'interval': {'varName': 'intervalData', 'template': '\74b:loop values\75\47data:intervalData\47 var\75\47i\47\76\n\74ul\76\n\74li expr:class\75\47\46quot;archivedate \46quot; + data:i.expclass\47\76\n\74b:include data\75\47i\47 name\75\47toggle\47\76\74/b:include\76\n\74a class\75\47post-count-link\47 expr:href\75\47data:i.url\47\76\74data:i.name\76\74/data:i.name\76\74/a\76\n\74span class\75\47post-count\47 dir\75\47ltr\47\76(\74data:i.post-count\76\74/data:i.post-count\76)\74/span\76\n\74b:if cond\75\47data:i.data\47\76\n\74b:include data\75\47i.data\47 name\75\47interval\47\76\74/b:include\76\n\74/b:if\76\n\74b:if cond\75\47data:i.posts\47\76\n\74b:include data\75\47i.posts\47 name\75\47posts\47\76\74/b:include\76\n\74/b:if\76\n\74/li\76\n\74/ul\76\n\74/b:loop\076'}, 'toggle': {'varName': 'interval', 'template': '\74b:if cond\75\47data:blog.pageType !\75 \46quot;item\46quot;\47\76\n\74b:if cond\75\47data:interval.toggleId\47\76\n\74b:if cond\75\47data:interval.expclass \75\75 \46quot;expanded\46quot;\47\76\n\74a class\75\47toggle\47 expr:href\75\47data:widget.actionUrl + \46quot;\46amp;action\75toggle\46quot; +                 \46quot;\46amp;dir\75close\46amp;toggle\75\46quot; + data:interval.toggleId + \46quot;\46amp;toggleopen\75\46quot; + data:toggleopen\47\76\n\74span class\75\47zippy toggle-open\47\76\46#9660; \74/span\76\n\74/a\76\n\74b:else\76\74/b:else\76\n\74a class\75\47toggle\47 expr:href\75\47data:widget.actionUrl + \46quot;\46amp;action\75toggle\46quot; +           \46quot;\46amp;dir\75open\46amp;toggle\75\46quot; + data:interval.toggleId + \46quot;\46amp;toggleopen\75\46quot; + data:toggleopen\47\76\n\74span class\75\47zippy\47\76\n\74b:if cond\75\47data:blog.languageDirection \75\75 \46quot;rtl\46quot;\47\76\n				  	            \46#9668;\n				  	          \74b:else\76\74/b:else\76\n				  	            \46#9658;\n		  	  	    		\74/b:if\76\n\74/span\76\n\74/a\76\n\74/b:if\76\n\74/b:if\76\n\74/b:if\076'}, 'posts': {'varName': 'posts', 'template': '\74ul class\75\47posts\47\76\n\74b:loop values\75\47data:posts\47 var\75\47i\47\76\n\74li\76\74a expr:href\75\47data:i.url\47\76\74data:i.title\76\74/data:i.title\76\74/a\76\74/li\76\n\74/b:loop\76\n\74/ul\076'}}, document.getElementById('BlogArchive1'), {'languageDirection': 'ltr'}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML1', 'sidebar',{'main': {'varName': '', 'template': '\74b:if cond\75\47data:title !\75 \46quot;\46quot;\47\76\n\74h2 class\75\47title\47\76\74data:title\76\74/data:title\76\74/h2\76\n\74/b:if\76\n\74div class\75\47widget-content\47\76\n\74data:content\76\74/data:content\76\n\74/div\76\n\74b:include name\75\47quickedit\47\76\74/b:include\076'}}, document.getElementById('HTML1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_LabelView', new _WidgetInfo('Label1', 'sidebar',{'main': {'varName': '', 'template': '\74b:if cond\75\47data:title\47\76\n\74h2 id\75\47index\47 style\75\47margin-bottom: 4px; border-bottom: 1px solid #e9e9e9; cursor: pointer\47 title\75\47a table of contents of sorts\47\76\74data:title\76\74/data:title\76\n\74span style\75\47font-size: 0.7em; color: #5588aa;\47\76(clickkkk.)\74/span\76\74/h2\76\n\74/b:if\76\n\74div class\75\47widget-content\47 style\75\47margin-bottom: 10px;\47\76\74div class\75\47hide\47\76\n\74ul\76\n\74b:loop values\75\47data:labels\47 var\75\47label\47\76\n\74li style\75\47list-style-type:none;\47\76\n\74b:if cond\75\47data:blog.url \75\75 data:label.url\47\76\n\74span expr:dir\75\47data:blog.languageDirection\47\76\74data:label.name\76\74/data:label.name\76\74/span\76\n\74b:else\76\74/b:else\76\n\74a expr:dir\75\47data:blog.languageDirection\47 expr:href\75\47data:label.url\47\76\74data:label.name\76\74/data:label.name\76\74/a\76\n\74/b:if\76\n\74span dir\75\47ltr\47\76(\74data:label.count\76\74/data:label.count\76)\74/span\76\n\74/li\76\n\74/b:loop\76\n\74/ul\76\n\74/div\76\n\74b:include name\75\47quickedit\47\76\74/b:include\76\n\74/div\076'}}, document.getElementById('Label1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML2', 'sidebar',{'main': {'varName': '', 'template': '\74b:if cond\75\47data:title !\75 \46quot;\46quot;\47\76\n\74h2 class\75\47title\47 id\75\47index\47\76\74data:title\76\74/data:title\76\74/h2\76\n\74/b:if\76\n\74b:if cond\75\47data:blog.pageType !\75 \46quot;index\46quot;\47\76\n\74b:else\76\74/b:else\76\n\74div class\75\47widget-content\47\76\n\74data:content\76\74/data:content\76\n\74/div\76\n\74b:include name\75\47quickedit\47\76\74/b:include\76\n\74/b:if\076'}}, document.getElementById('HTML2'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_SubscribeView', new _WidgetInfo('Subscribe1', 'sidebar',{'main': {'varName': '', 'template': '\74b:if cond\75\47data:isPublic\47\76\n\74div style\75\47white-space:nowrap\47\76\n\74h2 class\75\47title\47 style\75\47border-bottom: 1px solid #e9e9e9;\47\76\74data:title\76\74/data:title\76\74/h2\76\n\74div class\75\47widget-content\47\76\n\74b:loop values\75\47data:feeds\47 var\75\47feed\47\76\n\74div expr:class\75\47\46quot;subscribe-wrapper subscribe-type-\46quot; + data:feed.type\47\76\n\74div expr:class\75\47\46quot;subscribe expanded subscribe-type-\46quot; + data:feed.type\47 expr:id\75\47\46quot;SW_READER_LIST_\46quot; + data:widgetId + data:feed.type\47 style\75\47display:none;\47\76\n\74div class\75\47top\47\76\n\74span class\75\47inner\47 expr:onclick\75\47\46quot;return(_SW_toggleReaderList(event, \\\46quot;\46quot; + data:widgetId +               data:feed.type + \46quot;\\\46quot;));\46quot;\47\76\n\74img class\75\47subscribe-dropdown-arrow\47 expr:src\75\47data:arrowDropdownImg\47/\76\n\74img align\75\47absmiddle\47 alt\75\47\47 border\75\0470\47 class\75\47feed-icon\47 expr:src\75\47data:feedIconImg\47/\76\n\74data:feed.title\76\74/data:feed.title\76\n\74/span\76\n\74ul class\75\47feed-reader-links\47\76\n\74a class\75\47feed-reader-link\47 expr:href\75\47\46quot;http://www.google.com/ig/add?source\75bstp\46amp;feedurl\75\46quot; +               data:feed.encodedUrl\47 target\75\47_blank\47\76\n\74img expr:src\75\47data:imagePathBase + \46quot;subscribe-google.png\46quot;\47/\76\n\74/a\76\n\74a class\75\47feed-reader-link\47 expr:href\75\47\46quot;http://www.bloglines.com/sub/\46quot; + data:feed.url\47 target\75\47_blank\47\76\n\74img expr:src\75\47data:imagePathBase + \46quot;subscribe-bloglines.png\46quot;\47/\76\n\74/a\76\n\74a class\75\47feed-reader-link\47 expr:href\75\47\46quot;http://www.netvibes.com/subscribe.php?url\75\46quot; +               data:feed.encodedUrl\47 target\75\47_blank\47\76\n\74img expr:src\75\47data:imagePathBase + \46quot;subscribe-netvibes.png\46quot;\47/\76\n\74/a\76\n\74a class\75\47feed-reader-link\47 expr:href\75\47\46quot;http://www.newsgator.com/ngs/subscriber/subext.aspx?url\75\46quot; +              data:feed.encodedUrl\47 target\75\47_blank\47\76\n\74img expr:src\75\47data:imagePathBase + \46quot;subscribe-newsgator.png\46quot;\47/\76\n\74/a\76\n\74a class\75\47feed-reader-link\47 expr:href\75\47\46quot;http://add.my.yahoo.com/content?url\75\46quot; +               data:feed.encodedUrl\47 target\75\47_blank\47\76\n\74img expr:src\75\47data:imagePathBase + \46quot;subscribe-yahoo.png\46quot;\47/\76\n\74/a\76\n\74a class\75\47feed-reader-link\47 expr:href\75\47data:feed.url\47 target\75\47_blank\47\76\n\74img align\75\47absmiddle\47 class\75\47feed-icon\47 expr:src\75\47data:feedIconImg\47/\76\n				                Atom\n				              \74/a\76\n\74/ul\76\n\74/div\76\n\74div class\75\47bottom\47\76\74/div\76\n\74/div\76\n\74div class\75\47subscribe\47 expr:id\75\47\46quot;SW_READER_LIST_CLOSED_\46quot; + data:widgetId +data:feed.type\47 expr:onclick\75\47\46quot;return(_SW_toggleReaderList(event, \\\46quot;\46quot; + data:widgetId +data:feed.type + \46quot;\\\46quot;));\46quot;\47\76\n\74div class\75\47top\47\76\n\74span class\75\47inner\47\76\n\74img class\75\47subscribe-dropdown-arrow\47 expr:src\75\47data:arrowDropdownImg\47/\76\n\74span expr:onclick\75\47\46quot;return(_SW_toggleReaderList(event, \\\46quot;\46quot; + data:widgetId +data:feed.type + \46quot;\\\46quot;));\46quot;\47\76\n\74img align\75\47absmiddle\47 alt\75\47\47 border\75\0470\47 class\75\47feed-icon\47 expr:src\75\47data:feedIconImg\47/\76\n\74data:feed.title\76\74/data:feed.title\76\n\74/span\76\n\74/span\76\n\74/div\76\n\74div class\75\47bottom\47\76\74/div\76\n\74/div\76\n\74/div\76\n\74/b:loop\76\n\74div style\75\47clear:both\47\76\74/div\76\n\74/div\76\n\74/div\76\n\74b:include name\75\47quickedit\47\76\74/b:include\76\n\74/b:if\076'}}, document.getElementById('Subscribe1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_BloggerButtonView', new _WidgetInfo('BloggerButton1', 'sidebar',{'main': {'varName': '', 'template': '\74div class\75\47widget-content\47 style\75\47padding-left: 8px;\47\76\n\74a href\75\47http://www.blogger.com\47\76\74img alt\75\47Powered By Blogger\47 expr:src\75\47data:fullButton\47/\76\74/a\76\n\74b:include name\75\47quickedit\47\76\74/b:include\76\n\74/div\076'}}, document.getElementById('BloggerButton1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HeaderView', new _WidgetInfo('Header1', 'header'));
+_WidgetManager._RegisterWidget('_NavbarView', new _WidgetInfo('Navbar1', 'navbar'));
+_WidgetManager._RegisterWidget('_BlogView', new _WidgetInfo('Blog1', 'main',{'main': {'varName': 'top', 'template': '\74h3 style\75\47margin-bottom: 0px;  color: #676767; font-weight: normal;\47\76Updated Daily.\74/h3\76\n\74div class\75\47blog-posts hfeed\47\76\n\74b:include data\75\47top\47 name\75\47status-message\47\76\74/b:include\76\n\74data:adStart\76\74/data:adStart\76\n\74b:loop values\75\47data:posts\47 var\75\47post\47\76\n\74b:if cond\75\47data:post.dateHeader\47\76\n\74h2 class\75\47date-header\47 style\75\47padding-top: 5px; font-weight: bold;\47\76\74data:post.dateHeader\76\74/data:post.dateHeader\76 gave rise to...\74/h2\76\n\74/b:if\76\n\74b:include data\75\47post\47 name\75\47post\47\76\74/b:include\76\n\74b:if cond\75\47data:blog.pageType \75\75 \46quot;item\46quot;\47\76\n\74b:include data\75\47post\47 name\75\47comments\47\76\74/b:include\76\n\74/b:if\76\n\74/b:loop\76\n\74data:adEnd\76\74/data:adEnd\76\n\74/div\76\n\74b:include name\75\47nextprev\47\76\74/b:include\76\n\74b:include name\75\47feedLinks\47\76\74/b:include\076'}, 'nextprev': {'varName': '', 'template': '\74div class\75\47blog-pager\47 id\75\47blog-pager\47\76\n\74b:if cond\75\47data:newerPageUrl\47\76\n\74span id\75\47blog-pager-newer-link\47\76\n\74a class\75\47blog-pager-newer-link\47 expr:href\75\47data:newerPageUrl\47 expr:id\75\47data:widget.instanceId + \46quot;_blog-pager-newer-link\46quot;\47 expr:title\75\47data:newerPageTitle\47\76\74data:newerPageTitle\76\74/data:newerPageTitle\76\74/a\76\n\74/span\76\n\74/b:if\76\n\74b:if cond\75\47data:olderPageUrl\47\76\n\74span id\75\47blog-pager-older-link\47\76\n\74a class\75\47blog-pager-older-link\47 expr:href\75\47data:olderPageUrl\47 expr:id\75\47data:widget.instanceId + \46quot;_blog-pager-older-link\46quot;\47 expr:title\75\47data:olderPageTitle\47\76\74data:olderPageTitle\76\74/data:olderPageTitle\76\74/a\76\n\74/span\76\n\74/b:if\76\n\74b:if cond\75\47data:blog.homepageUrl !\75 data:blog.url\47\76\n\74a class\75\47home-link\47 expr:href\75\47data:blog.homepageUrl\47\76\74data:homeMsg\76\74/data:homeMsg\76\74/a\76\n\74b:else\76\74/b:else\76\n\74b:if cond\75\47data:newerPageUrl\47\76\n\74a class\75\47home-link\47 expr:href\75\47data:blog.homepageUrl\47\76\74data:homeMsg\76\74/data:homeMsg\76\74/a\76\n\74/b:if\76\n\74/b:if\76\n\74/div\76\n\74div class\75\47clear\47\76\74/div\076'}, 'post': {'varName': 'post', 'template': '\74div class\75\47post\47\76\n\74a expr:name\75\47data:post.id\47\76\74/a\76\n\74b:if cond\75\47data:post.title\47\76\n\74h3 class\75\47post-title\47\76\n\74b:if cond\75\47data:post.url\47\76\n\74a expr:href\75\47data:post.url\47\76\74data:post.title\76\74/data:post.title\76\74/a\76\n\74b:else\76\74/b:else\76\n\74data:post.title\76\74/data:post.title\76\n\74/b:if\76\n\74/h3\76\n\74/b:if\76\n\74div class\75\47post-header-line-1\47\76\74/div\76\n\74div class\75\47post-body\47 expr:id\75\47\46quot;post-\46quot; + data:post.id\47\76\n\74b:if cond\75\47data:blog.pageType \75\75 \46quot;item\46quot;\47\76\n\74style\76#fullpost{display:inline;}\74/style\76\n\74p\76\74data:post.body\76\74/data:post.body\76\74/p\76\n\74b:else\76\74/b:else\76\n\74style\76#fullpost{display:none;}\74/style\76\n\74p\76\74data:post.body\76\74/data:post.body\76\74/p\76\n\74span id\75\47showlink\47\76\n\74a expr:href\75\47data:post.url\47\76\74span style\75\47font-size:140%; font-weight: bold;\47\76Read Full Post \46#187;\74/span\76\74/a\76\n\74/span\76\n\74script type\75\47text/javascript\47\76\n         checkFull(\46quot;post-\46quot; + \46quot;\74data:post.id\76\74/data:post.id\76\46quot;);\n       \74/script\76\n\74/b:if\76\n\74div style\75\47clear: both;\47\76\74/div\76\n\74/div\76\n\74div class\75\47post-footer\47\76\n\74p class\75\47post-footer-line post-footer-line-1\47\76\n--\74br/\76\n\74a expr:href\75\47data:post.url\47 title\75\47permanent link\47\76#\74/a\76\46amp;nbsp;\n\n\74span class\75\47post-author\47\76\n\74b:if cond\75\47data:top.showAuthor\47\76\n\74data:top.authorLabel\76\74/data:top.authorLabel\76\n\74data:post.author\76\74/data:post.author\76\n\74/b:if\76\n\74/span\76\n\74span class\75\47post-timestamp\47\76\n\74b:if cond\75\47data:top.showTimestamp\47\76\n\74data:top.timestampLabel\76\74/data:top.timestampLabel\76\n\74b:if cond\75\47data:post.url\47\76\n\74a class\75\47timestamp-link\47 expr:href\75\47data:post.url\47 title\75\47permanent link\47\76\74data:post.timestamp\76\74/data:post.timestamp\76\74/a\76.\n        \74/b:if\76\n\74/b:if\76\n\74/span\76\n\74span class\75\47reaction-buttons\47\76\n\74b:if cond\75\47data:top.showReactions\47\76\n\74table border\75\0470\47 cellpadding\75\0470\47 width\75\047100%\47\76\74tr\76\n\74td valign\75\47center\47\76\74span class\75\47reactions-label\47\76\n\74data:top.reactionsLabel\76\74/data:top.reactionsLabel\76\74/span\76\n              \46#160;\74/td\76\n\74td\76\74iframe allowtransparency\75\47true\47 class\75\47reactions-iframe\47 expr:src\75\47data:post.reactionsUrl\47 frameborder\75\0470\47 name\75\47reactions\47 scrolling\75\47no\47\76\74/iframe\76\74/td\76\n\74/tr\76\74/table\76\n\74/b:if\76\n\74/span\76\n\74span class\75\47post-comment-link\47\76\n\74b:if cond\75\47data:blog.pageType !\75 \46quot;item\46quot;\47\76\n\74b:if cond\75\47data:post.allowComments\47\76\n\74a class\75\47comment-link\47 expr:href\75\47data:post.addCommentUrl\47 expr:onclick\75\47data:post.addCommentOnclick\47\76\74b:if cond\75\47data:post.numComments \75\75 1\47\0761 \74data:top.commentLabel\76\74/data:top.commentLabel\76\74b:else\76\74/b:else\76\74data:post.numComments\76\74/data:post.numComments\76\n\74data:top.commentLabelPlural\76\74/data:top.commentLabelPlural\76\74/b:if\76\74/a\76. \46amp;nbsp;\n          \74/b:if\76\n\74/b:if\76\n\74/span\76\n\74b:if cond\75\47data:post.link\47\76\n\74a expr:href\75\47data:post.link\47\76External Link (\46#8594;)\74/a\76\n\74/b:if\76\n\74span class\75\47post-icons\47\76\n\74b:include data\75\47post\47 name\75\47postQuickEdit\47\76\74/b:include\76\n\74/span\76\n\74span class\75\47post-backlinks post-comment-link\47\76\n\74b:if cond\75\47data:blog.pageType !\75 \46quot;item\46quot;\47\76\n\74b:if cond\75\47data:post.showBacklinks\47\76\n\74a class\75\47comment-link\47 expr:href\75\47data:post.url + \46quot;#links\46quot;\47\76\74data:top.backlinkLabel\76\74/data:top.backlinkLabel\76\74/a\76\n\74/b:if\76\n\74/b:if\76\n\74/span\76\n\74/p\76\n\74p class\75\47post-footer-line post-footer-line-2\47\76\74span class\75\47post-labels\47\76\n\74b:if cond\75\47data:post.labels\47\76\n\74span style\75\47font-weight: bold;\47\76tagged:\74/span\76\n\74b:loop values\75\47data:post.labels\47 var\75\47label\47\76\n\74a expr:href\75\47data:label.url + \46quot;?max-results\0755\46quot;\47 rel\75\47tag\47\76\74data:label.name\76\74/data:label.name\76\74/a\76\74b:if cond\75\47data:label.isLast !\75 \46quot;true\46quot;\47\76,\74/b:if\76\n\74/b:loop\76\n\74/b:if\76\n\74/span\76\n\74/p\76\n\74p class\75\47post-footer-line post-footer-line-3\47\76\n\74b:if cond\75\47data:blog.pageType \75\75 \46quot;item\46quot;\47\76\n\74b:if cond\75\47data:post.includeAd\47\76\n\74data:adEnd\76\74/data:adEnd\76\n\74data:adCode\76\74/data:adCode\76\n\74data:adStart\76\74/data:adStart\76\n\74br/\76\n\74/b:if\76\n\74/b:if\76\n\74/p\76\n\74/div\76\n\74/div\076'}, 'postQuickEdit': {'varName': 'post', 'template': '\74b:if cond\75\47data:post.editUrl\47\76\n\74span expr:class\75\47\46quot;item-control \46quot; + data:post.adminClass\47\76\n\74a expr:href\75\47data:post.editUrl\47 expr:title\75\47data:top.editPostMsg\47\76\n\74img alt\75\47quickedit\47 class\75\47icon-action\47 src\75\47http://www.blogger.com/img/icon18_edit_allbkg.gif\47/\76\n\74/a\76\n\74/span\76\n\74/b:if\076'}, 'commentDeleteIcon': {'varName': 'comment', 'template': '\74span expr:class\75\47\46quot;item-control \46quot; + data:comment.adminClass\47\76\n\74a expr:href\75\47data:comment.deleteUrl\47 expr:title\75\47data:top.deleteCommentMsg\47\76\n\74img src\75\47http://www.blogger.com/img/icon_delete13.gif\47/\76\n\74/a\76\n\74/span\076'}, 'backlinkDeleteIcon': {'varName': 'backlink', 'template': '\74span expr:class\75\47\46quot;item-control \46quot; + data:backlink.adminClass\47\76\n\74a expr:href\75\47data:backlink.deleteUrl\47 expr:title\75\47data:top.deleteBacklinkMsg\47\76\n\74img src\75\47http://www.blogger.com/img/icon_delete13.gif\47/\76\n\74/a\76\n\74/span\076'}, 'comments': {'varName': 'post', 'template': '\74div class\75\47comments\47 id\75\47comments\47\76\n\74a name\75\47comments\47\76\74/a\76\n\74b:if cond\75\47data:post.allowComments\47\76\n\74h4\76\n\74b:if cond\75\47data:post.numComments \75\75 1\47\76\n          1 \74data:commentLabel\76\74/data:commentLabel\76:\n        \74b:else\76\74/b:else\76\n\74data:post.numComments\76\74/data:post.numComments\76\n\74data:commentLabelPlural\76\74/data:commentLabelPlural\76:\n        \74/b:if\76\n\74/h4\76\n\74b:if cond\75\47data:post.commentPagingRequired\47\76\n\74span class\75\47paging-control-container\47\76\n\74a expr:class\75\47data:post.oldLinkClass\47 expr:href\75\47data:post.oldestLinkUrl\47\76\74data:post.oldestLinkText\76\74/data:post.oldestLinkText\76\74/a\76\n          \46#160;\n          \74a expr:class\75\47data:post.oldLinkClass\47 expr:href\75\47data:post.olderLinkUrl\47\76\74data:post.olderLinkText\76\74/data:post.olderLinkText\76\74/a\76\n          \46#160;\n          \74data:post.commentRangeText\76\74/data:post.commentRangeText\76\n          \46#160;\n          \74a expr:class\75\47data:post.newLinkClass\47 expr:href\75\47data:post.newerLinkUrl\47\76\74data:post.newerLinkText\76\74/data:post.newerLinkText\76\74/a\76\n          \46#160;\n          \74a expr:class\75\47data:post.newLinkClass\47 expr:href\75\47data:post.newestLinkUrl\47\76\74data:post.newestLinkText\76\74/data:post.newestLinkText\76\74/a\76\n\74/span\76\n\74/b:if\76\n\74dl id\75\47comments-block\47\76\n\74b:loop values\75\47data:post.comments\47 var\75\47comment\47\76\n\74dt expr:class\75\47\46quot;comment-author \46quot; + data:comment.authorClass\47 expr:id\75\47data:comment.anchorName\47\76\n\74a expr:name\75\47data:comment.anchorName\47\76\74/a\76\n\74b:if cond\75\47data:comment.authorUrl\47\76\n\74a expr:href\75\47data:comment.authorUrl\47 rel\75\47nofollow\47\76\74data:comment.author\76\74/data:comment.author\76\74/a\76\n\74b:else\76\74/b:else\76\n\74data:comment.author\76\74/data:comment.author\76\n\74/b:if\76\n\74data:commentPostedByMsg\76\74/data:commentPostedByMsg\76\n\74/dt\76\n\74dd class\75\47comment-body\47\76\n\74b:if cond\75\47data:comment.isDeleted\47\76\n\74span class\75\47deleted-comment\47\76\74data:comment.body\76\74/data:comment.body\76\74/span\76\n\74b:else\76\74/b:else\76\n\74p\76\74data:comment.body\76\74/data:comment.body\76\74/p\76\n\74/b:if\76\n\74/dd\76\n\74dd class\75\47comment-footer\47\76\n\74span class\75\47comment-timestamp\47\76\n\74a expr:href\75\47data:comment.url\47 title\75\47comment permalink\47\76\n\74data:comment.timestamp\76\74/data:comment.timestamp\76\n\74/a\76\n\74b:include data\75\47comment\47 name\75\47commentDeleteIcon\47\76\74/b:include\76\n\74/span\76\n\74/dd\76\n\74/b:loop\76\n\74/dl\76\n\74b:if cond\75\47data:post.commentPagingRequired\47\76\n\74span class\75\47paging-control-container\47\76\n\74a expr:class\75\47data:post.oldLinkClass\47 expr:href\75\47data:post.oldestLinkUrl\47\76\n\74data:post.oldestLinkText\76\74/data:post.oldestLinkText\76\n\74/a\76\n\74a expr:class\75\47data:post.oldLinkClass\47 expr:href\75\47data:post.olderLinkUrl\47\76\n\74data:post.olderLinkText\76\74/data:post.olderLinkText\76\n\74/a\76\n          \46#160;\n          \74data:post.commentRangeText\76\74/data:post.commentRangeText\76\n          \46#160;\n          \74a expr:class\75\47data:post.newLinkClass\47 expr:href\75\47data:post.newerLinkUrl\47\76\n\74data:post.newerLinkText\76\74/data:post.newerLinkText\76\n\74/a\76\n\74a expr:class\75\47data:post.newLinkClass\47 expr:href\75\47data:post.newestLinkUrl\47\76\n\74data:post.newestLinkText\76\74/data:post.newestLinkText\76\n\74/a\76\n\74/span\76\n\74/b:if\76\n\74p class\75\47comment-footer\47\76\n\74b:if cond\75\47data:post.embedCommentForm\47\76\n\74b:include data\75\47post\47 name\75\47comment-form\47\76\74/b:include\76\n\74b:else\76\74/b:else\76\n\74b:if cond\75\47data:post.allowComments\47\76\n\74a expr:href\75\47data:post.addCommentUrl\47 expr:onclick\75\47data:post.addCommentOnclick\47\76\74data:postCommentMsg\76\74/data:postCommentMsg\76\74/a\76\n\74/b:if\76\n\74/b:if\76\n\74/p\76\n\74/b:if\76\n\74div id\75\47backlinks-container\47\76\n\74div expr:id\75\47data:widget.instanceId + \46quot;_backlinks-container\46quot;\47\76\n\74b:if cond\75\47data:post.showBacklinks\47\76\n\74b:include data\75\47post\47 name\75\47backlinks\47\76\74/b:include\76\n\74/b:if\76\n\74/div\76\n\74/div\76\n\74/div\076'}, 'comment-form': {'varName': 'post', 'template': '\74div class\75\47comment-form\47\76\n\74a name\75\47comment-form\47\76\74/a\76\n\74h4 id\75\47comment-post-message\47\76\74data:postCommentMsg\76\74/data:postCommentMsg\76\74/h4\76\n\74p\76\74data:blogCommentMessage\76\74/data:blogCommentMessage\76\74/p\76\n\74data:blogTeamBlogMessage\76\74/data:blogTeamBlogMessage\76\n\74a expr:href\75\47data:post.commentFormIframeSrc\47 id\75\47comment-editor-src\47\76\74/a\76\n\74iframe allowtransparency\75\47true\47 class\75\47blogger-iframe-colorize blogger-comment-from-post\47 frameborder\75\0470\47 height\75\047410\47 id\75\47comment-editor\47 name\75\47comment-editor\47 src\75\47\47 width\75\047100%\47\76\74/iframe\76\n\74data:post.friendConnectJs\76\74/data:post.friendConnectJs\76\n\74data:post.cmtfpIframe\76\74/data:post.cmtfpIframe\76\n\74script type\75\47text/javascript\47\76\n      BLOG_CMT_createIframe(\46#39;\74data:post.appRpcRelayPath\76\74/data:post.appRpcRelayPath\76\46#39;, \46#39;\74data:post.communityId\76\74/data:post.communityId\76\46#39;);\n    \74/script\76\n\74/div\076'}, 'backlinks': {'varName': 'post', 'template': '\74a name\75\47links\47\76\74/a\76\74h4\76\74data:post.backlinksLabel\76\74/data:post.backlinksLabel\76\74/h4\76\n\74b:if cond\75\47data:post.numBacklinks !\75 0\47\76\n\74dl class\75\47comments-block\47 id\75\47comments-block\47\76\n\74b:loop values\75\47data:post.backlinks\47 var\75\47backlink\47\76\n\74div class\75\47collapsed-backlink backlink-control\47\76\n\74dt class\75\47comment-title\47\76\n\74span class\75\47backlink-toggle-zippy\47\76\46#160;\74/span\76\n\74a expr:href\75\47data:backlink.url\47 rel\75\47nofollow\47\76\74data:backlink.title\76\74/data:backlink.title\76\74/a\76\n\74b:include data\75\47backlink\47 name\75\47backlinkDeleteIcon\47\76\74/b:include\76\n\74/dt\76\n\74dd class\75\47comment-body collapseable\47\76\n\74data:backlink.snippet\76\74/data:backlink.snippet\76\n\74/dd\76\n\74dd class\75\47comment-footer collapseable\47\76\n\74span class\75\47comment-author\47\76\74data:post.authorLabel\76\74/data:post.authorLabel\76\n\74data:backlink.author\76\74/data:backlink.author\76\74/span\76\n\74span class\75\47comment-timestamp\47\76\74data:post.timestampLabel\76\74/data:post.timestampLabel\76\n\74data:backlink.timestamp\76\74/data:backlink.timestamp\76\74/span\76\n\74/dd\76\n\74/div\76\n\74/b:loop\76\n\74/dl\76\n\74/b:if\76\n\74p class\75\47comment-footer\47\76\n\74a class\75\47comment-link\47 expr:href\75\47data:post.createLinkUrl\47 expr:id\75\47data:widget.instanceId + \46quot;_backlinks-create-link\46quot;\47 target\75\47_blank\47\76\74data:post.createLinkLabel\76\74/data:post.createLinkLabel\76\74/a\76\n\74/p\076'}, 'feedLinks': {'varName': '', 'template': '\74b:if cond\75\47data:blog.pageType !\75 \46quot;item\46quot;\47\76\n\74b:if cond\75\47data:feedLinks\47\76\n\74div class\75\47blog-feeds\47\76\n\74b:include data\75\47feedLinks\47 name\75\47feedLinksBody\47\76\74/b:include\76\n\74/div\76\n\74/b:if\76\n\74b:else\76\74/b:else\76\n\74div class\75\47post-feeds\47\76\n\74b:loop values\75\47data:posts\47 var\75\47post\47\76\n\74b:if cond\75\47data:post.allowComments\47\76\n\74b:if cond\75\47data:post.feedLinks\47\76\n\74b:include data\75\47post.feedLinks\47 name\75\47feedLinksBody\47\76\74/b:include\76\n\74/b:if\76\n\74/b:if\76\n\74/b:loop\76\n\74/div\76\n\74/b:if\076'}, 'feedLinksBody': {'varName': 'links', 'template': '\74div class\75\47feed-links\47\76\n\74data:feedLinksMsg\76\74/data:feedLinksMsg\76\n\74b:loop values\75\47data:links\47 var\75\47f\47\76\n\74a class\75\47feed-link\47 expr:href\75\47data:f.url\47 expr:type\75\47data:f.mimeType\47 target\75\47_blank\47\76\74data:f.name\76\74/data:f.name\76 (\74data:f.feedType\76\74/data:f.feedType\76)\74/a\76\n\74/b:loop\76\n\74/div\076'}, 'status-message': {'varName': '', 'template': '\74b:if cond\75\47data:navMessage\47\76\n\74div class\75\47status-msg-wrap\47\76\n\74div class\75\47status-msg-body\47\76\n\74data:navMessage\76\74/data:navMessage\76\n\74/div\76\n\74div class\75\47status-msg-border\47\76\n\74div class\75\47status-msg-bg\47\76\n\74div class\75\47status-msg-hidden\47\76\74data:navMessage\76\74/data:navMessage\76\74/div\76\n\74/div\76\n\74/div\76\n\74/div\76\n\74div style\75\47clear: both;\47\76\74/div\76\n\74/b:if\076'}}, document.getElementById('Blog1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_AdSenseView', new _WidgetInfo('AdSense2', 'main',{'main': {'varName': '', 'template': '\74b:if cond\75\47data:blog.pageType \75\75 \46quot;item\46quot;\47\76\n\74br/\76\74br/\76\n\74div class\75\47widget-content\47\76\n\74data:adCode\76\74/data:adCode\76\n\74/div\76\n\74/b:if\076'}}, document.getElementById('AdSense2'), {}, 'displayModeFull'));
+</script>
+</body></html>

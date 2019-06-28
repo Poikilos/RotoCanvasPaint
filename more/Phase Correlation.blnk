@@ -1,0 +1,8 @@
+Content-Type: text/blnk
+Type:Application
+NoDisplay:true
+Terminal:false
+Name:Phase Correlation - Implementation Example by nashruddin (requires opencv)
+Encoding:UTF-8
+Comment:
+Exec:/home/owner/ownCloud/d.cs/RotoCanvas/Phase_Correlation.zip

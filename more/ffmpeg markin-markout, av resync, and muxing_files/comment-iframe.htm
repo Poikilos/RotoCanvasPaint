@@ -1,0 +1,220 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html dir="ltr"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><title>Blogger: blogggggg.ahfr.org - Post a Comment</title>
+<link href="comment-iframe_data/3182438014-cmtfp.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="comment-iframe_data/2609704013-cmt.js"></script>
+
+<script type="text/javascript">
+        if (!window.google || !google.friendconnect) {
+          document.write('<script type="text/javascript"' +
+              'src="http://www.google.com/friendconnect/script/friendconnect.js">' +
+              '</scr' + 'ipt>');
+        }
+      </script><script type="text/javascript" src="comment-iframe_data/friendconnect.js"></script>
+<script type="text/javascript">
+      if (!window.registeredBloggerCallbacks) {
+        window.registeredBloggerCallbacks = true;
+
+        
+
+        
+        var registeredGadgets = [];
+        gadgets.rpc.register('registerGadgetForRpcs', function(gadgetDomain, iframeName) {
+          // Trim the gadget domain from a random url (w/ query params)
+          // down to just a top level domain.
+          // TODO(henrywong): There must be a slicker way to do this
+          var startIndex = 0;
+          var protocolMarker = "://";
+
+          // Find the start of the host name
+          if (gadgetDomain.indexOf(protocolMarker) != -1) {
+            startIndex = gadgetDomain.indexOf(protocolMarker) + protocolMarker.length;
+          }
+          // Now find the start of the path
+          var pathIndex = gadgetDomain.indexOf("/", startIndex);
+
+          // Now extract just the hostname
+          if (pathIndex != -1) {
+            gadgetDomain = gadgetDomain.substring(0, pathIndex);
+          }
+
+          // TODO(jpanzer): Presumably this is a no-op now?  Should we remove this?
+          gadgets.rpc.setRelayUrl(iframeName, gadgetDomain + "/ps/rpc_relay.html");
+
+          // Just return some random stuff so the gadget can tell when
+          // we're done.
+          return "callback";
+        });
+
+        
+        gadgets.rpc.register('getBlogUrls', function() {
+          var holder = {};
+          
+            
+              
+              
+                holder.currentPost = "http://www.blogger.com/feeds/3943397105358047332/posts/default/2742838784193321545";
+              
+              
+              
+                holder.currentComments = "http://www.blogger.com/feeds/3943397105358047332/2742838784193321545/comments/default";
+              
+            
+            
+            
+              holder.postFeed = "http://www.blogger.com/feeds/3943397105358047332/posts/default";
+            
+            
+            
+              holder.commentFeed = "http://www.blogger.com/feeds/3943397105358047332/comments/default";
+            
+          
+          return holder;
+        });
+
+        
+        gadgets.rpc.register('requestReload', function() {
+          document.location.reload();
+        });
+
+        
+        gadgets.rpc.register('requestSignOut', function(siteId) {
+          
+          google.friendconnect.container.openSocialSiteId = siteId;
+          google.friendconnect.requestSignOut();
+        });
+      }
+    </script>
+<script type="text/javascript">
+          var token = "6945156";
+
+          // Set the path to rpc_relay.html. ".." is a magic key that means
+          // the parent window
+          gadgets.rpc.setRelayUrl("..", "http://blog.ahfr.org/rpc_relay.html");
+
+          var callback = function callback(arg) {
+            if (arg == null) {
+              // If there was no cookie, just wait a second and re-poll. This
+              // allows us to handle the case where the user logged in to FC
+              // (and got a cookie).
+
+              var callAgain = function() {
+                gadgets.rpc.call(null, 'fcViewer', callback, token);
+              }
+
+              window.setTimeout(callAgain, 3000);
+            } else {
+              BLOG_xhr.send("/get-public-person.g?fcAuthToken=" + encodeURIComponent(arg)
+              + "&communityId=" + '76562331850063987',
+              function() {
+                if (this.isSuccess()) {
+                  var data = this.getResponseJson();
+                  // We're using the trogedit convention for ajax calls...
+                  if (data.type == "ok") {
+                    var person = data.details;
+
+                    // The FC identity is just a pair of the label and the cookie
+                    BLOG_CMT_addAndSelectIdentity(new BLOG_CMT_FriendConnectIdentity(
+                      person.displayName + " (" + person.profileSource + ")",
+                      arg,
+                      person.settingsLink));
+                  }
+                }
+              });
+            }
+          }
+          gadgets.rpc.call(null, 'fcViewer', callback, token);
+        </script><style>body { color: rgb(76, 76, 76);
+font-family: Georgia,Serif;}
+a:link, a:visited, a:active, a:hover { color: rgb(85, 136, 170);}
+</style></head><body onload="BLOG_CMT_init(false, false);" class="null lang_en"><div id="setupLogic" style="display: none;"></div>
+<div id="allHolder"><form action="/comment-iframe.do" method="POST" name="commentForm" id="commentForm" target="_top" onsubmit="return false"><input name="security_token" value="AOuZoY6zwTAlkmWIeSfz4w7DyfNe6A05kA:1249590779196" type="hidden"><div class="errorbox-good"><input name="securityToken" value="905ztUEiLnBw3By_DSU0oejjuUs:1249590779218" type="hidden">
+</div>
+<input name="blogID" value="3943397105358047332" type="hidden">
+<input name="postID" value="2742838784193321545" type="hidden">
+<input name="encodedIds" id="encodedIds" type="hidden">
+<input name="encodedSelectedId" id="encodedSelectedId" type="hidden">
+<input name="showPreview" id="showPreview" value="false" type="hidden">
+<div id="commentsHolder"><div id="identityHolder"><input name="fcAuthToken" id="fcAuthToken" type="hidden">
+<div class="dialog" id="openIdIdentityHolder"><div class="top"><img class="close" onclick="BLOG_CMT_onCancel()" src="comment-iframe_data/close.gif" alt="Close">
+<h3>Edit profile</h3>
+<div class="group"><label id="openIdUsernameLabel" for="openIdUserNameField"></label><br>
+<input class="dialogField" id="openIdUserNameField" type="text">
+<div class="shown-openid-url"><span id="openIdUriDisplayPrefix" dir="ltr"></span><span id="openIdUriDisplayUsername" dir="ltr"></span><span id="openIdUriDisplaySuffix" dir="ltr"></span></div></div>
+<div class="group"><input onclick="BLOG_CMT_onContinue()" value="Continue" type="button">
+<span id="openIdDialogErrorHolder"></span></div></div>
+<div class="bottom"></div></div>
+<div class="dialog" id="genericOpenIdIdentityHolder"><div class="top"><img class="close" onclick="BLOG_CMT_onCancel()" src="comment-iframe_data/close.gif" alt="Close">
+<h3>Edit profile</h3>
+<div class="group"><label for="openIdUrlField">OpenID URL:</label><br>
+<input class="dialogField" name="openIdUri" id="openIdUriField" dir="ltr" type="text"></div>
+<div class="group"><input onclick="BLOG_CMT_onContinue()" value="Continue" type="button">
+<span id="genericOpenIdDialogErrorHolder"></span></div></div>
+<div class="bottom"></div></div>
+<div class="dialog" id="nameUrlIdentityHolder"><div class="top"><img class="close" onclick="BLOG_CMT_onCancel()" src="comment-iframe_data/close.gif" alt="Close">
+<h3>Edit profile</h3>
+<div class="group"><label for="anonNameField">Name:</label><br>
+<input class="dialogField" name="anonName" id="anonNameField" type="text"><br>
+<label for="anonUrlField">URL:</label><br>
+<input class="dialogField" name="anonURL" id="anonUrlField" dir="ltr" type="text"></div>
+<div class="group"><input onclick="BLOG_CMT_onContinue()" value="Continue" type="button">
+<span id="nameUrlDialogErrorHolder"></span></div></div>
+<div class="bottom"></div></div></div>
+
+<textarea name="commentBody" rows="8" cols="60" id="commentBodyField" onkeypress="BLOG_CMT_onCommentBodyChange()"></textarea><br>
+<div id="identityControlsHolder"><label id="commentSelectorLabel" for="identityMenu">Comment as:</label>
+<select id="identityMenu" name="identityMenu" dir="ltr" onchange="BLOG_CMT_onSelectorChange()"><option selected="selected" disabled="disabled" value="NONE">Select profile...</option><option disabled="disabled" value="NONE"> </option><option value="GOOGLE">Google Account</option><option value="NONE">LiveJournal</option><option value="NONE">WordPress</option><option value="NONE">TypePad</option><option value="NONE">AIM</option><option value="OPENID">OpenID</option><option disabled="disabled" value="NONE"> </option><option value="NAMEURL">Name/URL</option><option value="ANON">Anonymous</option></select>
+<span id="editButton"><a href="javascript:void(0)" onclick="BLOG_CMT_onEdit()">Edit</a></span>
+<span id="settingsButton"><a href="javascript:void(0)" onclick="BLOG_CMT_onEdit()">Settings</a></span>
+<span id="signoutLink" style="display: none;"><span id="commentDash">–</span>
+<a target="_top" href="http://www.blogger.com/logout-redirect.g?blogID=3943397105358047332&amp;postID=2742838784193321545" onclick="gadgets.rpc.call(null, 'requestSignOut', function(){}, &quot;07481442473544171001&quot;);">Sign out</a></span>
+<div id="id-error"></div></div></div>
+<div id="postCommentButtonHolder" class="postCommentButtonHolder"><div style="display: none;" id="subscribeButtonHolder"><a href="javascript:BLOG_CMT_subscription.toggle()" id="subscribeButton"></a></div>
+<input id="postCommentSubmit" name="postCommentSubmit" onclick="BLOG_CMT_onPost()" value="Post Comment" type="button">
+<input id="postCommentPreview" name="postCommentPreview" onclick="return BLOG_CMT_onPreview()" value="Preview" type="button">
+<span id="empty-error"></span><span id="body-error"></span></div>
+</form>
+<div id="main-error-holder"><table class="status-msg error" cellpadding="0" cellspacing="0"><tbody><tr class="top"><td class="corner"><img alt="" src="navbar_data/blank.gif" width="1" height="1"></td>
+<td class="msgcolor stretch"></td>
+<td class="corner"><img alt="" src="navbar_data/blank.gif" width="1" height="1"></td></tr>
+<tr><td class="msgcolor"></td>
+<td id="main-error" class="msgcolor"></td>
+<td class="msgcolor"></td></tr>
+<tr class="bottom"><td class="corner"><img alt="" src="navbar_data/blank.gif" width="1" height="1"></td>
+<td class="msgcolor stretch"></td>
+<td class="corner"><img alt="" src="navbar_data/blank.gif" width="1" height="1"></td></tr></tbody></table></div>
+<div id="main-status-holder"><table class="status-msg status" cellpadding="0" cellspacing="0"><tbody><tr class="top"><td class="corner"><img alt="" src="navbar_data/blank.gif" width="1" height="1"></td>
+<td class="msgcolor stretch"></td>
+<td class="corner"><img alt="" src="navbar_data/blank.gif" width="1" height="1"></td></tr>
+<tr><td class="msgcolor"></td>
+<td id="main-status" class="msgcolor"></td>
+<td class="msgcolor"></td></tr>
+<tr class="bottom"><td class="corner"><img alt="" src="navbar_data/blank.gif" width="1" height="1"></td>
+<td class="msgcolor stretch"></td>
+<td class="corner"><img alt="" src="navbar_data/blank.gif" width="1" height="1"></td></tr></tbody></table></div></div>
+
+<script type="text/javascript">
+        
+          BLOG_CMT_addNotLoggedInGaiaIdentity();
+        
+
+        
+          BLOG_CMT_addOpenIdIdentityFactories();
+        
+        
+          BLOG_CMT_addNameUrlIdentityFactory();
+          BLOG_CMT_addAnonIdentity();
+        
+
+        
+      </script>
+<script src="comment-iframe_data/urchin.js" type="text/javascript">
+        </script>
+<script type="text/javascript">
+          _uacct="UA-18003-7";
+          _uanchor=1;
+          _ufsc=false;
+          _usample = 10;
+          urchinTracker();
+          _uff=0;
+        </script></body></html>
