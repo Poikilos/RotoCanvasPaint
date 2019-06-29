@@ -265,7 +265,7 @@ kind. Use this software at your own risk.*
   better for some reason--see <http://www.github.com/expertmm/IntroCompatiblizer>)
   `ffmpeg -i "concat:Logo4 Animation A 1a0001-0100.avi|Logo4 Animation A 1a101-142.avi" -c copy "Logo4 Animation A 1a combined.avi"`
   * Even with text file, the names may need to be changed automatically
-    first to prevent ffmpeg syntax error. See
+    first to prevent ffmpeg syntax error.
 - h.264 avi to mp3 container for Sony software
   `ffmpeg -i "Logo4 Animation A 1b.avi" -acodec libfaac -b:a 128k -vcodec mpeg4 -b:v 1200k -flags +aic+mv4 "Logo4 Animation A 1b.mp4"`
 - losslessly split
@@ -303,7 +303,7 @@ REM mencoder 00394.mts -vf scale=1280:720 -oac copy -fps 60 -ofps 30 -o %USERPRO
 REM mencoder 00394.mts -s hd720 -oac copy -fps 60 -ofps 30 -o %USERPROFILE%\Documents\1080-to-720-00394.m2ts
 ```
 - ffmpeg convert h.264 avi to mp4 container for sony
-  ffmpeg -i "Logo4 Animation A 1b.avi" -acodec libfaac -b:a 128k -vcodec mpeg4 -b:v 1200k -flags +aic+mv4 "Logo4 Animation A 1b.mp4"
+  `ffmpeg -i "Logo4 Animation A 1b.avi" -acodec libfaac -b:a 128k -vcodec mpeg4 -b:v 1200k -flags +aic+mv4 "Logo4 Animation A 1b.mp4"`
   * Convert to m2ts (using ffmpeg):
     * -y overwrite output files without asking
     * -loglevel 1  is OK too
@@ -347,7 +347,7 @@ REM mencoder 00394.mts -s hd720 -oac copy -fps 60 -ofps 30 -o %USERPROFILE%\Docu
 #the commands below supposedly also work
 #ffmpeg -i 'concat:VTS_01_1.VOB|VTS_01_2.VOB|VTS_01_3.VOB|VTS_01_4.VOB|VTS_01_5.VOB|VTS_01_6.VOB|VTS_01_7.VOB|VTS_01_8.VOB|VTS_01_9.VOB' -c copy $dest_path/Hi-8-to-DVD-via-Sharp.mpg
 #ffmpeg -i VTS_01_1.VOB -i VTS_01_2.VOB -i VTS_01_3.VOB -i VTS_01_4.VOB -i VTS_01_5.VOB -i VTS_01_6.VOB -i VTS_01_7.VOB -i VTS_01_8.VOB -i VTS_01_9.VOB -c copy $dest_path/Hi-8-to-DVD-via-Sharp.mpg
-``
+```
 The commands above produce out-of-order errors due to timestamps starting at 0 at each file
 so see <https://stackoverflow.com/questions/31691943/ffmpeg-concat-poduces-dts-out-of-order-errors>:
 ```bash
