@@ -263,29 +263,19 @@ kind. Use this software at your own risk.*
   <https://github.com/poikilos/IntroCompatiblizer>.
 - Combine videos (this is a one-line command, however, text file works
   better for some reason--see <http://www.github.com/expertmm/IntroCompatiblizer>)
-  ```
-  ffmpeg -i "concat:Logo4 Animation A 1a0001-0100.avi|Logo4 Animation A 1a101-142.avi" -c copy "Logo4 Animation A 1a combined.avi"
-```
+  `ffmpeg -i "concat:Logo4 Animation A 1a0001-0100.avi|Logo4 Animation A 1a101-142.avi" -c copy "Logo4 Animation A 1a combined.avi"`
   * Even with text file, the names may need to be changed automatically
     first to prevent ffmpeg syntax error. See
 - h.264 avi to mp3 container for Sony software
-  ```
-  ffmpeg -i "Logo4 Animation A 1b.avi" -acodec libfaac -b:a 128k -vcodec mpeg4 -b:v 1200k -flags +aic+mv4 "Logo4 Animation A 1b.mp4"
-```
+  `ffmpeg -i "Logo4 Animation A 1b.avi" -acodec libfaac -b:a 128k -vcodec mpeg4 -b:v 1200k -flags +aic+mv4 "Logo4 Animation A 1b.mp4"`
 - losslessly split
-  ```
-  ffmpeg -vcodec copy -acodec copy -ss 00:00:00 -t 00:01:00 -i in.mp4 out.mp4
-``
+  `ffmpeg -vcodec copy -acodec copy -ss 00:00:00 -t 00:01:00 -i in.mp4 out.mp4`
   * where time after ss is start as hh:mm:ss, & time after t is duration as hh:mm:ss.
 - losslessly change container e.g. from FLV to MP4:
-  ```
-  ffmpeg -i VideoFile.flv -vcodec copy -acodec copy VideoFile.mp4
-```
+  `ffmpeg -i VideoFile.flv -vcodec copy -acodec copy VideoFile.mp4`
   * allows Premiere Elements to load it (tested where flv was AVC video with AAC audio)
 - convert video to image sequence:
-  ```
-  ffmpeg -i VideoFile.m2v Forensics1a%d.png
-```
+  `ffmpeg -i VideoFile.m2v Forensics1a%d.png`
 - convert image sequence to video:
   * Tried with image sequence in folder: $HOME\Videos\Projects\Rebel Assault IX\RAIX2b\Scene07 (Lightsaber Duel)\forcegrab\2b4 (2013 3D Hilt flying away and back added)\
   * Force fps such as 29.97: `ffmpeg -r 29.97 -i RAIX2b4-scene-lightsaberduel-shot-forcegrab%04d.png -sameq -r 29.97 output.mp4`
