@@ -349,7 +349,7 @@ REM mencoder 00394.mts -s hd720 -oac copy -fps 60 -ofps 30 -o %USERPROFILE%\Docu
 #ffmpeg -i VTS_01_1.VOB -i VTS_01_2.VOB -i VTS_01_3.VOB -i VTS_01_4.VOB -i VTS_01_5.VOB -i VTS_01_6.VOB -i VTS_01_7.VOB -i VTS_01_8.VOB -i VTS_01_9.VOB -c copy $dest_path/Hi-8-to-DVD-via-Sharp.mpg
 ```
 The commands above produce out-of-order errors due to timestamps starting at 0 at each file
-so see <https://stackoverflow.com/questions/31691943/ffmpeg-concat-poduces-dts-out-of-order-errors>:
+so instead, as per <https://stackoverflow.com/questions/31691943/ffmpeg-concat-poduces-dts-out-of-order-errors> do:
 ```bash
 #ffmpeg -i concat:'VTS_01_1.VOB|VTS_01_2.VOB|VTS_01_3.VOB|VTS_01_4.VOB|VTS_01_5.VOB|VTS_01_6.VOB|VTS_01_7.VOB|VTS_01_8.VOB|VTS_01_9.VOB' -c:v copy -c:a copy $dest_path/Hi-8-to-DVD-via-Sharp.mpg
 
