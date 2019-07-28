@@ -96,6 +96,13 @@ rotoscoping is highly dependent on the source frame remaining the same.
   * Shift Alt Scrollwheel: brush hardness
   * Shift Scrollwheel: brush size
 * Add exception handling in appropriate situations:
+* Motion Estimation
+  * True ME (intra-frame): Get MSU ME (and other virtualdub plugins) working for
+    multiple motion vectors ([not free for commercial
+    use](https://www.compression.ru/video/motion_estimation/index_en.html))
+  * Overall image motion: Create or use an existing [Phase
+    correlation](https://en.wikipedia.org/wiki/Phase_correlation) filter
+    for whole-image motion at least.
 ```
 catch(std::exception& e) {
       qCritical() << "Exception thrown:" << e.what();
