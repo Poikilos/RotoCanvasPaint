@@ -234,7 +234,7 @@ sequence are stored:
 ```
 
 ## Credits
-* created by expertmm (see also LICENSE)
+* created by Poikilos (see also LICENSE)
 * special thanks to the Qt team for ScribbleArea from Qt Examples
 
 *DISCLAIMER: This software comes without warranty or guarantees of any
@@ -269,7 +269,7 @@ kind. Use this software at your own risk.*
   conversion commands embedded in the Python code as strings, see
   <https://github.com/poikilos/IntroCompatiblizer>.
 - Combine videos (this is a one-line command, however, text file works
-  better for some reason--see <http://www.github.com/expertmm/IntroCompatiblizer>)
+  better for some reason--see <http://www.github.com/poikilos/IntroCompatiblizer>)
   `ffmpeg -i "concat:Logo4 Animation A 1a0001-0100.avi|Logo4 Animation A 1a101-142.avi" -c copy "Logo4 Animation A 1a combined.avi"`
   * Even with text file, the names may need to be changed automatically
     first to prevent ffmpeg syntax error.
