@@ -1,8 +1,8 @@
 # RotoCanvas
 For now this repository serves as a collection of terminal commands for
 manipulating videos and DVDs, but if you can get the code working, let
-me know. I'll change this message if I make more progress. See [FFMpeg
-Notes](#FFMpeg Notes) below, and the "more" directory. Upstream ideas
+me know. I'll change this message if I make more progress. See [FFmpeg
+Notes](#FFmpeg Notes) below, and the "more" directory. Upstream ideas
 and code from "more" directory that are implemented will be moved to
 "references". Please read "Purpose" and "Why aren't there more
 rotoscoping applications?" below before commenting on the code or
@@ -192,6 +192,9 @@ rotoscoped out, there will be both the error and a corrected blotch
 that is the error's original position & shape), which in such cases
 would require redoing the rotoscoping.
 
+### Alternate names
+See "~/Nextcloud/d.cs/RotoCanvas/1.RotoCanvas (SEE GitHub instead).txt"
+
 ### Backends
 #### Python
 (Not Tried Yet)
@@ -205,6 +208,22 @@ would require redoing the rotoscoping.
 - <https://github.com/mattrobenolt/colors.py>: "Convert colors between
   rgb, hsv, and hex, perform arithmetic, blend modes, and generate
   random colors within boundaries"
+- VapourSynth
+  - Python equivalent to AviSynth
+  - has a cli tool for piping output into ffmpeg or other tools
+- ffmpeg
+  - See also: the "ffmpeg Notes" section.
+  - Possibly bake changes to png files then overlay them onto the video
+    (to use frame rate from video automatically):
+    `ffmpeg -i foo.mkv -i bar%04d.png -filter_complex "[1:v]format=argb,geq=r='r(X,Y)':a='alpha(X,Y)'[zork]; [0:v][zork]overlay" -vcodec libx264 myresult.mkv`
+    - based on
+      <https://stackoverflow.com/questions/38753739/ffmpeg-overlay-a-png-image-on-a-video-with-custom-transparency>
+      answered Aug 3 '16 at 22:00 RocketNuts
+      - overall opacity can be multiplied by prepending a value such
+        as `0.5*`, for example: `a=0.5*'alpha(X,Y)'`
+      - For no custom opacity (only 2nd layer's alpha), simplify to the
+        line in the question at that link:
+        `ffmpeg -i foo.mkv -i bar.png -filter_complex "[0:v][1:v]overlay" -vcodec libx264 myresult.mkv`
 
 ### RotoCanvas Paint Notes
 * The save method is used by both the Save and the Save As actions. The
@@ -278,7 +297,7 @@ kind. Use this software at your own risk.*
   - or download and unzip **megui** to `C:\PortableApps\Video` and add
     `C:\PortableApps\Video\megui\tools\mencoder` to your PATH.
 
-### FFMpeg Notes
+### FFmpeg Notes
 - For a program that has a narrow use case but has additional video
   conversion commands embedded in the Python code as strings, see
   <https://github.com/poikilos/IntroCompatiblizer>.

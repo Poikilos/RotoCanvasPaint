@@ -538,9 +538,14 @@ void RotoCanvas::setBrushRadius(double newWidth)
 
 void RotoCanvas::setBrushHardness(double new_value)
 {
-    if (new_value>1.0) new_value=1.0;
-    else if (new_value<0.0) new_value=0.0f;
-    brushHardRadius = brushRadius-(brushRadius*(1.0-new_value));
+    // brushHardRadius is the part that is hard, 0 for softest brush.
+    if (new_value > 1.0)
+        new_value = 1.0;
+    else if (new_value < 0.0)
+        new_value = 0.0f;
+    brushHardRadius = brushRadius * new_value;
+    if (brushHardRadius < 0.0)
+        brushHardRadius = 0.0;
 }
 
 void RotoCanvas::setBrushOpacity(double new_value)

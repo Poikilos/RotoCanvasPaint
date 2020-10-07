@@ -48,13 +48,13 @@ public:
     QString getFramePath(int frameNumber);
 
     static QString getFramePath(QString folderPath, QString seqName, int frameNumber, int minDigitCount, QString format);
-    //QString getFramePath(int frameNumber);
+    // QString getFramePath(int frameNumber);
     static QString getZeroPadded(int frameNumber, int minDigitCount);
     static void drawAlphaPix(QImage* destImage, int x, int y, QColor sourceColor, double this_opacity);
 
     bool getIsModified();
     bool openImage(const QString &fileName);
-    bool saveFrame();//const QString &fileName, const char *fileFormat);
+    bool saveFrame(); // const QString &fileName, const char *fileFormat);
     bool exportFrame(QDir destinationDir, const QString &sequenceName, const char *fileFormat, int frameNumber);
     int exportFrames(QDir destinationDir, const QString &sequenceName, const char *fileFormat);
     void setBrushColor(const QColor &newColor);
@@ -64,7 +64,7 @@ public:
 
     QColor getBrushColor() const { return brushColor; }
     double getBrushRadius() const { return brushRadius; }
-    double getBrushHardness() const { return (brushRadius-brushHardRadius)/brushRadius; }
+    double getBrushHardness() const { return brushHardRadius / brushRadius; }
     double getBrushOpacity() const { return brushOpacity; }
 
 public slots:

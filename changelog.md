@@ -1,7 +1,18 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] - 2019-06-28
+
+## [git] - 2020-10-07
+### Changed
+- (examples.blend) Upgrade blend to 2.83.5 (paste objects into a new file)
+
+### Fixed
+- (examples.blend) Turn on "Soft Shadows" render option to avoid
+  large aliasing artifacts on shadows.
+- Calculate and change brush hardness correctly.
+
+
+## [git] - 2019-06-28
 - Add potential references from local directories.
 - Add note regarding new documents to README.md.
 - Name and sort documents better.
