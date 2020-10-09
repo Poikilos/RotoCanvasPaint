@@ -8,6 +8,7 @@ and code from "more" directory that are implemented will be moved to
 rotoscoping applications?" below before commenting on the code or
 submitting pull requests.
 
+
 ## Purpose
 This is a manual rotoscoping (frame by frame painting) application.
 Rotoscoping is the only accurate way to achieve effects such as manual
@@ -58,10 +59,6 @@ the expectations of normal consumers (primarily expectations for speed
 and format support) may be impractical to be achieved by volunteer
 programmers, or may be impossible for technical reasons described above.
 
-## Changes
-* (2016-08-05) detect format instead of ever using the strings "png" or
-".png" during loading (but continue to use png for all saved image data,
-as nondestructive layers)
 
 ## Caveats
 * Lag during frame loading cannot be avoided, since each video frame
@@ -76,27 +73,28 @@ applied without reloading the frame from the source video file.
 or may not ever be added, since MPEG-style frame seeking is inexact and
 rotoscoping is highly dependent on the source frame remaining the same.
 
+
 ## Known Issues
-* complete first working version
-* audit & test getLayerImagePathMostRecent
+* Complete the first working version.
+* Audit & test `getLayerImagePathMostRecent`.
+
 
 ## Planned Features
-(!=important, ~=low-priority)
-* add markers to media OR timeline, separately (media markers are also
-  on timeline behave differently: ghosted until media is selected, has
-  filmstrip icon if from a clip; reversed if video is reversed, changed
-  placement if speed is changed, etc)
-* use alpha.png for reducing opacity of parts of background layer
-* allow blocker layer type (make an animated object that seems to "undo"
-  previous edits, such as to reveal parts of characters under the
-  effect, without permanently erasing any part of the effect)
-* use layer cache (purpose for unused variable cacheMaxMB)
-* Keyboard controls for fast operation:
+* [ ] Add markers to media OR timeline, separately (media markers are
+  also on timeline behave differently: ghosted until media is selected,
+  has filmstrip icon if from a clip; reversed if video is reversed,
+  changed placement if speed is changed, etc).
+* [ ] Use alpha.png for reducing opacity of parts of background layer.
+* [ ] Allow a blocker layer type (make an animated object that seems to
+  "undo" previous edits, such as to reveal parts of characters under
+  the effect, without permanently erasing any part of the effect).
+* [ ] Use the layer cache (purpose for unused variable cacheMaxMB).
+* [ ] Keyboard controls for fast operation:
   * Ctrl Scrollwheel: zoom
   * Shift Alt Scrollwheel: brush hardness
   * Shift Scrollwheel: brush size
-* Add exception handling in appropriate situations:
-* Motion Estimation
+* [ ] Add exception handling in appropriate situations.
+* [ ] Motion Estimation
   * True ME (intra-frame): Get MSU ME (and other virtualdub plugins) working for
     multiple motion vectors ([not free for commercial
     use](https://www.compression.ru/video/motion_estimation/index_en.html))
@@ -108,12 +106,22 @@ catch(std::exception& e) {
       qCritical() << "Exception thrown:" << e.what();
     }
 ```
-* Change Speed (optional frame blending to create "in-between" frames
-  for slow, merged frames for fast!)
-* (~) Effects (see <http://randombio.com/linuxsetup141.html>)
-* (~) Load VirtualDub plugins, possibly as cscript using their
+* [ ] Change Speed
+  - [ ] optional frame blending to create "in-between"
+    frames if slower than original
+    - [ ] use motion estimation to warp
+  - [ ] optional merged frames for faster than original
+    - [ ] use motion estimation for motion blur (so the effect isn't
+      simply ghosting)
+
+### Low-priority Planned Features
+* [ ] Add a test system that builds ImageSequenceExamples from the blend
+  file if Blender is installed on the system. For now, render manually
+  (to /home/owner/Videos/ImageSequenceExamples on Poikilos' computer).
+* [ ] Effects (see <http://randombio.com/linuxsetup141.html>)
+* [ ] Load VirtualDub plugins, possibly as cscript using their
   sourcecode.
-* (~) Detect Light Sabers
+* [ ] Detect Light Sabers
   * auto masking behind objects
   * auto sound generation!
   * auto strike/collide generation
@@ -125,26 +133,26 @@ catch(std::exception& e) {
       * allow manually adding saber-to-target hits
   * Set in-out points for saber
     * generate in-out sounds
-* (~) use G'MIC library for image processing (so GIMP plugins can be
+* [ ] use G'MIC library for image processing (so GIMP plugins can be
   used).
   * example: Flowblade uses G'MIC, so does EKD (see http://gmic.eu/)
   * use GIMP HQRESIZE plugin (esp for resizing letterbox movies to 16:9
     anamorphic, esp DVD low-res mode mpegs created by Panasonic DVDR EP
     mode)
-* (~) Manipulate flv directly to avoid recompression (example: Try to
+* [ ] Manipulate flv directly to avoid recompression (example: Try to
   rerender and combine zelda fan film from youtube, using curves from
   Sony Vegas [see vf project file])
-* (~) Have an expandable palette of sound effects, and a depth settings
+* [ ] Have an expandable palette of sound effects, and a depth settings
   (negative for behind camera), then allow clicking to add 3D placement
   of sound
   * also allow animation
   * eventually create Blender export of speaker objects
   * allow optional facing direction (default is track viewer [always
     face camera])
-* (~) Seam Carving resize (possibly via an existing G'MIC plugin)
+* [ ] Seam Carving resize (possibly via an existing G'MIC plugin)
   example: [SeaMonster - Content-aware resizing FOSS (Seam
   Carving)](http://blogs.msdn.com/b/mswanson/archive/2007/10/23/seamonster-a-net-based-seam-carving-implementation.aspx)
-* (~) PAL-NTSC conversion (universal size/framerate converter) idea
+* [ ] PAL-NTSC conversion (universal size/framerate converter) idea
   (or make VirtualDub plugin for this that writes output manually)
   * Make it universal: from any size/framerate to any size/framerate
   * Blend frames retroactively once there is enough data per frame (or
@@ -155,9 +163,11 @@ catch(std::exception& e) {
   * dump the frames into ffmpeg successively
   * test it with a PAL movie
 
+
 ## Low-priority Known Issues
 * drawLineTo (this is used for painting) should draw line instead of
   last point
+
 
 ## Design Directives
 * Completely customizable but good defaults for example there are three
@@ -173,6 +183,7 @@ catch(std::exception& e) {
   which drives will work) by checkbox for "Include source files
   (required for using file on another computer, and also if files were
   opened directly from device such as camera or removable data storage)"
+
 
 ## Developer Notes
 The RotoCanvas class is modular, with hopes that it can be used by
@@ -266,12 +277,13 @@ sequence are stored:
       linear
 ```
 
+
 ## Credits
 * created by Poikilos (see also LICENSE)
 * special thanks to the Qt team for ScribbleArea from Qt Examples
 
-*DISCLAIMER: This software comes without warranty or guarantees of any
-kind. Use this software at your own risk.*
+*DISCLAIMER: See license.txt*
+
 
 ## Notes on Other Programs
 * In some programs, ss;ff denotes drop frame, and ss:ff denotes NON-drop
