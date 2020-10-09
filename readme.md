@@ -310,6 +310,8 @@ sequence are stored:
     `C:\PortableApps\Video\megui\tools\mencoder` to your PATH.
 
 ### FFmpeg Notes
+(See also "more" folder and
+[IntroCompatiblizer](https://github.com/poikilos/IntroCompatiblizer))
 - For a program that has a narrow use case but has additional video
   conversion commands embedded in the Python code as strings, see
   <https://github.com/poikilos/IntroCompatiblizer>.
